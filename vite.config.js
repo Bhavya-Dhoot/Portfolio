@@ -1,0 +1,19 @@
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  build: {
+    target: 'es2020',
+    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          gsap: ['gsap'],
+          lenis: ['lenis'],
+        },
+      },
+    },
+  },
+  css: {
+    devSourcemap: true,
+  },
+});

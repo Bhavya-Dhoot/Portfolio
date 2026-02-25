@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Bhavya Dhoot — Quantitative Developer, Finance Researcher, and AI Engineer. Building at the intersection of quantitative finance and intelligent systems." />
+  <meta name="keywords" content="Bhavya Dhoot, Quantitative Developer, Finance, AI Engineer, Portfolio" />
+  <meta property="og:title" content="Bhavya Dhoot — Quant Developer · Finance Researcher · AI Engineer" />
+  <meta property="og:description"
+    content="Building at the intersection of quantitative finance and intelligent systems." />
+  <meta property="og:type" content="website" />
+  <title>Bhavya Dhoot — Quant Developer · Finance Researcher · AI Engineer</title>
+
+  <!-- Preconnect for fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+
+<body class="bg-ink text-paper selection:bg-accent selection:text-ink overflow-x-hidden">
+
+  <!-- Scroll Progress Bar -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" aria-hidden="true">
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+  </div>
+
+  <!-- ============================================================
+       NAVIGATION
+  ============================================================ -->
+  <nav id="nav" role="navigation" aria-label="Main navigation">
+    <div id="nav-inner">
+      <a href="#hero" id="nav-logo" class="nav-logo magnetic" aria-label="Bhavya Dhoot — Home">
+        <span class="font-mono text-label text-accent tracking-widest uppercase">BD</span>
+      </a>
+
+      <div id="nav-links" role="list">
+        <a href="#about" class="nav-link magnetic" role="listitem" data-section="about">About</a>
+        <a href="#experience" class="nav-link magnetic" role="listitem" data-section="experience">Experience</a>
+        <a href="#projects" class="nav-link magnetic" role="listitem" data-section="projects">Projects</a>
+        <a href="#skills" class="nav-link magnetic" role="listitem" data-section="skills">Skills</a>
+        <a href="#contact" class="nav-link magnetic" role="listitem" data-section="contact">Contact</a>
+      </div>
+
+      <div id="nav-indicator" aria-hidden="true"></div>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO SECTION
+  ============================================================ -->
+  <section id="hero" aria-label="Hero — Introduction">
+    <!-- SVG Background Grid -->
+    <div id="hero-grid" aria-hidden="true"></div>
+
+    <!-- Noise texture overlay -->
+    <div id="hero-noise" aria-hidden="true"></div>
+
+    <div id="hero-content">
+      <!-- Eyebrow -->
+      <div id="hero-eyebrow" class="hero-eyebrow" aria-hidden="true">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Portfolio · 2025</span>
+        <div class="eyebrow-line" aria-hidden="true"></div>
+      </div>
+
+      <!-- Main headline -->
+      <h1 id="hero-headline" aria-label="Bhavya Dhoot">
+        <span class="hero-line" data-text="Bhavya">
+          <span class="hero-line-inner">Bhavya</span>
+        </span>
+        <span class="hero-line" data-text="Dhoot">
+          <span class="hero-line-inner hero-line-accent">Dhoot</span>
+        </span>
+      </h1>
+
+      <!-- Role tagline -->
+      <div id="hero-tagline">
+        <p class="hero-role">
+          <span class="role-segment">Quantitative Developer</span>
+          <span class="role-dot" aria-hidden="true">·</span>
+          <span class="role-segment">Finance Researcher</span>
+          <span class="role-dot" aria-hidden="true">·</span>
+          <span class="role-segment">AI Engineer</span>
+        </p>
+      </div>
+
+      <!-- Hero CTAs -->
+      <div id="hero-ctas" aria-label="Call to action buttons">
+        <a href="mailto:dhoot.bhavya1@gmail.com" class="hero-cta-primary magnetic" aria-label="Contact Bhavya">
+          <span>Get in touch</span>
+          <span class="cta-arrow" aria-hidden="true">↗</span>
+        </a>
+        <a href="https://www.linkedin.com/in/bhavya-dhoot/" target="_blank" rel="noopener noreferrer"
+          class="hero-cta-secondary magnetic" aria-label="View LinkedIn">
+          <span>LinkedIn</span>
+        </a>
+      </div>
+
+      <!-- Scroll cue -->
+      <div id="hero-scroll-cue" aria-label="Scroll down">
+        <div class="scroll-cue-line" aria-hidden="true"></div>
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Scroll</span>
+      </div>
+    </div>
+
+    <!-- Floating data labels -->
+    <div id="hero-data" aria-hidden="true">
+      <div class="data-label" id="dl-location">
+        <span class="font-mono text-label text-muted">Location</span>
+        <span class="font-mono text-label text-paper">India</span>
+      </div>
+      <div class="data-label" id="dl-focus">
+        <span class="font-mono text-label text-muted">Focus</span>
+        <span class="font-mono text-label text-paper">Quant &amp; AI</span>
+      </div>
+      <div class="data-label" id="dl-status">
+        <span class="font-mono text-label text-muted">Status</span>
+        <span class="font-mono text-label text-accent">Available</span>
+      </div>
+    </div>
+
+    <!-- Availability badge -->
+    <div id="availability-badge" aria-label="Open to new opportunities">
+      <span class="avail-pulse" aria-hidden="true"></span>
+      <span class="font-mono text-label">Open to opportunities</span>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MARQUEE TICKER
+  ============================================================ -->
+  <div id="ticker" aria-hidden="true" role="marquee">
+    <div id="ticker-inner">
+      <div class="ticker-track">
+        <span>Quantitative Finance</span><span class="ticker-dot">·</span>
+        <span>algorithmic Trading</span><span class="ticker-dot">·</span>
+        <span>Machine Learning</span><span class="ticker-dot">·</span>
+        <span>Python Engineering</span><span class="ticker-dot">·</span>
+        <span>Financial Modelling</span><span class="ticker-dot">·</span>
+        <span>AI Systems</span><span class="ticker-dot">·</span>
+        <span>Backtesting Infrastructure</span><span class="ticker-dot">·</span>
+        <span>Team Leadership</span><span class="ticker-dot">·</span>
+        <span>Product Strategy</span><span class="ticker-dot">·</span>
+        <span>Quantitative Finance</span><span class="ticker-dot">·</span>
+        <span>Algorithmic Trading</span><span class="ticker-dot">·</span>
+        <span>Machine Learning</span><span class="ticker-dot">·</span>
+        <span>Python Engineering</span><span class="ticker-dot">·</span>
+        <span>Financial Modelling</span><span class="ticker-dot">·</span>
+        <span>AI Systems</span><span class="ticker-dot">·</span>
+        <span>Backtesting Infrastructure</span><span class="ticker-dot">·</span>
+        <span>Team Leadership</span><span class="ticker-dot">·</span>
+        <span>Product Strategy</span><span class="ticker-dot">·</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       ABOUT SECTION
+  ============================================================ -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="section-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">01 / About</span>
+      </div>
+
+      <div id="about-grid">
+        <div id="about-text">
+          <h2 id="about-heading" class="section-heading reveal-heading">
+            Building at the<br />
+            intersection of<br />
+            <em class="text-accent not-italic">precision</em> &amp; intelligence.
+          </h2>
+
+          <div id="about-body" class="about-body">
+            <p class="reveal-text">
+              I'm a quantitative developer and AI engineer with a deep focus on
+              financial systems, algorithmic research, and intelligent automation.
+              I work at the boundary where rigorous mathematics meets production
+              engineering.
+            </p>
+            <p class="reveal-text">
+              My work spans developing trading infrastructure, leading research
+              initiatives in quantitative finance, and applying machine learning
+              to complex, high-dimensional financial datasets.
+            </p>
+          </div>
+
+          <div id="about-stats">
+            <div class="stat reveal-stat">
+              <span class="stat-value font-mono">3+</span>
+              <span class="stat-label font-mono text-label text-muted">Years Research</span>
+            </div>
+            <div class="stat reveal-stat">
+              <span class="stat-value font-mono">15+</span>
+              <span class="stat-label font-mono text-label text-muted">Projects Built</span>
+            </div>
+            <div class="stat reveal-stat">
+              <span class="stat-value font-mono">₹2Cr+</span>
+              <span class="stat-label font-mono text-label text-muted">Capital Analyzed</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="about-visual" aria-hidden="true">
+          <div id="about-svg-wrap"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXPERIENCE SECTION
+  ============================================================ -->
+  <section id="experience" aria-labelledby="experience-heading">
+    <div class="section-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">02 / Experience</span>
+      </div>
+
+      <h2 id="experience-heading" class="section-heading reveal-heading">
+        Where I've<br />worked &amp; led.
+      </h2>
+
+      <div id="experience-list" role="list">
+
+        <!-- Moon Finance -->
+        <article class="exp-item reveal-exp" role="listitem">
+          <div class="exp-index font-mono text-label text-muted">01</div>
+          <div class="exp-body">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Research Analyst Intern</h3>
+                <p class="exp-company">Moon Finance</p>
+              </div>
+              <div class="exp-meta">
+                <span class="font-mono text-label text-muted">2024</span>
+                <span class="exp-tag">Finance · Research</span>
+              </div>
+            </div>
+            <p class="exp-description">
+              Conducted quantitative research on alternative data sets and developed
+              signal generation frameworks for systematic trading strategies. Analyzed
+              market microstructure and built backtesting pipelines across Indian equity markets.
+            </p>
+            <ul class="exp-highlights" aria-label="Key contributions">
+              <li><span class="font-mono text-accent text-label">→</span> Built Python-based backtesting engine with
+                vectorized operations</li>
+              <li><span class="font-mono text-accent text-label">→</span> Researched alpha factors across 500+ NSE
+                equities</li>
+              <li><span class="font-mono text-accent text-label">→</span> Delivered weekly quantitative research reports
+              </li>
+            </ul>
+          </div>
+          <div class="exp-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- E-Cell Chairperson -->
+        <article class="exp-item reveal-exp" role="listitem">
+          <div class="exp-index font-mono text-label text-muted">02</div>
+          <div class="exp-body">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Chairperson</h3>
+                <p class="exp-company">Entrepreneurship Cell — VIT</p>
+              </div>
+              <div class="exp-meta">
+                <span class="font-mono text-label text-muted">2023–2024</span>
+                <span class="exp-tag">Leadership · Strategy</span>
+              </div>
+            </div>
+            <p class="exp-description">
+              Led a 200+ member organization driving entrepreneurship culture at VIT.
+              Oversaw strategy, partnerships, event execution, and community growth
+              for one of the largest E-Cells in South India.
+            </p>
+            <ul class="exp-highlights" aria-label="Key contributions">
+              <li><span class="font-mono text-accent text-label">→</span> Managed ₹25L+ annual budget across events</li>
+              <li><span class="font-mono text-accent text-label">→</span> Organized Entrepreneurship Summit with 2000+
+                attendees</li>
+              <li><span class="font-mono text-accent text-label">→</span> Grew member base by 40% year-over-year</li>
+            </ul>
+          </div>
+          <div class="exp-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- Digital Marketing -->
+        <article class="exp-item reveal-exp" role="listitem">
+          <div class="exp-index font-mono text-label text-muted">03</div>
+          <div class="exp-body">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Digital Marketing Specialist</h3>
+                <p class="exp-company">Entrepreneurship Cell — VIT</p>
+              </div>
+              <div class="exp-meta">
+                <span class="font-mono text-label text-muted">2022–2023</span>
+                <span class="exp-tag">Marketing · Growth</span>
+              </div>
+            </div>
+            <p class="exp-description">
+              Designed and executed digital growth strategy across social media channels.
+              Built content calendars, led creative campaigns, and drove measurable
+              growth in community engagement and event registrations.
+            </p>
+            <ul class="exp-highlights" aria-label="Key contributions">
+              <li><span class="font-mono text-accent text-label">→</span> 3× increase in social media reach within 6
+                months</li>
+              <li><span class="font-mono text-accent text-label">→</span> Managed multi-platform campaigns for 10+
+                events</li>
+              <li><span class="font-mono text-accent text-label">→</span> Introduced data-driven content optimization
+              </li>
+            </ul>
+          </div>
+          <div class="exp-line" aria-hidden="true"></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROJECTS SECTION
+  ============================================================ -->
+  <section id="projects" aria-labelledby="projects-heading">
+    <div class="section-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">03 / Projects</span>
+      </div>
+
+      <h2 id="projects-heading" class="section-heading reveal-heading">
+        Selected<br />work.
+      </h2>
+
+      <div id="projects-list" role="list">
+
+        <!-- Project 1 -->
+        <article class="project-card reveal-project" role="listitem" id="proj-trading" tabindex="0">
+          <div class="proj-number font-mono text-label text-border">001</div>
+          <div class="proj-body">
+            <div class="proj-header">
+              <h3 class="proj-title">Quantitative Trading Platform</h3>
+              <div class="proj-tags">
+                <span class="proj-tag">Python</span>
+                <span class="proj-tag">NumPy</span>
+                <span class="proj-tag">Finance</span>
+              </div>
+            </div>
+            <p class="proj-description">
+              Full-stack algorithmic trading infrastructure for Indian equity markets.
+              Features real-time signal generation, vectorized backtesting engine,
+              risk management layer, and live execution via broker APIs.
+            </p>
+            <div class="proj-footer">
+              <span class="proj-metric font-mono">
+                <span class="text-accent">↑</span> 18% Annualized Alpha
+              </span>
+              <span class="proj-metric font-mono">
+                <span class="text-accent">◆</span> 500+ instruments
+              </span>
+            </div>
+          </div>
+          <div class="proj-visual" aria-hidden="true">
+            <canvas class="proj-canvas" id="proj-canvas-1" width="300" height="180"></canvas>
+          </div>
+          <div class="proj-hover-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal-project" role="listitem" id="proj-fintech" tabindex="0">
+          <div class="proj-number font-mono text-label text-border">002</div>
+          <div class="proj-body">
+            <div class="proj-header">
+              <h3 class="proj-title">FinTech Innovation Challenge</h3>
+              <div class="proj-tags">
+                <span class="proj-tag">FinTech</span>
+                <span class="proj-tag">ML</span>
+                <span class="proj-tag">Product</span>
+              </div>
+            </div>
+            <p class="proj-description">
+              Designed and built a credit risk assessment system leveraging alternative
+              data signals and gradient boosting models to underwrite thin-file borrowers
+              in emerging markets. Presented at national FinTech competition.
+            </p>
+            <div class="proj-footer">
+              <span class="proj-metric font-mono">
+                <span class="text-accent">↑</span> 94% AUC-ROC Score
+              </span>
+              <span class="proj-metric font-mono">
+                <span class="text-accent">◆</span> National finalist
+              </span>
+            </div>
+          </div>
+          <div class="proj-visual" aria-hidden="true">
+            <canvas class="proj-canvas" id="proj-canvas-2" width="300" height="180"></canvas>
+          </div>
+          <div class="proj-hover-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card reveal-project" role="listitem" id="proj-summit" tabindex="0">
+          <div class="proj-number font-mono text-label text-border">003</div>
+          <div class="proj-body">
+            <div class="proj-header">
+              <h3 class="proj-title">Entrepreneurship Summit Platform</h3>
+              <div class="proj-tags">
+                <span class="proj-tag">Full-Stack</span>
+                <span class="proj-tag">Node.js</span>
+                <span class="proj-tag">Operations</span>
+              </div>
+            </div>
+            <p class="proj-description">
+              End-to-end event management system for VIT's annual Entrepreneurship Summit.
+              Handles registrations, speaker scheduling, QR-based check-in, live analytics
+              dashboard, and real-time capacity management.
+            </p>
+            <div class="proj-footer">
+              <span class="proj-metric font-mono">
+                <span class="text-accent">↑</span> 2000+ attendees managed
+              </span>
+              <span class="proj-metric font-mono">
+                <span class="text-accent">◆</span> Zero downtime
+              </span>
+            </div>
+          </div>
+          <div class="proj-visual" aria-hidden="true">
+            <canvas class="proj-canvas" id="proj-canvas-3" width="300" height="180"></canvas>
+          </div>
+          <div class="proj-hover-line" aria-hidden="true"></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SKILLS SECTION
+  ============================================================ -->
+  <section id="skills" aria-labelledby="skills-heading">
+    <div class="section-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">04 / Skills</span>
+      </div>
+
+      <h2 id="skills-heading" class="section-heading reveal-heading">
+        Capabilities.
+      </h2>
+
+      <div id="skills-layout">
+        <!-- Node canvas -->
+        <div id="skills-canvas-wrap" aria-label="Interactive skills visualization">
+          <canvas id="skills-canvas" aria-hidden="true"></canvas>
+        </div>
+
+        <!-- Skills legend -->
+        <div id="skills-legend" role="list" aria-label="Skills by category">
+
+          <div class="skill-group reveal-skill-group" role="listitem">
+            <div class="skill-group-header">
+              <span class="skill-group-dot" style="background: #c8ff00;" aria-hidden="true"></span>
+              <span class="font-mono text-label text-muted tracking-widest uppercase">Technical</span>
+            </div>
+            <ul class="skill-list">
+              <li>Python · NumPy · Pandas</li>
+              <li>JavaScript / TypeScript</li>
+              <li>SQL · MongoDB</li>
+              <li>Git · Docker</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal-skill-group" role="listitem">
+            <div class="skill-group-header">
+              <span class="skill-group-dot" style="background: #60a5fa;" aria-hidden="true"></span>
+              <span class="font-mono text-label text-muted tracking-widest uppercase">Analytics</span>
+            </div>
+            <ul class="skill-list">
+              <li>Quantitative Research</li>
+              <li>Financial Modeling</li>
+              <li>Statistical Analysis</li>
+              <li>Backtesting Systems</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal-skill-group" role="listitem">
+            <div class="skill-group-header">
+              <span class="skill-group-dot" style="background: #f472b6;" aria-hidden="true"></span>
+              <span class="font-mono text-label text-muted tracking-widest uppercase">AI / ML</span>
+            </div>
+            <ul class="skill-list">
+              <li>Machine Learning</li>
+              <li>Gradient Boosting (XGBoost)</li>
+              <li>Time-Series Forecasting</li>
+              <li>NLP · LLM Integration</li>
+            </ul>
+          </div>
+
+          <div class="skill-group reveal-skill-group" role="listitem">
+            <div class="skill-group-header">
+              <span class="skill-group-dot" style="background: #fb923c;" aria-hidden="true"></span>
+              <span class="font-mono text-label text-muted tracking-widest uppercase">Management</span>
+            </div>
+            <ul class="skill-list">
+              <li>Team Leadership</li>
+              <li>Strategic Planning</li>
+              <li>Event Operations</li>
+              <li>Community Building</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACT SECTION
+  ============================================================ -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <!-- Three.js 3D Canvas -->
+    <div id="contact-3d-wrap" aria-hidden="true"></div>
+
+    <div class="section-inner contact-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">05 / Contact</span>
+      </div>
+
+      <div id="contact-body">
+        <h2 id="contact-heading" class="section-heading contact-heading reveal-heading">
+          Let's build<br />
+          something<br />
+          <em class="text-accent not-italic">precise.</em>
+        </h2>
+
+        <div id="contact-links" class="reveal-text">
+          <a href="mailto:dhoot.bhavya1@gmail.com" id="contact-email" class="contact-cta magnetic"
+            aria-label="Send email to Bhavya Dhoot">
+            <span class="contact-cta-text">dhoot.bhavya1@gmail.com</span>
+            <span class="contact-cta-arrow" aria-hidden="true">↗</span>
+          </a>
+
+          <div id="contact-social">
+            <a href="https://www.linkedin.com/in/bhavya-dhoot/" class="social-link magnetic" target="_blank"
+              rel="noopener noreferrer" aria-label="LinkedIn profile">
+              <span class="font-mono text-label">LinkedIn</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <a href="https://github.com/Bhavya-Dhoot" class="social-link magnetic" target="_blank"
+              rel="noopener noreferrer" aria-label="GitHub profile">
+              <span class="font-mono text-label">GitHub</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer id="footer" role="contentinfo">
+    <div id="footer-inner">
+      <div class="footer-col">
+        <span class="font-mono text-label text-muted">© 2025 Bhavya Dhoot</span>
+      </div>
+      <div class="footer-col footer-center">
+        <span class="font-mono text-label text-muted">Designed &amp; built with precision</span>
+      </div>
+      <div class="footer-col footer-right">
+        <a href="#hero" class="footer-top magnetic font-mono text-label" aria-label="Back to top">
+          Back to top ↑
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
