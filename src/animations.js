@@ -154,6 +154,62 @@ export function initAnimations(lenis) {
             }
         );
     });
+
+    // ── KPI Cards ──────────────────────────────────────────────────
+    gsap.utils.toArray('.reveal-kpi').forEach((el, i) => {
+        gsap.fromTo(el,
+            { opacity: 0, y: 30, scale: 0.96 },
+            {
+                opacity: 1, y: 0, scale: 1,
+                duration: 0.9,
+                delay: i * 0.08,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none',
+                },
+            }
+        );
+    });
+
+    // ── Thesis Cards ───────────────────────────────────────────────
+    gsap.utils.toArray('.reveal-thesis').forEach((el, i) => {
+        gsap.fromTo(el,
+            { opacity: 0, y: 25 },
+            {
+                opacity: 1, y: 0,
+                duration: 0.9,
+                delay: i * 0.12,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none',
+                },
+            }
+        );
+    });
+
+    // ── Case Study Blocks ──────────────────────────────────────────
+    gsap.utils.toArray('.case-study-frame').forEach(frame => {
+        const blocks = frame.querySelectorAll('.cs-block');
+        if (!blocks.length) return;
+        gsap.fromTo(blocks,
+            { opacity: 0, y: 18 },
+            {
+                opacity: 1, y: 0,
+                duration: 0.7,
+                stagger: 0.1,
+                ease: 'expo.out',
+                scrollTrigger: {
+                    trigger: frame,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none',
+                },
+            }
+        );
+    });
 }
 
 /**

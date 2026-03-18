@@ -1302,3 +1302,292 @@ section {
     opacity: 0.35;
   }
 }
+
+/* ================================================================
+   INVESTMENT INTELLIGENCE — NEW SECTIONS
+================================================================ */
+
+/* ── Pipeline Section ─────────────────────────────────────────── */
+#pipeline {
+  position: relative;
+  height: 400vh;
+  background: #070707;
+}
+
+#pipeline-sticky {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  overflow: hidden;
+}
+
+#pipeline-3d-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pipeline-3d-wrap canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#pipeline-phases {
+  position: relative;
+  z-index: 1;
+  grid-column: 2;
+  padding: clamp(2rem, 5vw, 5rem);
+}
+
+.pipeline-phase {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-expo), transform 0.5s var(--ease-expo);
+  position: absolute;
+  top: 50%;
+  transform: translateY(20px);
+  max-width: 420px;
+}
+
+.pipeline-phase.active {
+  opacity: 1;
+  transform: translateY(-50%);
+}
+
+.phase-index {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 0.6875rem;
+}
+
+.phase-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 0.75rem;
+  line-height: 1.2;
+}
+
+.phase-desc {
+  font-size: 0.75rem;
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+  max-width: 380px;
+}
+
+.phase-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+
+.phase-metric-val {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.phase-metric-label {
+  font-size: 0.6875rem;
+}
+
+/* Pipeline progress dots */
+#pipeline-progress {
+  position: absolute;
+  right: clamp(1.5rem, 3vw, 3rem);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.pipeline-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.pipeline-dot.active {
+  background: var(--accent);
+  transform: scale(1.5);
+}
+
+/* ── KPI Dashboard ────────────────────────────────────────────── */
+#dashboard {
+  background: #070707;
+}
+
+#kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  margin-bottom: clamp(3rem, 5vw, 5rem);
+}
+
+.kpi-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  background: rgba(10, 10, 10, 0.6);
+  transition: transform 0.3s var(--ease-expo), border-color 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(200, 255, 0, 0.2);
+  box-shadow: 0 4px 24px rgba(200, 255, 0, 0.04);
+}
+
+.kpi-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.kpi-value {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.kpi-context {
+  font-size: 0.625rem;
+  line-height: 1.5;
+}
+
+/* ── Charts ───────────────────────────────────────────────────── */
+#dashboard-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.chart-container {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem;
+  background: rgba(10, 10, 10, 0.6);
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 0.625rem;
+}
+
+.chart-container canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Market Thesis ────────────────────────────────────────────── */
+#thesis {
+  background: var(--ink);
+}
+
+#thesis-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.thesis-card {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  transition: border-color 0.3s;
+}
+
+.thesis-card:hover {
+  border-color: rgba(200, 255, 0, 0.2);
+}
+
+.thesis-index {
+  display: block;
+  font-size: 0.6875rem;
+  margin-bottom: 1rem;
+}
+
+.thesis-title {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 500;
+  color: var(--paper);
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.thesis-body {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── Case Study Frame ─────────────────────────────────────────── */
+.case-study-frame {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.cs-block {
+  border-left: 1px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+.cs-label {
+  display: block;
+  font-size: 0.5625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.cs-block p {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ── Responsive: New Sections ─────────────────────────────────── */
+@media (max-width: 900px) {
+  #pipeline-sticky { grid-template-columns: 1fr; }
+  #pipeline-phases { padding: clamp(1.5rem, 4vw, 3rem); }
+  .pipeline-phase { position: relative; top: auto; transform: none; max-width: 100%; }
+  .pipeline-phase.active { transform: none; }
+  #pipeline-3d-wrap { opacity: 0.2; }
+  #kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  #dashboard-charts { grid-template-columns: 1fr; }
+  #thesis-grid { grid-template-columns: 1fr; }
+  .case-study-frame { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 600px) {
+  #kpi-grid { grid-template-columns: 1fr; }
+  #pipeline { height: 200vh; }
+}

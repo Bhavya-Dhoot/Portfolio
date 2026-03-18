@@ -1,16 +1,18 @@
 /**
  * main.js — Entry point
- * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, skills canvas, projects
+ * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, skills, projects, pipeline, dashboard, contact-3d
  */
 
 import Lenis from 'lenis';
-import { initCursor } from './cursor.js';
-import { initNav } from './components/nav.js';
+import { initCursor }     from './cursor.js';
+import { initNav }        from './components/nav.js';
 import { initAnimations, initHeroAnimation } from './animations.js';
-import { initGrid, initAboutSVG } from './svg/grid.js';
-import { initSkills } from './components/skills.js';
-import { initProjects } from './components/projects.js';
-import { initContact3D } from './components/contact-3d.js';
+import { initGrid, initAboutSVG }            from './svg/grid.js';
+import { initSkills }     from './components/skills.js';
+import { initProjects }   from './components/projects.js';
+import { initContact3D }  from './components/contact-3d.js';
+import { initPipeline }   from './components/pipeline-3d.js';
+import { initDashboard }  from './components/dashboard.js';
 
 // ── 1. Smooth Scroll (Lenis) ────────────────────────────────────
 const lenis = new Lenis({
@@ -46,10 +48,16 @@ initSkills();
 // ── 9. Project Canvases ─────────────────────────────────────────
 initProjects();
 
-// ── 10. Contact 3D Scene ─────────────────────────────────────────
+// ── 10. Pipeline 3D (scroll-driven) ─────────────────────────────
+initPipeline();
+
+// ── 11. KPI Dashboard ───────────────────────────────────────────
+initDashboard();
+
+// ── 12. Contact 3D Scene ────────────────────────────────────────
 initContact3D();
 
-// ── 11. Section label observer ──────────────────────────────────
+// ── 13. Section label observer ──────────────────────────────────
 const labelObserver = new IntersectionObserver(
     (entries) => {
         entries.forEach(e => {
@@ -60,7 +68,7 @@ const labelObserver = new IntersectionObserver(
 );
 document.querySelectorAll('.section-label').forEach(el => labelObserver.observe(el));
 
-// ── 12. Scroll progress bar ─────────────────────────────────────
+// ── 14. Scroll progress bar ─────────────────────────────────────
 const progressBar = document.getElementById('scroll-progress');
 if (progressBar) {
     window.addEventListener('scroll', () => {
@@ -70,11 +78,11 @@ if (progressBar) {
     }, { passive: true });
 }
 
-// ── 13. Availability badge reveal ───────────────────────────────
+// ── 15. Availability badge reveal ───────────────────────────────
 const badge = document.getElementById('availability-badge');
 if (badge) setTimeout(() => badge.classList.add('visible'), 1800);
 
-// ── 14. Hero CTAs entrance ──────────────────────────────────────
+// ── 16. Hero CTAs entrance ──────────────────────────────────────
 const ctaWrap = document.getElementById('hero-ctas');
 if (ctaWrap) {
     setTimeout(() => {
@@ -84,7 +92,7 @@ if (ctaWrap) {
     }, 50);
 }
 
-// ── 15. Section in-view class (for CSS decorations) ─────────────
+// ── 17. Section in-view class ───────────────────────────────────
 const sectionObserver = new IntersectionObserver(
     (entries) => entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('in-view-section');
@@ -93,7 +101,7 @@ const sectionObserver = new IntersectionObserver(
 );
 document.querySelectorAll('section').forEach(s => sectionObserver.observe(s));
 
-// ── 16. Exp items: slide-in left bar ────────────────────────────
+// ── 18. Exp items: slide-in left bar ────────────────────────────
 const expObserver = new IntersectionObserver(
     (entries) => entries.forEach(e => {
         if (e.isIntersecting) e.target.classList.add('in-view');
@@ -101,6 +109,8 @@ const expObserver = new IntersectionObserver(
     { threshold: 0.2 }
 );
 document.querySelectorAll('.exp-item').forEach(el => expObserver.observe(el));
+
+// ── 19. Scroll-to-section links ─────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
         const id = link.getAttribute('href').slice(1);
@@ -112,20 +122,19 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     });
 });
 
-// ── 12. Reduced motion fallback ─────────────────────────────────
+// ── 20. Reduced motion fallback ─────────────────────────────────
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (prefersReduced) {
     document.documentElement.style.setProperty('--ease-expo', 'linear');
-    // Reveal everything immediately
     document.querySelectorAll(
-        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue'
+        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue, .pipeline-phase'
     ).forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
     });
 }
 
-// ── 13. Page visibility — pause Lenis when hidden ───────────────
+// ── 21. Page visibility — pause Lenis when hidden ───────────────
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) lenis.stop();
     else lenis.start();
