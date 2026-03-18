@@ -1310,8 +1310,10 @@ section {
 /* ── Pipeline Section ─────────────────────────────────────────── */
 #pipeline {
   position: relative;
-  height: 400vh;
+  height: 250vh;
   background: #070707;
+  margin: 0;
+  padding: 0;
 }
 
 #pipeline-sticky {
@@ -1591,5 +1593,5 @@ section {
 
 @media (max-width: 600px) {
   #kpi-grid { grid-template-columns: 1fr; }
-  #pipeline { height: 200vh; }
+  #pipeline { height: 150vh; }
 }
