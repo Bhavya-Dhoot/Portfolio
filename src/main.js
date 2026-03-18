@@ -11,7 +11,7 @@ import { initGrid, initAboutSVG }            from './svg/grid.js';
 import { initSkills }     from './components/skills.js';
 import { initProjects }   from './components/projects.js';
 import { initContact3D }  from './components/contact-3d.js';
-import { initPipeline }   from './components/pipeline-3d.js';
+
 import { initDashboard }  from './components/dashboard.js';
 
 // ── 1. Smooth Scroll (Lenis) ────────────────────────────────────
@@ -48,8 +48,6 @@ initSkills();
 // ── 9. Project Canvases ─────────────────────────────────────────
 initProjects();
 
-// ── 10. Pipeline 3D (scroll-driven) ─────────────────────────────
-initPipeline();
 
 // ── 11. KPI Dashboard ───────────────────────────────────────────
 initDashboard();
