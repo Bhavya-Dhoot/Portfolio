@@ -29,3 +29,7 @@ npm-debug.log*
 # Cache
 .cache/
 .vite/
+
+# Local-only: resume source (contains personal contact details) + agent tooling
+main.md
+.claude/

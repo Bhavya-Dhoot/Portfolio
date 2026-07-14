@@ -11,11 +11,12 @@ export function initSkills() {
     let animFrame = null;
     let mouse = { x: -999, y: -999 };
 
+    // Monochrome + single accent: nodes are paper, hover ignites lime.
     const CATEGORIES = [
-        { name: 'Technical', color: '#c8ff00', skills: ['Python', 'TypeScript', 'SQL', 'Docker', 'Git', 'NumPy'] },
-        { name: 'Analytics', color: '#60a5fa', skills: ['Quant Research', 'Backtesting', 'Statistics', 'Modeling'] },
-        { name: 'AI / ML', color: '#f472b6', skills: ['XGBoost', 'Time-Series', 'NLP', 'LLMs', 'Scikit-learn'] },
-        { name: 'Mgmt', color: '#fb923c', skills: ['Leadership', 'Strategy', 'Operations', 'Community'] },
+        { name: 'Languages', color: '#c8ff00', skills: ['Python', 'Rust', 'TypeScript', 'SQL', 'Polars', 'NumPy'] },
+        { name: 'Quant', color: '#c8ff00', skills: ['Options Pricing', 'Momentum', 'Backtesting', 'GARCH / HMM', 'Monte Carlo'] },
+        { name: 'AI / ML', color: '#c8ff00', skills: ['LLMs', 'RAG', 'Multi-Agent', 'PyTorch', 'LightGBM', 'RL / PPO'] },
+        { name: 'Infra', color: '#c8ff00', skills: ['FastAPI', 'Docker', 'TimescaleDB', 'Redis', 'Airflow', 'Cloud Run'] },
     ];
 
     const CONNECT_DIST = 120;
@@ -50,7 +51,7 @@ export function initSkills() {
                     vx: (Math.random() - 0.5) * 0.3,
                     vy: (Math.random() - 0.5) * 0.3,
                     phase: Math.random() * Math.PI * 2,
-                    r: 26 + skill.length * 1.2,
+                    r: 26 + skill.length * 1.6,
                     catIdx: ci,
                 });
             });
@@ -88,12 +89,11 @@ export function initSkills() {
                 const dx = b.x - a.x, dy = b.y - a.y;
                 const d = Math.sqrt(dx * dx + dy * dy);
                 if (d < CONNECT_DIST) {
-                    const opacity = (1 - d / CONNECT_DIST) * 0.25;
+                    const opacity = (1 - d / CONNECT_DIST) * 0.16;
                     ctx.beginPath();
                     ctx.moveTo(a.x, a.y);
                     ctx.lineTo(b.x, b.y);
-                    ctx.strokeStyle = a.color.replace(')', `, ${opacity})`).replace('rgb', 'rgba').replace('#', 'rgba(').replace(/^rgba\(([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/, (m, r, g, b) =>
-                        `rgba(${parseInt(r, 16)}, ${parseInt(g, 16)}, ${parseInt(b, 16)}`);
+                    ctx.strokeStyle = hexToRgba(a.color, opacity);
                     ctx.lineWidth = 0.8;
                     ctx.stroke();
                 }
@@ -115,7 +115,7 @@ export function initSkills() {
                 ? hexToRgba(n.color, 0.18)
                 : 'rgba(20, 20, 20, 0.85)';
             ctx.fill();
-            ctx.strokeStyle = hover ? hexToRgba(n.color, 0.7) : hexToRgba(n.color, 0.3);
+            ctx.strokeStyle = hover ? hexToRgba(n.color, 0.7) : 'rgba(240, 237, 232, 0.18)';
             ctx.lineWidth = hover ? 1.2 : 0.6;
             ctx.stroke();
             ctx.restore();

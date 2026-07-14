@@ -6,14 +6,14 @@ export default {
             colors: {
                 ink: '#0a0a0a',
                 paper: '#f0ede8',
-                muted: '#6b6b6b',
+                muted: '#8a8a8a',
                 accent: '#c8ff00',
                 'accent-dim': '#a8d900',
                 surface: '#141414',
                 border: '#1e1e1e',
             },
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
+                sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
                 mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
             },
             fontSize: {

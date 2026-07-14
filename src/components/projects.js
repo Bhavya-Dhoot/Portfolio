@@ -1,11 +1,14 @@
 /**
- * Project cards — Canvas mini-visualizations per project
+ * Project cards — Canvas mini-visualizations per case study
+ * 1: Kronos MVE (candlesticks) · 2: Momentum (equity curve)
+ * 3: Options Pricer (IV smile) · 4: THF Ops Suite (pipeline bars)
  */
 
 export function initProjects() {
-    initProjectCanvas(1, drawTradingViz);
-    initProjectCanvas(2, drawFintechViz);
-    initProjectCanvas(3, drawSummitViz);
+    initProjectCanvas(1, drawMarketViz);
+    initProjectCanvas(2, drawEquityViz);
+    initProjectCanvas(3, drawSmileViz);
+    initProjectCanvas(4, drawOpsViz);
 }
 
 function initProjectCanvas(n, drawFn) {
@@ -13,11 +16,12 @@ function initProjectCanvas(n, drawFn) {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // Resize canvas to actual display size
+    // Resize canvas to actual display size.
+    // offsetWidth/Height ignore the .proj-visual pre-reveal scale(0.95)
+    // transform; getBoundingClientRect() would bake that 5% into the buffer.
     function resize() {
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width * window.devicePixelRatio;
-        canvas.height = rect.height * window.devicePixelRatio;
+        canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+        canvas.height = canvas.offsetHeight * window.devicePixelRatio;
         ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     }
     resize();
@@ -50,8 +54,17 @@ function initProjectCanvas(n, drawFn) {
     }
 }
 
-// ── Trading platform: candlestick-style chart ───────────────────
-function drawTradingViz(ctx, w, h, t) {
+function drawGrid(ctx, w, h) {
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= 4; i++) {
+        const y = 8 + (h - 16) * (i / 4);
+        ctx.beginPath(); ctx.moveTo(8, y); ctx.lineTo(w - 8, y); ctx.stroke();
+    }
+}
+
+// ── 1. Kronos MVE: candlestick chart ────────────────────────────
+function drawMarketViz(ctx, w, h, t) {
     const bars = 24;
     const barW = (w - 16) / bars;
     const data = [];
@@ -68,13 +81,7 @@ function drawTradingViz(ctx, w, h, t) {
         data.push({ open, close: Math.max(0.05, Math.min(0.95, close)), high, low });
     }
 
-    // Draw grid lines
-    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-    ctx.lineWidth = 0.5;
-    for (let i = 0; i <= 4; i++) {
-        const y = 8 + (h - 16) * (i / 4);
-        ctx.beginPath(); ctx.moveTo(8, y); ctx.lineTo(w - 8, y); ctx.stroke();
-    }
+    drawGrid(ctx, w, h);
 
     // Draw candles
     data.forEach((d, i) => {
@@ -100,66 +107,89 @@ function drawTradingViz(ctx, w, h, t) {
     });
 }
 
-// ── FinTech: ROC curve / metric bars ────────────────────────────
-function drawFintechViz(ctx, w, h, t) {
-    // Background grid
+// ── 2. Momentum: equity curve with drawdown dip ─────────────────
+function drawEquityViz(ctx, w, h, t) {
+    drawGrid(ctx, w, h);
+
+    const steps = 48;
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+        const p = i / steps;
+        let v = p * 0.72 + Math.sin(p * 9 + t) * 0.025 + Math.sin(p * 23) * 0.02 + 0.08;
+        // Single drawdown episode mid-curve
+        if (p > 0.55 && p < 0.68) v -= 0.07 * Math.sin(((p - 0.55) / 0.13) * Math.PI);
+        const x = 8 + p * (w - 16);
+        const y = h - 10 - v * (h - 24);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#c8ff00';
+    ctx.lineWidth = 1.5;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+
+    // Label
+    ctx.fillStyle = 'rgba(200,255,0,0.85)';
+    ctx.font = '500 10px "JetBrains Mono", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText('SHARPE 1.44', 12, 20);
+}
+
+// ── 3. Options Pricer: IV smile ─────────────────────────────────
+function drawSmileViz(ctx, w, h, t) {
+    // Vertical strike grid
     ctx.strokeStyle = 'rgba(255,255,255,0.04)';
     ctx.lineWidth = 0.5;
     for (let i = 0; i <= 4; i++) {
-        const v = 8 + (i / 4) * (w - 16);
-        ctx.beginPath(); ctx.moveTo(v, 8); ctx.lineTo(v, h - 8); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(8, v * (h / w)); ctx.lineTo(w - 8, v * (h / w)); ctx.stroke();
+        const x = 8 + (i / 4) * (w - 16);
+        ctx.beginPath(); ctx.moveTo(x, 8); ctx.lineTo(x, h - 8); ctx.stroke();
     }
 
-    // Diagonal reference line
+    // ATM marker (dashed vertical)
+    const atmX = 8 + 0.55 * (w - 16);
     ctx.beginPath();
-    ctx.moveTo(8, h - 8); ctx.lineTo(w - 8, 8);
-    ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-    ctx.lineWidth = 0.75;
+    ctx.moveTo(atmX, 8); ctx.lineTo(atmX, h - 8);
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
     ctx.setLineDash([3, 4]);
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // ROC curve (animated)
+    // Smile curve (skewed parabola in strike space)
     ctx.beginPath();
     const steps = 40;
     for (let i = 0; i <= steps; i++) {
-        const fpr = i / steps;
-        // Realistic ROC curve shape
-        const tpr = Math.min(1, Math.pow(fpr, 0.25) + 0.05 * Math.sin(i * 0.4 + t));
-        const x = 8 + fpr * (w - 16);
-        const y = h - 8 - tpr * (h - 16);
+        const p = i / steps;
+        const iv = 0.28 + 1.5 * Math.pow(p - 0.55, 2) + 0.02 * Math.sin(t + p * 6);
+        const x = 8 + p * (w - 16);
+        const y = h - 10 - iv * (h - 24);
         i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     }
-    const grad = ctx.createLinearGradient(8, h - 8, w - 8, 8);
-    grad.addColorStop(0, 'rgba(96,165,250,0.9)');
-    grad.addColorStop(1, 'rgba(244,114,182,0.9)');
-    ctx.strokeStyle = grad;
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#c8ff00';
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // AUC label
+    // Label
     ctx.fillStyle = 'rgba(200,255,0,0.85)';
     ctx.font = '500 10px "JetBrains Mono", monospace';
-    ctx.fillText('AUC: 0.94', w - 60, 20);
+    ctx.textAlign = 'left';
+    ctx.fillText('IV / STRIKE', 12, 20);
 }
 
-// ── Summit: event timeline / attendance bars ─────────────────────
-function drawSummitViz(ctx, w, h, t) {
-    const events = [
-        { label: 'Reg', val: 0.72, color: '#c8ff00' },
-        { label: 'Day 1', val: 0.88, color: '#60a5fa' },
-        { label: 'Key', val: 1.00, color: '#f472b6' },
-        { label: 'Work', val: 0.61, color: '#fb923c' },
-        { label: 'Day 2', val: 0.79, color: '#60a5fa' },
-        { label: 'Close', val: 0.95, color: '#c8ff00' },
+// ── 4. THF Ops Suite: per-system pipeline bars ──────────────────
+function drawOpsViz(ctx, w, h, t) {
+    const systems = [
+        { label: 'S1', val: 0.92, color: '#c8ff00' },
+        { label: 'S2', val: 0.74, color: '#c8ff00' },
+        { label: 'S3', val: 0.85, color: '#c8ff00' },
+        { label: 'S4', val: 0.66, color: '#c8ff00' },
+        { label: 'S5', val: 0.98, color: '#c8ff00' },
+        { label: 'S6', val: 0.58, color: '#c8ff00' },
     ];
 
-    const barW = (w - 24) / events.length;
+    const barW = (w - 24) / systems.length;
     const maxH = h - 32;
 
-    events.forEach((ev, i) => {
-        const animH = ev.val * maxH * Math.min(1, (Math.sin(t * 1.5 - i * 0.2) * 0.04 + 0.96) * 1);
+    systems.forEach((s, i) => {
+        const animH = s.val * maxH * (Math.sin(t * 1.5 - i * 0.2) * 0.04 + 0.96);
         const x = 12 + i * barW + barW * 0.15;
         const bw = barW * 0.7;
         const y = h - 20 - animH;
@@ -170,8 +200,8 @@ function drawSummitViz(ctx, w, h, t) {
 
         // Filled bar
         const grad = ctx.createLinearGradient(0, y, 0, h - 20);
-        grad.addColorStop(0, ev.color + 'cc');
-        grad.addColorStop(1, ev.color + '22');
+        grad.addColorStop(0, s.color + 'cc');
+        grad.addColorStop(1, s.color + '22');
         ctx.fillStyle = grad;
         ctx.fillRect(x, y, bw, animH);
 
@@ -179,6 +209,6 @@ function drawSummitViz(ctx, w, h, t) {
         ctx.fillStyle = 'rgba(240,237,232,0.4)';
         ctx.font = '9px "JetBrains Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillText(ev.label, x + bw / 2, h - 6);
+        ctx.fillText(s.label, x + bw / 2, h - 6);
     });
 }

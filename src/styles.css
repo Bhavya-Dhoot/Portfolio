@@ -8,7 +8,7 @@
 :root {
   --ink: #0a0a0a;
   --paper: #f0ede8;
-  --muted: #6b6b6b;
+  --muted: #8a8a8a; /* WCAG AA on ink/surface backgrounds */
   --accent: #c8ff00;
   --surface: #141414;
   --border: #1e1e1e;
@@ -40,7 +40,7 @@ html {
 body {
   background-color: var(--ink);
   color: var(--paper);
-  font-family: 'Inter', system-ui, sans-serif;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
   font-weight: 300;
   line-height: 1.6;
   overflow-x: hidden;
@@ -611,9 +611,9 @@ section {
 
 .project-card:hover {
   background: var(--surface);
-  margin: 0 -4rem;
-  padding-left: 4rem;
-  padding-right: 4rem;
+  margin: 0 calc(-1 * clamp(1.5rem, 5vw, 4rem));
+  padding-left: clamp(1.5rem, 5vw, 4rem);
+  padding-right: clamp(1.5rem, 5vw, 4rem);
 }
 
 .proj-number {
@@ -656,7 +656,7 @@ section {
   text-transform: uppercase;
   color: var(--muted);
   border: 1px solid var(--border);
-  padding: 0.2rem 0.5rem;
+  padding: 0.25rem 0.625rem;
   border-radius: 2px;
   transition: border-color 0.25s, color 0.25s;
 }
@@ -703,7 +703,7 @@ section {
 .proj-canvas {
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid var(--border);
 }
 
@@ -756,7 +756,7 @@ section {
 .skill-group {
   padding: 1.5rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   transition: border-color 0.3s, background 0.3s;
 }
 
@@ -770,13 +770,6 @@ section {
   align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
-}
-
-.skill-group-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
 }
 
 .skill-list {
@@ -983,10 +976,10 @@ section {
   }
 
   #about-stats {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 
-  .skills-legend {
+  #skills-legend {
     grid-template-columns: 1fr;
   }
 }
@@ -1093,7 +1086,7 @@ section {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
-  border-radius: 3px;
+  border-radius: 2px;
   transition: background 0.2s, box-shadow 0.2s;
 }
 
@@ -1108,7 +1101,8 @@ section {
   transition: transform 0.3s var(--ease-expo);
 }
 
-.hero-cta-primary:hover .cta-arrow {
+.hero-cta-primary:hover .cta-arrow,
+.hero-cta-secondary:hover .cta-arrow {
   transform: translate(3px, -3px);
 }
 
@@ -1116,14 +1110,14 @@ section {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(240, 237, 232, 0.18);
   color: var(--muted);
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 0.85rem 1.6rem;
-  border-radius: 3px;
+  border-radius: 2px;
   transition: border-color 0.25s, color 0.25s;
 }
 
@@ -1268,7 +1262,7 @@ section {
 /* ── Skills canvas border glow ───────────────────────────────── */
 #skills-canvas-wrap {
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   overflow: hidden;
   background: rgba(10, 10, 10, 0.5);
   transition: border-color 0.4s;
@@ -1372,7 +1366,7 @@ section {
 }
 
 .phase-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 500;
   color: var(--paper);
@@ -1443,7 +1437,7 @@ section {
 
 .kpi-card {
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 1.5rem;
   background: rgba(10, 10, 10, 0.6);
   transition: transform 0.3s var(--ease-expo), border-color 0.3s, box-shadow 0.3s;
@@ -1476,34 +1470,6 @@ section {
   line-height: 1.5;
 }
 
-/* ── Charts ───────────────────────────────────────────────────── */
-#dashboard-charts {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.25rem;
-}
-
-.chart-container {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  padding: 1.25rem;
-  background: rgba(10, 10, 10, 0.6);
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-  font-size: 0.625rem;
-}
-
-.chart-container canvas {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
 /* ── Market Thesis ────────────────────────────────────────────── */
 #thesis {
   background: var(--ink);
@@ -1517,7 +1483,7 @@ section {
 
 .thesis-card {
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 2px;
   padding: clamp(1.5rem, 2.5vw, 2rem);
   transition: border-color 0.3s;
 }
@@ -1533,7 +1499,7 @@ section {
 }
 
 .thesis-title {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 500;
   color: var(--paper);
@@ -1542,7 +1508,7 @@ section {
 }
 
 .thesis-body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.875rem;
   font-weight: 300;
   color: var(--muted);
@@ -1571,7 +1537,7 @@ section {
 }
 
 .cs-block p {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: 0.8125rem;
   font-weight: 300;
   color: var(--muted);
@@ -1586,12 +1552,135 @@ section {
   .pipeline-phase.active { transform: none; }
   #pipeline-3d-wrap { opacity: 0.2; }
   #kpi-grid { grid-template-columns: repeat(2, 1fr); }
-  #dashboard-charts { grid-template-columns: 1fr; }
-  #thesis-grid { grid-template-columns: 1fr; }
+    #thesis-grid { grid-template-columns: 1fr; }
   .case-study-frame { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 600px) {
   #kpi-grid { grid-template-columns: 1fr; }
   #pipeline { height: 150vh; }
+}
+
+/* ================================================================
+   CONTENT REFRESH — mini project grid, links, a11y polish
+================================================================ */
+
+/* ── Keyboard focus visibility ────────────────────────────────── */
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ── Project card GitHub link ─────────────────────────────────── */
+.proj-link {
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(200, 255, 0, 0.25);
+  padding-bottom: 2px;
+  transition: border-color 0.25s;
+}
+
+.proj-link:hover {
+  border-color: var(--accent);
+}
+
+/* ── Mini projects grid ───────────────────────────────────────── */
+#mini-projects {
+  margin-top: clamp(3rem, 6vw, 5rem);
+}
+
+#mini-heading {
+  margin-bottom: 1.5rem;
+}
+
+#mini-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.mini-card {
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.mini-card:hover {
+  border-color: rgba(200, 255, 0, 0.2);
+  background: rgba(200, 255, 0, 0.02);
+}
+
+.mini-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.mini-title {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--paper);
+}
+
+.mini-link {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color 0.25s;
+}
+
+.mini-link:hover {
+  color: var(--accent);
+}
+
+.mini-desc {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.mini-stack {
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 232, 0.45);
+  margin-top: auto;
+}
+
+/* ── Touch feedback (hover states never fire on touch) ────────── */
+@media (hover: none) {
+  .kpi-card:active,
+  .skill-group:active,
+  .thesis-card:active,
+  .mini-card:active {
+    border-color: rgba(200, 255, 0, 0.3);
+  }
+}
+
+/* ── Responsive: mini grid + nav ──────────────────────────────── */
+@media (max-width: 900px) {
+  #mini-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  /* ponytail: nav links hidden on phones; hero CTA + linear flow cover
+     navigation. Add a hamburger if mobile analytics ever demand it. */
+  #nav-links {
+    display: none;
+  }
 }

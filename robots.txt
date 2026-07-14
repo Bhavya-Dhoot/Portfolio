@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://bhavya-dhoot.github.io/Portfolio/sitemap.xml

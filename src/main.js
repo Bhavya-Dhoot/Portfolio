@@ -125,7 +125,7 @@ const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').mat
 if (prefersReduced) {
     document.documentElement.style.setProperty('--ease-expo', 'linear');
     document.querySelectorAll(
-        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue, .pipeline-phase'
+        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue'
     ).forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
