@@ -9,8 +9,8 @@ export function initCursor() {
 
     if (!cursor || !dot || !ring) return;
 
-    // Touch device: disable cursor
-    if ('ontouchstart' in window) {
+    // Touch device or reduced motion: disable cursor (CSS restores the system cursor)
+    if ('ontouchstart' in window || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         cursor.style.display = 'none';
         return;
     }

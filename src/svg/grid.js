@@ -10,8 +10,11 @@ export function initGrid() {
     const cols = 20;
     const rows = 12;
 
-    let mouse = { x: 0.5, y: 0.5 };
-    let smoothMouse = { x: 0.5, y: 0.5 };
+    // Mouse tracked in SVG viewBox units (100x60), mapped via getScreenCTM so
+    // the accent dot lands exactly under the cursor regardless of how
+    // preserveAspectRatio="slice" crops the grid at any viewport ratio.
+    let mouse = { x: 50, y: 30 };
+    let smoothMouse = { x: 50, y: 30 };
     let scrollVelocity = 0;
     let lastScrollY = 0;
     let animFrame = null;
@@ -78,8 +81,8 @@ export function initGrid() {
 
     // Update grid point positions based on cursor
     function updatePoints() {
-        const mx = smoothMouse.x * 100;  // 0-100 in SVG coords
-        const my = smoothMouse.y * 60;
+        const mx = smoothMouse.x;  // already in SVG coords
+        const my = smoothMouse.y;
         const radius = 30;
         const strength = 4 + scrollVelocity * 8;
 
@@ -111,8 +114,8 @@ export function initGrid() {
 
     function render() {
         // Smooth mouse following
-        smoothMouse.x += (mouse.x - smoothMouse.x) * 0.06;
-        smoothMouse.y += (mouse.y - smoothMouse.y) * 0.06;
+        smoothMouse.x += (mouse.x - smoothMouse.x) * 0.14;
+        smoothMouse.y += (mouse.y - smoothMouse.y) * 0.14;
         scrollVelocity *= 0.92;
 
         updatePoints();
@@ -138,10 +141,13 @@ export function initGrid() {
         animFrame = requestAnimationFrame(render);
     }
 
-    // Mouse tracking
+    // Mouse tracking — client px to SVG viewBox units, crop-aware
     window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX / window.innerWidth;
-        mouse.y = e.clientY / window.innerHeight;
+        const ctm = svg.getScreenCTM();
+        if (!ctm) return;
+        const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
+        mouse.x = p.x;
+        mouse.y = p.y;
     }, { passive: true });
 
     // Scroll velocity tracking
@@ -151,7 +157,19 @@ export function initGrid() {
         lastScrollY = sy;
     }, { passive: true });
 
-    render();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+        // Single static frame: undistorted grid, dot at center
+        updatePoints();
+        for (let r = 0; r <= rows; r++) {
+            hLines[r].setAttribute('points', buildPolyline(points.filter((_, i) => Math.floor(i / (cols + 1)) === r)));
+        }
+        for (let c = 0; c <= cols; c++) {
+            vLines[c].setAttribute('points', buildPolyline(points.filter((_, i) => i % (cols + 1) === c)));
+        }
+    } else {
+        render();
+    }
 
     return () => {
         cancelAnimationFrame(animFrame);
@@ -224,7 +242,8 @@ export function initAboutSVG() {
     dot.setAttribute('fill', 'rgba(200,255,0,0.7)');
     svg.appendChild(dot);
 
-    // Animated inner dot
+    // Rotating outer ring (static under reduced motion)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let t = 0;
     function animateSVG() {
         t += 0.008;

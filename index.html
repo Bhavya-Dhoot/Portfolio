@@ -72,7 +72,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap"
     rel="stylesheet" />
 
   <!-- Favicon -->
@@ -132,7 +132,7 @@
     <div id="hero-content">
       <!-- Eyebrow -->
       <div id="hero-eyebrow" class="hero-eyebrow" aria-hidden="true">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">Quant Research × AI Systems · 2026</span>
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Quant Research @ JM Financial · 2026</span>
         <div class="eyebrow-line" aria-hidden="true"></div>
       </div>
 
@@ -168,11 +168,12 @@
         </a>
       </div>
 
-      <!-- Scroll cue -->
-      <div id="hero-scroll-cue" aria-label="Scroll down">
-        <div class="scroll-cue-line" aria-hidden="true"></div>
-        <span class="font-mono text-label text-muted tracking-widest uppercase">Scroll</span>
-      </div>
+    </div>
+
+    <!-- Scroll cue (anchored to hero bottom-left, outside the centered column) -->
+    <div id="hero-scroll-cue" aria-label="Scroll down">
+      <div class="scroll-cue-line" aria-hidden="true"></div>
+      <span class="font-mono text-label text-muted tracking-widest uppercase">Scroll</span>
     </div>
 
     <!-- Floating data labels -->
@@ -188,6 +189,10 @@
       <div class="data-label" id="dl-status">
         <span class="font-mono text-label text-muted">Status</span>
         <span class="font-mono text-label text-accent">7+ systems live</span>
+      </div>
+      <div class="data-label" id="dl-flagship">
+        <span class="font-mono text-label text-muted">Flagship</span>
+        <span class="font-mono text-label text-accent">1.44 OOS Sharpe</span>
       </div>
     </div>
 
@@ -246,30 +251,31 @@
           <div id="about-body" class="about-body">
             <p class="reveal-text">
               I'm a CS undergraduate at VIT (class of 2027) working as a hands-on AI consultant
-              and quantitative developer. From a founder's office, I build and operate 7+
-              production AI and automation systems across two FMCG companies, covering sales
-              intelligence, production planning, and supply-chain reconciliation.
+              and quantitative developer. From a founder's office, I build and operate
+              <strong>7+ production AI and automation systems</strong> across two FMCG
+              companies, covering sales intelligence, production planning, and supply-chain
+              reconciliation.
             </p>
             <p class="reveal-text">
-              Behind that sits quantitative research at JM Financial: fine-tuning a foundation
-              model on NSE equity data and building an options pricing and paper-trading
-              terminal. Every system I ship is judged on one question: does it keep running,
-              correctly, without me in the loop?
+              Behind that sits <strong>quantitative research at JM Financial</strong>:
+              fine-tuning a foundation model on NSE equity data and building an options pricing
+              and paper-trading terminal. Every system I ship is judged on one question: does
+              it keep running, correctly, without me in the loop?
             </p>
           </div>
 
           <div id="about-stats">
             <div class="stat reveal-stat">
-              <span class="stat-value font-mono">7+</span>
-              <span class="stat-label font-mono text-label text-muted">Production Systems Operated</span>
+              <span class="stat-value font-mono">2027</span>
+              <span class="stat-label font-mono text-label text-muted">B.Tech CS, VIT · Expected</span>
             </div>
             <div class="stat reveal-stat">
-              <span class="stat-value font-mono">1.44</span>
-              <span class="stat-label font-mono text-label text-muted">OOS Sharpe, Momentum Research</span>
+              <span class="stat-value font-mono">6</span>
+              <span class="stat-label font-mono text-label text-muted">Institutions Shipped For</span>
             </div>
             <div class="stat reveal-stat">
-              <span class="stat-value font-mono">&lt;340ms</span>
-              <span class="stat-label font-mono text-label text-muted">Candle-Close to Signal</span>
+              <span class="stat-value font-mono">139</span>
+              <span class="stat-label font-mono text-label text-muted">Tests on Flagship Engine</span>
             </div>
           </div>
         </div>
@@ -296,42 +302,9 @@
 
       <div id="experience-list" role="list">
 
-        <!-- The Health Factory -->
-        <article class="exp-item reveal-exp" role="listitem">
-          <div class="exp-index font-mono text-label text-muted">01</div>
-          <div class="exp-body">
-            <div class="exp-header">
-              <div>
-                <h3 class="exp-role">AI Consultant · Founder's Office</h3>
-                <p class="exp-company">The Health Factory</p>
-              </div>
-              <div class="exp-meta">
-                <span class="font-mono text-label text-muted">2026 · Present</span>
-                <span class="exp-tag">Production AI · Automation</span>
-              </div>
-            </div>
-            <p class="exp-description">
-              Own AI and automation infrastructure end-to-end across two sister FMCG
-              companies: scope use cases with leadership, select the stack, then build,
-              deploy, and operate 7+ production systems.
-            </p>
-            <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> Sales-intelligence platform
-                (FastAPI, Polars, Next.js) unifying ERP and quick-commerce channel data into a
-                deterministic, citation-backed insight engine</li>
-              <li><span class="font-mono text-accent text-label">→</span> LLM document-extraction pipeline
-                (Gemini) turning supply-chain paperwork into a same-day reconciliation ledger</li>
-              <li><span class="font-mono text-accent text-label">→</span> Unattended reporting and
-                distribution layer (Playwright, Node.js) delivering daily leadership reports with
-                delivery confirmation and retries</li>
-            </ul>
-          </div>
-          <div class="exp-line" aria-hidden="true"></div>
-        </article>
-
         <!-- JM Financial -->
         <article class="exp-item reveal-exp" role="listitem">
-          <div class="exp-index font-mono text-label text-muted">02</div>
+          <div class="exp-index font-mono text-label text-muted">01</div>
           <div class="exp-body">
             <div class="exp-header">
               <div>
@@ -349,12 +322,44 @@
               production-grade options pricing terminal.
             </p>
             <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> Fine-tuned Kronos-small (24.7M
-                params) on NSE OHLCV; real-time Market Variance Engine across 5 signal dimensions</li>
-              <li><span class="font-mono text-accent text-label">→</span> BSM options pricer with warm-start
-                Newton-Raphson IV solver: typically single-iteration convergence, 80-90% computation cut</li>
-              <li><span class="font-mono text-accent text-label">→</span> Cut Angel One API quota 66% via
-                ATM-centered payload bundling; 90%+ bandwidth reduction with gzip</li>
+              <li><span class="font-mono text-accent text-label">→</span> Fine-tuned a
+                <strong>24.7M-param</strong> foundation model feeding a 5-layer signal pipeline,
+                <strong>&lt;340ms</strong> latency</li>
+              <li><span class="font-mono text-accent text-label">→</span> BSM options pricer: warm-start IV
+                solver, <strong>80-90%</strong> compute cut</li>
+              <li><span class="font-mono text-accent text-label">→</span> Broker API quota down
+                <strong>66%</strong>; bandwidth down <strong>90%+</strong> with gzip</li>
+            </ul>
+          </div>
+          <div class="exp-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- The Health Factory -->
+        <article class="exp-item reveal-exp" role="listitem">
+          <div class="exp-index font-mono text-label text-muted">02</div>
+          <div class="exp-body">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">AI Consultant · Founder's Office</h3>
+                <p class="exp-company">The Health Factory</p>
+              </div>
+              <div class="exp-meta">
+                <span class="font-mono text-label text-muted">2026 · Present</span>
+                <span class="exp-tag">Production AI · Automation</span>
+              </div>
+            </div>
+            <p class="exp-description">
+              Own AI and automation infrastructure end-to-end across two sister FMCG
+              companies: scope use cases with leadership, select the stack, then build,
+              deploy, and operate 7+ production systems.
+            </p>
+            <ul class="exp-highlights" aria-label="Key contributions">
+              <li><span class="font-mono text-accent text-label">→</span> <strong>Citation-backed</strong>
+                sales-intelligence platform: ERP + quick-commerce data in one live dashboard</li>
+              <li><span class="font-mono text-accent text-label">→</span> LLM document extraction turning
+                supply-chain paperwork into a <strong>same-day ledger</strong></li>
+              <li><span class="font-mono text-accent text-label">→</span> Zero-touch daily reporting with
+                <strong>delivery confirmation</strong> and retries</li>
             </ul>
           </div>
           <div class="exp-line" aria-hidden="true"></div>
@@ -380,12 +385,12 @@
               to a finished paper.
             </p>
             <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> 88% retrieval accuracy over a 50K+
-                document RAG corpus (FAISS + chunked embeddings)</li>
-              <li><span class="font-mono text-accent text-label">→</span> Reduced manual research cycle time
-                by 70% on end-to-end workflows</li>
-              <li><span class="font-mono text-accent text-label">→</span> FastAPI + WebSocket live UI with
-                ChromaDB memory, provider fallbacks, Dockerized deployment</li>
+              <li><span class="font-mono text-accent text-label">→</span> <strong>6-agent</strong>
+                autonomous research pipeline, idea to finished paper</li>
+              <li><span class="font-mono text-accent text-label">→</span> <strong>88%</strong> retrieval
+                accuracy over a 50K+ document corpus (FAISS)</li>
+              <li><span class="font-mono text-accent text-label">→</span> <strong>70%</strong> cut in manual
+                research cycle time</li>
             </ul>
           </div>
           <div class="exp-line" aria-hidden="true"></div>
@@ -410,38 +415,11 @@
               voice-agent workflows to conversion audits.
             </p>
             <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> n8n + RetellAI voice agent
-                automating outbound order follow-up calls for a US industrial-gas distributor</li>
-              <li><span class="font-mono text-accent text-label">→</span> Website/CRO audit, competitive
-                brief, and 4-vertical cold-email library for an AI-automation agency</li>
-            </ul>
-          </div>
-          <div class="exp-line" aria-hidden="true"></div>
-        </article>
-
-        <!-- E-Cell Chairperson -->
-        <article class="exp-item reveal-exp" role="listitem">
-          <div class="exp-index font-mono text-label text-muted">05</div>
-          <div class="exp-body">
-            <div class="exp-header">
-              <div>
-                <h3 class="exp-role">Chairperson</h3>
-                <p class="exp-company">Entrepreneurship Cell · VIT</p>
-              </div>
-              <div class="exp-meta">
-                <span class="font-mono text-label text-muted">2026 · Present</span>
-                <span class="exp-tag">Leadership · Capital Allocation</span>
-              </div>
-            </div>
-            <p class="exp-description">
-              Re-elected to lead a 200+ member organization; direct strategic priorities,
-              capital deployment, and cross-functional operations for the 2026 cycle.
-            </p>
-            <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> Rs. 25L+ annual budget across 5
-                verticals with zero cost overrun</li>
-              <li><span class="font-mono text-accent text-label">→</span> Structured recruitment and
-                performance frameworks scaling the analyst pipeline</li>
+              <li><span class="font-mono text-accent text-label">→</span> <strong>Voice-agent
+                workflow</strong> (n8n + RetellAI) automating order follow-up calls for a US
+                distributor</li>
+              <li><span class="font-mono text-accent text-label">→</span> Full CRO audit and
+                <strong>4-vertical</strong> outreach library for an AI agency</li>
             </ul>
           </div>
           <div class="exp-line" aria-hidden="true"></div>
@@ -449,7 +427,7 @@
 
         <!-- Moon Finance -->
         <article class="exp-item reveal-exp" role="listitem">
-          <div class="exp-index font-mono text-label text-muted">06</div>
+          <div class="exp-index font-mono text-label text-muted">05</div>
           <div class="exp-body">
             <div class="exp-header">
               <div>
@@ -466,12 +444,40 @@
               portfolio optimization behind real allocation decisions.
             </p>
             <ul class="exp-highlights" aria-label="Key contributions">
-              <li><span class="font-mono text-accent text-label">→</span> DCF and comparable valuation models
-                with 75% recommendation accuracy</li>
-              <li><span class="font-mono text-accent text-label">→</span> Portfolio optimization over 500K+
-                data points, informing $50K+ allocations</li>
-              <li><span class="font-mono text-accent text-label">→</span> 15+ investment reports grounded in
-                statistical and time-series analysis</li>
+              <li><span class="font-mono text-accent text-label">→</span> DCF and comps valuation models,
+                <strong>75%</strong> recommendation accuracy</li>
+              <li><span class="font-mono text-accent text-label">→</span> Portfolio optimization over
+                <strong>500K+</strong> data points, informing $50K+ allocations</li>
+              <li><span class="font-mono text-accent text-label">→</span> <strong>15+</strong> investment
+                reports across 8 sectors</li>
+            </ul>
+          </div>
+          <div class="exp-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- E-Cell Chairperson -->
+        <article class="exp-item reveal-exp" role="listitem">
+          <div class="exp-index font-mono text-label text-muted">06</div>
+          <div class="exp-body">
+            <div class="exp-header">
+              <div>
+                <h3 class="exp-role">Chairperson</h3>
+                <p class="exp-company">Entrepreneurship Cell · VIT</p>
+              </div>
+              <div class="exp-meta">
+                <span class="font-mono text-label text-muted">2026 · Present</span>
+                <span class="exp-tag">Leadership · Capital Allocation</span>
+              </div>
+            </div>
+            <p class="exp-description">
+              Re-elected to lead a 200+ member organization; direct strategic priorities,
+              capital deployment, and cross-functional operations for the 2026 cycle.
+            </p>
+            <ul class="exp-highlights" aria-label="Key contributions">
+              <li><span class="font-mono text-accent text-label">→</span> <strong>Rs. 25L+ (~$30K)</strong>
+                annual budget across 5 verticals, zero cost overrun</li>
+              <li><span class="font-mono text-accent text-label">→</span> Built recruitment and
+                performance frameworks scaling the analyst pipeline</li>
             </ul>
           </div>
           <div class="exp-line" aria-hidden="true"></div>
@@ -496,9 +502,58 @@
 
       <div id="projects-list" role="list">
 
-        <!-- Case Study 1: Kronos NSE -->
+        <!-- Case Study 1: NSE Momentum -->
+        <article class="project-card reveal-project" role="listitem" id="proj-momentum" tabindex="0">
+          <div class="proj-number font-mono text-label text-muted">001</div>
+          <div class="proj-body">
+            <div class="proj-header">
+              <h3 class="proj-title">NSE Momentum · Dual-Engine Quant Research</h3>
+              <div class="proj-tags">
+                <span class="proj-tag">Factor Research</span>
+                <span class="proj-tag">Backtesting</span>
+                <span class="proj-tag">Rust</span>
+              </div>
+            </div>
+            <div class="case-study-frame">
+              <div class="cs-block">
+                <span class="cs-label font-mono text-label text-muted">Problem</span>
+                <p>Backtests inflate easily: survivorship bias, curve-fitting, and implementation
+                  bugs make naive strategies look like alpha.</p>
+              </div>
+              <div class="cs-block">
+                <span class="cs-label font-mono text-label text-muted">System</span>
+                <p>Survivorship-free cross-sectional momentum on NSE small/mid-caps; roughly 20
+                  strategy families tested and rejected. Python research engine cross-validated
+                  against an independently written Rust engine, agreeing to the decimal.</p>
+              </div>
+              <div class="cs-block">
+                <span class="cs-label font-mono text-label text-muted">Result</span>
+                <p>OOS Sharpe near 1.44, +23% CAGR, max drawdown -6.6%, Fama-MacBeth
+                  Newey-West t of about 2.7. Now running a live forward paper-trading book
+                  from a 650-stock monthly universe.</p>
+              </div>
+            </div>
+            <div class="proj-footer">
+              <span class="proj-metric font-mono">
+                <span class="text-accent">↑</span> 1.44 OOS Sharpe
+              </span>
+              <span class="proj-metric font-mono">
+                <span class="text-accent">◆</span> -6.6% max drawdown
+              </span>
+              <a href="mailto:dhoot.bhavya1@gmail.com?subject=NSE%20Momentum%20methodology"
+                class="proj-link font-mono" aria-label="Request the momentum methodology by email">methodology
+                on request <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <div class="proj-visual" aria-hidden="true">
+            <canvas class="proj-canvas" id="proj-canvas-2" width="300" height="180"></canvas>
+          </div>
+          <div class="proj-hover-line" aria-hidden="true"></div>
+        </article>
+
+        <!-- Case Study 2: Kronos NSE -->
         <article class="project-card reveal-project" role="listitem" id="proj-kronos" tabindex="0">
-          <div class="proj-number font-mono text-label text-border">001</div>
+          <div class="proj-number font-mono text-label text-muted">002</div>
           <div class="proj-body">
             <div class="proj-header">
               <h3 class="proj-title">Kronos NSE · Real-Time Market Variance Engine</h3>
@@ -544,58 +599,9 @@
           <div class="proj-hover-line" aria-hidden="true"></div>
         </article>
 
-        <!-- Case Study 2: NSE Momentum -->
-        <article class="project-card reveal-project" role="listitem" id="proj-momentum" tabindex="0">
-          <div class="proj-number font-mono text-label text-border">002</div>
-          <div class="proj-body">
-            <div class="proj-header">
-              <h3 class="proj-title">NSE Momentum · Dual-Engine Quant Research</h3>
-              <div class="proj-tags">
-                <span class="proj-tag">Factor Research</span>
-                <span class="proj-tag">Backtesting</span>
-                <span class="proj-tag">Rust</span>
-              </div>
-            </div>
-            <div class="case-study-frame">
-              <div class="cs-block">
-                <span class="cs-label font-mono text-label text-muted">Problem</span>
-                <p>Backtests inflate easily: survivorship bias, curve-fitting, and implementation
-                  bugs make naive strategies look like alpha.</p>
-              </div>
-              <div class="cs-block">
-                <span class="cs-label font-mono text-label text-muted">System</span>
-                <p>Survivorship-free cross-sectional momentum on NSE small/mid-caps; roughly 20
-                  strategy families tested and rejected. Python research engine cross-validated
-                  against an independently written Rust engine, agreeing to the decimal.</p>
-              </div>
-              <div class="cs-block">
-                <span class="cs-label font-mono text-label text-muted">Result</span>
-                <p>OOS Sharpe near 1.44, +23% CAGR, max drawdown -6.6%, Fama-MacBeth
-                  Newey-West t of about 2.7. Now running a live forward paper-trading book
-                  from a 650-stock monthly universe.</p>
-              </div>
-            </div>
-            <div class="proj-footer">
-              <span class="proj-metric font-mono">
-                <span class="text-accent">↑</span> 1.44 OOS Sharpe
-              </span>
-              <span class="proj-metric font-mono">
-                <span class="text-accent">◆</span> -6.6% max drawdown
-              </span>
-              <span class="proj-metric font-mono">
-                <span class="text-accent">◆</span> methodology on request
-              </span>
-            </div>
-          </div>
-          <div class="proj-visual" aria-hidden="true">
-            <canvas class="proj-canvas" id="proj-canvas-2" width="300" height="180"></canvas>
-          </div>
-          <div class="proj-hover-line" aria-hidden="true"></div>
-        </article>
-
         <!-- Case Study 3: Options Pricer -->
         <article class="project-card reveal-project" role="listitem" id="proj-options" tabindex="0">
-          <div class="proj-number font-mono text-label text-border">003</div>
+          <div class="proj-number font-mono text-label text-muted">003</div>
           <div class="proj-body">
             <div class="proj-header">
               <h3 class="proj-title">Options Pricer &amp; Paper Trading Terminal</h3>
@@ -643,7 +649,7 @@
 
         <!-- Case Study 4: The Health Factory -->
         <article class="project-card reveal-project" role="listitem" id="proj-thf" tabindex="0">
-          <div class="proj-number font-mono text-label text-border">004</div>
+          <div class="proj-number font-mono text-label text-muted">004</div>
           <div class="proj-body">
             <div class="proj-header">
               <h3 class="proj-title">The Health Factory · AI Operations Suite</h3>
@@ -704,7 +710,7 @@
             </div>
             <p class="mini-desc">Agent-based simulation (500 agents, 160 Monte Carlo runs) of systemic
               risk from homogeneous LLM traders: +30.3% drawdown amplification at full adoption.
-              Introduced Computational Asymmetry Theory.</p>
+              Proposed Computational Asymmetry Theory as a risk framework.</p>
             <span class="mini-stack font-mono">Python · Mesa ABM · Hawkes</span>
           </article>
 

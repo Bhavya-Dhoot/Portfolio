@@ -13,7 +13,7 @@ export default {
                 border: '#1e1e1e',
             },
             fontFamily: {
-                sans: ['Space Grotesk', 'system-ui', 'sans-serif'],
+                sans: ['Archivo', 'system-ui', 'sans-serif'],
                 mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
             },
             fontSize: {

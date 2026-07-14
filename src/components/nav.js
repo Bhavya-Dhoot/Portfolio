@@ -11,9 +11,13 @@ export function initNav() {
 
     // Scrolled state
     const scrollHandler = () => {
-        if (window.scrollY > 60) {
+        // Hysteresis (enter 24 / exit 8) so elastic-scroll jitter near the top
+        // can't restart the 0.4s blur transition every frame
+        const y = window.scrollY;
+        const scrolled = nav.classList.contains('scrolled');
+        if (!scrolled && y > 24) {
             nav.classList.add('scrolled');
-        } else {
+        } else if (scrolled && y < 8) {
             nav.classList.remove('scrolled');
         }
     };

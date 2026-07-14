@@ -45,12 +45,14 @@ function initProjectCanvas(n, drawFn) {
         });
     }
 
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     function animate() {
         t += 0.025;
         const w = canvas.offsetWidth, h = canvas.offsetHeight;
         ctx.clearRect(0, 0, w, h);
         drawFn(ctx, w, h, t);
-        if (isVisible) animFrame = requestAnimationFrame(animate);
+        if (isVisible && !reduced) animFrame = requestAnimationFrame(animate);
     }
 }
 
@@ -91,19 +93,27 @@ function drawMarketViz(ctx, w, h, t) {
         const yH = h - 8 - d.high * (h - 16);
         const yL = h - 8 - d.low * (h - 16);
         const bull = d.close >= d.open;
-        const col = bull ? '#c8ff00' : '#ef4444';
 
-        // Wick
+        // Wick — monochrome lime, direction encoded by body fill weight
         ctx.beginPath();
         ctx.moveTo(x, yH); ctx.lineTo(x, yL);
-        ctx.strokeStyle = col + '80';
+        ctx.strokeStyle = 'rgba(200,255,0,0.5)';
         ctx.lineWidth = 1;
         ctx.stroke();
 
-        // Body
+        // Body: bull = solid, bear = hollow (dim fill + lime stroke)
         const bodyH = Math.max(1, Math.abs(yC - yO));
-        ctx.fillStyle = bull ? 'rgba(200,255,0,0.7)' : 'rgba(239,68,68,0.7)';
-        ctx.fillRect(x - barW * 0.35, Math.min(yO, yC), barW * 0.7, bodyH);
+        const bx = x - barW * 0.35, by = Math.min(yO, yC), bw = barW * 0.7;
+        if (bull) {
+            ctx.fillStyle = 'rgba(200,255,0,0.7)';
+            ctx.fillRect(bx, by, bw, bodyH);
+        } else {
+            ctx.fillStyle = 'rgba(200,255,0,0.12)';
+            ctx.fillRect(bx, by, bw, bodyH);
+            ctx.strokeStyle = 'rgba(200,255,0,0.55)';
+            ctx.lineWidth = 0.75;
+            ctx.strokeRect(bx, by, bw, bodyH);
+        }
     });
 }
 

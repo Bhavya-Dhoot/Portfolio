@@ -40,7 +40,7 @@ html {
 body {
   background-color: var(--ink);
   color: var(--paper);
-  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-family: 'Archivo', system-ui, sans-serif;
   font-weight: 300;
   line-height: 1.6;
   overflow-x: hidden;
@@ -261,7 +261,8 @@ section {
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  /* Top padding keeps the centered stack clear of the fixed nav */
+  padding: var(--nav-h) clamp(1.5rem, 5vw, 4rem) 0;
 }
 
 #hero-grid {
@@ -311,11 +312,12 @@ section {
 
 #hero-headline {
   display: block;
-  font-size: clamp(4rem, 12vw, 10rem);
+  /* Height-aware: min() keeps the two-line stack from clipping on short viewports */
+  font-size: clamp(3.5rem, min(12vw, 16svh), 10rem);
   font-weight: 300;
   line-height: 0.92;
   letter-spacing: -0.05em;
-  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  margin-bottom: clamp(1.5rem, 4svh, 3.5rem);
   overflow: hidden;
 }
 
@@ -338,7 +340,7 @@ section {
 #hero-tagline {
   opacity: 0;
   transform: translateY(16px);
-  margin-bottom: clamp(3rem, 6vw, 5rem);
+  margin-bottom: clamp(1.5rem, 5svh, 5rem);
 }
 
 .hero-role {
@@ -362,6 +364,10 @@ section {
 }
 
 #hero-scroll-cue {
+  position: absolute;
+  left: clamp(1.5rem, 5vw, 4rem);
+  bottom: clamp(1.5rem, 4vh, 3rem);
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -575,9 +581,27 @@ section {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   color: rgba(240, 237, 232, 0.55);
-  display: flex;
-  gap: 0.75rem;
-  align-items: baseline;
+  display: block;
+  position: relative;
+  padding-left: 1.6rem;
+  line-height: 1.6;
+}
+
+.exp-highlights li > span:first-child {
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+}
+
+/* Metric emphasis: recruiters scan numbers first */
+.exp-highlights strong {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.about-body strong {
+  color: var(--paper);
+  font-weight: 400;
 }
 
 /* ================================================================
@@ -803,7 +827,7 @@ section {
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.04em;
-  margin-bottom: 3rem;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
 }
 
 #contact-links {
@@ -1069,7 +1093,7 @@ section {
 #hero-ctas {
   display: flex;
   gap: 1rem;
-  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  /* No bottom margin: the scroll cue is out of the flow now */
   opacity: 0;
   transform: translateY(14px);
 }
@@ -1366,7 +1390,7 @@ section {
 }
 
 .phase-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-size: clamp(1.4rem, 2.5vw, 2rem);
   font-weight: 500;
   color: var(--paper);
@@ -1499,7 +1523,7 @@ section {
 }
 
 .thesis-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 500;
   color: var(--paper);
@@ -1508,10 +1532,10 @@ section {
 }
 
 .thesis-body {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-size: 0.875rem;
   font-weight: 300;
-  color: var(--muted);
+  color: rgba(240, 237, 232, 0.6);
   line-height: 1.7;
 }
 
@@ -1537,10 +1561,10 @@ section {
 }
 
 .cs-block p {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Archivo', sans-serif;
   font-size: 0.8125rem;
   font-weight: 300;
-  color: var(--muted);
+  color: rgba(240, 237, 232, 0.6);
   line-height: 1.6;
 }
 
@@ -1648,7 +1672,7 @@ a:focus-visible,
 .mini-desc {
   font-size: 0.8125rem;
   font-weight: 300;
-  color: var(--muted);
+  color: rgba(240, 237, 232, 0.6);
   line-height: 1.6;
 }
 
@@ -1667,6 +1691,25 @@ a:focus-visible,
   .thesis-card:active,
   .mini-card:active {
     border-color: rgba(200, 255, 0, 0.3);
+  }
+}
+
+/* ── Reduced motion: stop perpetual CSS animations, restore cursor ── */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track,
+  .scroll-cue-line,
+  .avail-pulse::after,
+  .animate-spin-slow,
+  .animate-float {
+    animation: none !important;
+  }
+
+  body {
+    cursor: auto;
+  }
+
+  #cursor {
+    display: none !important;
   }
 }
 

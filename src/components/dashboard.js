@@ -25,6 +25,12 @@ function initKPICounters() {
         const prefix = el.dataset.prefix || '';
         const suffix = el.dataset.suffix || '';
         const decimals = parseInt(el.dataset.decimals || '0', 10);
+
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          el.textContent = `${prefix}${target.toFixed(decimals)}${suffix}`;
+          return;
+        }
+
         const duration = 1400;
         const start = performance.now();
 

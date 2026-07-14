@@ -168,7 +168,13 @@ export function initSkills() {
     resize();
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas.parentElement);
-    animFrame = requestAnimationFrame(draw);
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
+        draw(0);               // single static frame
+        cancelAnimationFrame(animFrame);
+    } else {
+        animFrame = requestAnimationFrame(draw);
+    }
 
     return () => {
         cancelAnimationFrame(animFrame);
