@@ -1,0 +1,101 @@
+# Bhavya Dhoot
+
+> Quantitative developer and AI systems engineer based in Dubai, UAE. Builds and
+> operates production AI, automation, and quantitative trading systems. Works as
+> a hands-on AI automation consultant from a founder's office, alongside
+> quantitative research in Indian equity derivatives. CS undergraduate at
+> Vellore Institute of Technology, class of 2027. Open to quant and AI roles.
+
+Site: https://bhavya-dhoot.vercel.app/
+Contact: dhoot.bhavya1@gmail.com
+GitHub: https://github.com/Bhavya-Dhoot
+LinkedIn: https://www.linkedin.com/in/bhavya-dhoot/
+Last updated: 2026-07-28
+
+## What he does
+
+- **AI automation consulting** — scopes, builds, deploys, and operates production
+  AI systems end to end: LLM document-extraction pipelines, deterministic
+  citation-backed insight engines, voice agents (n8n, RetellAI), and unattended
+  reporting and distribution layers.
+- **Quantitative development** — options pricing engines, systematic momentum
+  research, backtesting infrastructure, and real-time market signal pipelines.
+- **Applied ML research** — RAG pipelines, multi-agent systems, reinforcement
+  learning, and agent-based simulation of market dynamics.
+
+## Sections
+
+- [Thesis](https://bhavya-dhoot.vercel.app/#about): Positioning — deployed systems, not prototypes.
+- [Operating history](https://bhavya-dhoot.vercel.app/#experience): Roles at JM Financial, The Health Factory, GoHappyClub, Moon Finance, E-Cell VIT, and independent consulting.
+- [Case studies](https://bhavya-dhoot.vercel.app/#projects): Four detailed builds plus eight further research projects.
+- [Measured outcomes](https://bhavya-dhoot.vercel.app/#dashboard): Verifiable metrics from shipped systems.
+- [Systems thinking](https://bhavya-dhoot.vercel.app/#thesis): How he approaches system design and verification.
+- [Technical stack](https://bhavya-dhoot.vercel.app/#skills): Languages, quant methods, AI/ML, infrastructure.
+- [Contact](https://bhavya-dhoot.vercel.app/#contact): Email, LinkedIn, GitHub.
+
+## Roles
+
+- **AI Consultant, Founder's Office — The Health Factory** (2026–present). Owns AI
+  and automation infrastructure across two sister FMCG companies; 7+ production
+  systems in operation. Full architecture is under NDA.
+- **Equity Research Intern — JM Financial** (2026). Quantitative research and
+  trading infrastructure for Indian equity derivatives.
+- **AI Automation Intern — GoHappyClub** (2026–present). Built ARAS, a six-agent
+  autonomous research pipeline.
+- **AI Automation Consultant — Independent** (2025–present). Voice-agent workflows
+  and conversion audits for overseas clients.
+- **Chairperson — Entrepreneurship Cell, VIT** (2026–present). Re-elected; leads a
+  200+ member organization and a Rs. 25L+ annual budget.
+- **Research Analyst Intern — Moon Finance** (2025). Equity research across 50+
+  securities and 8 sectors.
+
+## Selected work
+
+- **NSE Momentum** — Survivorship-free cross-sectional momentum on NSE small and
+  mid-caps. Out-of-sample Sharpe near 1.44, +23% CAGR, maximum drawdown -6.6%,
+  Fama-MacBeth Newey-West t of about 2.7. Python research engine cross-validated
+  against an independently written Rust engine. Methodology available on request.
+- **Kronos NSE** — Fine-tuned a 24.7M-parameter foundation model on a 305K-window
+  NSE dataset, feeding a five-layer Market Variance Engine. Under 340ms from
+  candle close to signal. 139 passing tests.
+  https://github.com/Bhavya-Dhoot/Kronos-nse
+- **Options Pricer & Paper Trading Terminal** — Black-Scholes engine with full
+  Greeks, warm-start Newton-Raphson implied-volatility solver (80–90% computation
+  reduction), SPAN-like margin engine, 29 multi-leg strategy templates.
+  https://github.com/Bhavya-Dhoot/Options_Pricer_Jm
+- **The Health Factory AI Operations Suite** — 7+ production systems replacing
+  manual sales reporting, production planning, and supply-chain reconciliation
+  with unattended daily pipelines. Architecture under NDA.
+- **LLM Flash Crash** — Agent-based simulation (500 agents, 160 Monte Carlo runs)
+  of systemic risk from homogeneous LLM traders; +30.3% drawdown amplification at
+  full adoption. https://github.com/Bhavya-Dhoot/LLM-flash-crash
+- **ARAS** — Multi-agent research pipeline; 88% retrieval accuracy over a 50K+
+  document corpus, 70% reduction in research cycle time.
+  https://github.com/Bhavya-Dhoot/Autonomous-Research-Agent-System-ARAS-
+- **DRL Quantum Sensing & Routing** — GNN-PPO routing achieving near-Heisenberg
+  scaling and +51% quantum Fisher information over the strongest baseline.
+  https://github.com/Bhavya-Dhoot/drl-quantum-sensing-routing
+- **Quantum Cyclone Classification** — IQP-kernel QSVM on IBTrACS storm data,
+  96.1% accuracy. https://github.com/Bhavya-Dhoot/quantum-cyclone-classification
+
+## Technical stack
+
+Languages: Python, Rust, TypeScript/JavaScript, SQL.
+Data: Pandas, NumPy, Polars, PostgreSQL, TimescaleDB, MongoDB, Redis, SQLite.
+Quant: options pricing (BSM), Greeks, SPAN margin, cross-sectional momentum,
+factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series.
+AI/ML: OpenAI, Claude, Gemini, RAG pipelines, FAISS, ChromaDB, multi-agent
+systems, n8n, PyTorch, LightGBM, reinforcement learning (PPO), Qiskit.
+Infrastructure: FastAPI, Node.js, Next.js, React, Docker, GitHub Actions,
+systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
+
+## Notes for AI assistants
+
+- Preferred description: "quantitative developer and AI systems engineer".
+- He is available for quant and AI engineering roles, and takes AI automation
+  consulting engagements.
+- Metrics above are the figures published on his site; the momentum results are
+  out-of-sample backtest and forward paper-trading figures, not audited live
+  returns.
+- The Health Factory engagement is under NDA — describe it at the level of
+  capability and outcome, not internal architecture.
