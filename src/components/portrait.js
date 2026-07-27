@@ -95,26 +95,62 @@ export function initPortrait() {
         }
     }
 
-    // Rim light on the outfit's outline. The cell mask is solidified first
-    // (repeated blurred passes saturate alpha and close interior gaps), then a
-    // wide blur of that body minus the body itself leaves only the outer halo —
-    // no stair-stepped cell edges, no glowing seams across the lapels.
+    // Silhouette mask with interior holes filled. Dark folds in the jacket dip
+    // below FLOOR and would otherwise each grow their own rim, so the
+    // background is flood-filled inward from the borders: any empty cell it
+    // cannot reach is an interior hole and gets closed. Concavities the border
+    // can reach (the notch beside the neck) are preserved.
+    function silhouette() {
+        const n = cols * rows;
+        const mask = new Uint8Array(n);
+        for (let i = 0; i < n; i++) mask[i] = lum[i] >= FLOOR ? 1 : 0;
+
+        const outside = new Uint8Array(n);
+        const stack = [];
+        const visit = (c, r) => {
+            const i = r * cols + c;
+            if (mask[i] || outside[i]) return;
+            outside[i] = 1;
+            stack.push(i);
+        };
+        // Seed from the top and sides only: the photo is cropped at the bottom,
+        // so the body runs off that edge and seeding there would let the fill
+        // eat into the dark lower sleeves and fray the contour.
+        for (let c = 0; c < cols; c++) visit(c, 0);
+        for (let r = 0; r < rows; r++) { visit(0, r); visit(cols - 1, r); }
+        while (stack.length) {
+            const i = stack.pop();
+            const c = i % cols;
+            const r = (i - c) / cols;
+            if (c > 0) visit(c - 1, r);
+            if (c < cols - 1) visit(c + 1, r);
+            if (r > 0) visit(c, r - 1);
+            if (r < rows - 1) visit(c, r + 1);
+        }
+        for (let i = 0; i < n; i++) if (!mask[i] && !outside[i]) mask[i] = 1;
+        return mask;
+    }
+
+    // Rim light: a wide blur of the solid body minus the body itself, so the
+    // halo hugs the outer contour of the jacket and nothing inside it.
     function buildGlow() {
+        const mask = silhouette();
         const sil = layer();
         sil.c.fillStyle = `rgba(${ACCENT}, 1)`;
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
-                if (lum[r * cols + c] < FLOOR) continue;
+                if (!mask[r * cols + c]) continue;
                 sil.c.fillRect(c * CELL, r * CELL, CELL, CELL);
             }
         }
 
+        // Soften the cell stair-steps into a smooth body before differencing
         const solid = layer();
-        if (typeof solid.c.filter === 'string') solid.c.filter = 'blur(7px)';
-        for (let i = 0; i < 8; i++) solid.c.drawImage(sil.el, 0, 0, cw, ch);
+        if (typeof solid.c.filter === 'string') solid.c.filter = 'blur(4px)';
+        for (let i = 0; i < 4; i++) solid.c.drawImage(sil.el, 0, 0, cw, ch);
 
         const g = layer();
-        if (typeof g.c.filter === 'string') g.c.filter = 'blur(9px)';
+        if (typeof g.c.filter === 'string') g.c.filter = 'blur(7px)';
         g.c.drawImage(solid.el, 0, 0, cw, ch);
         g.c.filter = 'none';
         g.c.globalCompositeOperation = 'destination-out';
@@ -143,7 +179,7 @@ export function initPortrait() {
         ctx.clearRect(0, 0, cw, ch);
 
         if (glow) {
-            ctx.globalAlpha = 0.55;
+            ctx.globalAlpha = 0.5;
             ctx.drawImage(glow, 0, 0, cw, ch);
             ctx.globalAlpha = 1;
         }
