@@ -1,15 +1,14 @@
 /**
  * portrait.js — ASCII portrait for the About section
- * Luminance-mapped glyphs on canvas from /portrait.jpg, with a thin accent
- * halo tracing the silhouette edge. Static at rest; a cursor spotlight tints
- * glyphs toward the accent, echoing the hero grid's cursor language.
+ * Luminance-mapped glyphs on canvas from /portrait.jpg. Monochrome and static
+ * at rest; a cursor spotlight lifts glyphs toward white as you move across it.
  */
 
 const RAMP = ' .:-=+*#%@';           // dark -> bright
 const CELL = 5;                      // CSS px per glyph cell
 const SPOT_R = 130;                  // cursor spotlight radius, CSS px
-const ACCENT = '200, 255, 0';
 const PAPER = '240, 237, 232';
+const LIGHT = '255, 255, 255';       // spotlight lift — white, never tinted
 const FLOOR = 0.055;                 // below this the subject is background
 
 export function initPortrait() {
@@ -27,7 +26,6 @@ export function initPortrait() {
     let dpr = 1;
     let cols = 0, rows = 0;
     let lum = null;                  // Float32Array luminance grid, 0..1
-    let glow = null;                 // pre-rendered edge halo
     let field = null;                // pre-rendered glyph field at rest
     let mouse = { x: -1e4, y: -1e4 };
     let rafPending = false;
@@ -62,7 +60,6 @@ export function initPortrait() {
         cols = Math.floor(cw / CELL);
         rows = Math.floor(ch / CELL);
         sample();
-        buildGlow();
         buildField();
         draw();
     }
@@ -95,69 +92,6 @@ export function initPortrait() {
         }
     }
 
-    // Silhouette mask with interior holes filled. Dark folds in the jacket dip
-    // below FLOOR and would otherwise each grow their own rim, so the
-    // background is flood-filled inward from the borders: any empty cell it
-    // cannot reach is an interior hole and gets closed. Concavities the border
-    // can reach (the notch beside the neck) are preserved.
-    function silhouette() {
-        const n = cols * rows;
-        const mask = new Uint8Array(n);
-        for (let i = 0; i < n; i++) mask[i] = lum[i] >= FLOOR ? 1 : 0;
-
-        const outside = new Uint8Array(n);
-        const stack = [];
-        const visit = (c, r) => {
-            const i = r * cols + c;
-            if (mask[i] || outside[i]) return;
-            outside[i] = 1;
-            stack.push(i);
-        };
-        // Seed from the top and sides only: the photo is cropped at the bottom,
-        // so the body runs off that edge and seeding there would let the fill
-        // eat into the dark lower sleeves and fray the contour.
-        for (let c = 0; c < cols; c++) visit(c, 0);
-        for (let r = 0; r < rows; r++) { visit(0, r); visit(cols - 1, r); }
-        while (stack.length) {
-            const i = stack.pop();
-            const c = i % cols;
-            const r = (i - c) / cols;
-            if (c > 0) visit(c - 1, r);
-            if (c < cols - 1) visit(c + 1, r);
-            if (r > 0) visit(c, r - 1);
-            if (r < rows - 1) visit(c, r + 1);
-        }
-        for (let i = 0; i < n; i++) if (!mask[i] && !outside[i]) mask[i] = 1;
-        return mask;
-    }
-
-    // Rim light: a wide blur of the solid body minus the body itself, so the
-    // halo hugs the outer contour of the jacket and nothing inside it.
-    function buildGlow() {
-        const mask = silhouette();
-        const sil = layer();
-        sil.c.fillStyle = `rgba(${ACCENT}, 1)`;
-        for (let r = 0; r < rows; r++) {
-            for (let c = 0; c < cols; c++) {
-                if (!mask[r * cols + c]) continue;
-                sil.c.fillRect(c * CELL, r * CELL, CELL, CELL);
-            }
-        }
-
-        // Soften the cell stair-steps into a smooth body before differencing
-        const solid = layer();
-        if (typeof solid.c.filter === 'string') solid.c.filter = 'blur(4px)';
-        for (let i = 0; i < 4; i++) solid.c.drawImage(sil.el, 0, 0, cw, ch);
-
-        const g = layer();
-        if (typeof g.c.filter === 'string') g.c.filter = 'blur(7px)';
-        g.c.drawImage(solid.el, 0, 0, cw, ch);
-        g.c.filter = 'none';
-        g.c.globalCompositeOperation = 'destination-out';
-        g.c.drawImage(solid.el, 0, 0, cw, ch);
-        glow = g.el;
-    }
-
     // Glyph field at rest, rendered once — pointer moves only repaint the
     // spotlight disc on top, not all ~20k cells.
     function buildField() {
@@ -178,11 +112,6 @@ export function initPortrait() {
         if (!field) return;
         ctx.clearRect(0, 0, cw, ch);
 
-        if (glow) {
-            ctx.globalAlpha = 0.5;
-            ctx.drawImage(glow, 0, 0, cw, ch);
-            ctx.globalAlpha = 1;
-        }
         ctx.drawImage(field, 0, 0, cw, ch);
 
         if (mouse.x < -SPOT_R) return;
@@ -203,7 +132,7 @@ export function initPortrait() {
                 const dx = x - mouse.x, dy = y - mouse.y;
                 const t = 1 - Math.sqrt(dx * dx + dy * dy) / SPOT_R;
                 if (t <= 0) continue;
-                ctx.fillStyle = `rgba(${ACCENT}, ${Math.min(1, alphaAt(v) + t * 0.35)})`;
+                ctx.fillStyle = `rgba(${LIGHT}, ${Math.min(1, alphaAt(v) + t * 0.45)})`;
                 ctx.fillText(glyphAt(v), x, y);
             }
         }
