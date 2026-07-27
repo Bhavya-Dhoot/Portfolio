@@ -33,3 +33,6 @@ npm-debug.log*
 # Local-only: resume source (contains personal contact details) + agent tooling
 main.md
 .claude/
+
+# Source photo (public/portrait.jpg is the derived, served asset)
+club_image.jpg

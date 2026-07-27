@@ -7,7 +7,8 @@ import Lenis from 'lenis';
 import { initCursor }     from './cursor.js';
 import { initNav }        from './components/nav.js';
 import { initAnimations, initHeroAnimation } from './animations.js';
-import { initGrid, initAboutSVG }            from './svg/grid.js';
+import { initGrid }       from './svg/grid.js';
+import { initPortrait }   from './components/portrait.js';
 import { initSkills }     from './components/skills.js';
 import { initProjects }   from './components/projects.js';
 import { initContact3D }  from './components/contact-3d.js';
@@ -33,8 +34,8 @@ initNav();
 // ── 4. SVG Grid (hero background) ──────────────────────────────
 initGrid();
 
-// ── 5. About SVG Visual ─────────────────────────────────────────
-initAboutSVG();
+// ── 5. About ASCII Portrait ─────────────────────────────────────
+initPortrait();
 
 // ── 6. GSAP Scroll Animations ───────────────────────────────────
 initAnimations(lenis);

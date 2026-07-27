@@ -476,7 +476,7 @@ section {
   top: calc(var(--nav-h) + 2rem);
 }
 
-#about-svg-wrap {
+#about-portrait {
   width: 100%;
   aspect-ratio: 1;
   position: relative;
@@ -945,8 +945,11 @@ section {
     grid-template-columns: 1fr;
   }
 
+  /* Portrait is content, not decoration — keep it on phones, just smaller */
   #about-visual {
-    display: none;
+    position: static;
+    width: min(300px, 70%);
+    margin-top: 1rem;
   }
 
   #skills-layout {
