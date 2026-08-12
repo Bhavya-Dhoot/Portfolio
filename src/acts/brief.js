@@ -18,6 +18,13 @@ import { reconcile, assertPipeline, BANK } from '../components/pipeline.js';
  */
 function splitChars(el) {
     const text = el.textContent;
+
+    // One span per glyph reads as a stream of single letters in some screen
+    // readers, so the sentence is moved onto the element as its label and the
+    // glyphs themselves are hidden from assistive tech.
+    el.setAttribute('aria-label', text.replace(/\s+/g, ' ').trim());
+    el.setAttribute('role', 'text');
+
     el.textContent = '';
     const chars = [];
 
@@ -26,12 +33,14 @@ function splitChars(el) {
         if (/^\s+$/.test(token)) {
             const sp = document.createElement('span');
             sp.className = 'brief__sp';
+            sp.setAttribute('aria-hidden', 'true');
             sp.textContent = token;
             el.appendChild(sp);
             continue;
         }
         const word = document.createElement('span');
         word.className = 'brief__word';
+        word.setAttribute('aria-hidden', 'true');
         for (const ch of token) {
             const span = document.createElement('span');
             span.className = 'brief__ch';
@@ -44,10 +53,15 @@ function splitChars(el) {
     return chars;
 }
 
+// One per brief/system pair, in markup order. Shown while that pair is on
+// screen, so the act reads as "every corner of the business", not one project.
+const DOMAINS = ['Finance', 'Sales', 'Supply chain', 'Planning', 'Support'];
+
 registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
-    const briefEl = act.querySelector('.brief__line');
-    const codeEl = act.querySelector('.brief__code');
-    if (!briefEl || !codeEl) return null;
+    const reel = act.querySelector('.brief__reel');
+    const lines = gsap.utils.toArray(act.querySelectorAll('.brief__line, .brief__code'));
+    const domainEl = act.querySelector('[data-brief-domain]');
+    if (!reel || lines.length < 2) return null;
 
     assertPipeline();
     const { matched, exceptions, stats } = reconcile();
@@ -82,49 +96,82 @@ registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
             </li>`).join('');
     }
 
-    const briefChars = splitChars(briefEl);
-    const codeChars = splitChars(codeEl);
+    const chars = lines.map(splitChars);
+    const all = chars.flat();
 
     if (reduced || !tl) {
-        gsap.set([...briefChars, ...codeChars], { opacity: 1, x: 0, y: 0, rotate: 0 });
-        return null;
+        // No scroll to drive the reel. Showing only the first pair would throw
+        // away the point of the act — that the work spans the whole business —
+        // so every pair is laid out as a static list instead.
+        reel.classList.add('is-static');
+        gsap.set(all, { opacity: 1, x: 0, y: 0, rotate: 0 });
+        if (domainEl) domainEl.textContent = 'Finance to support';
+        return () => reel.classList.remove('is-static');
     }
 
     // Deterministic scatter: seeded off the index so the layout is identical on
     // every replay and on resize, which a random() would not be.
-    const scatter = (i, n) => {
+    const scatter = (i) => {
         const a = (i * 2.399963) % (Math.PI * 2);      // golden-angle spread
         const r = 60 + ((i * 37) % 90);
-        return { x: Math.cos(a) * r, y: Math.sin(a) * r * 0.6, rotate: ((i % 7) - 3) * 12, n };
+        return { x: Math.cos(a) * r, y: Math.sin(a) * r * 0.6, rotate: ((i % 7) - 3) * 12 };
     };
 
     // Hidden until the stichwort has cleared, or the two sit on top of each other
     const wrap = act.querySelector('.brief');
     gsap.set(wrap, { opacity: 0 });
-    gsap.set(codeChars, { opacity: 0 });
+    gsap.set(all, { opacity: 0 });
 
     const t = phaseAt(0);
+    // Each line lands, settles, then leaves just before the next arrives. The
+    // land and leave windows barely overlap on purpose: when they do, two
+    // different sentences are in flight at once and it reads as noise.
+    const STEP = 0.42;                  // scroll units per line
+    const LAND = 0.24;
+    const LEAVE_AT = STEP - 0.12;
+    const lineAt = (i) => t + 0.35 + i * STEP;
+
     tl.to(wrap, { opacity: 1, duration: 0.25, ease: 'none' }, t);
 
-    // The sentence comes apart, glyph by glyph
-    briefChars.forEach((ch, i) => {
-        const s = scatter(i);
-        tl.to(ch, {
-            opacity: 0, x: s.x, y: s.y, rotate: s.rotate,
-            duration: 0.5, ease: 'power2.in',
-        }, t + 0.4 + (i % 11) * 0.02);
+    chars.forEach((glyphs, line) => {
+        const at = lineAt(line);
+
+        // Land: glyphs converge from their scattered positions
+        glyphs.forEach((ch, i) => {
+            const s = scatter(i + line * 3);
+            tl.fromTo(ch,
+                { opacity: 0, x: -s.x, y: -s.y, rotate: -s.rotate },
+                { opacity: 1, x: 0, y: 0, rotate: 0, duration: LAND, ease: 'power3.out' },
+                at + (i % 13) * 0.01);
+        });
+
+        // Leave: it comes apart again as the next line arrives. The last line
+        // stays put — it hands over to the working pipeline instead.
+        if (line === chars.length - 1) return;
+        glyphs.forEach((ch, i) => {
+            const s = scatter(i + line * 3);
+            tl.to(ch, {
+                opacity: 0, x: s.x, y: s.y, rotate: s.rotate,
+                duration: 0.14, ease: 'power2.in',
+            }, at + LEAVE_AT + (i % 11) * 0.008);
+        });
     });
 
-    // and lands as the rule that implements it
-    codeChars.forEach((ch, i) => {
-        const s = scatter(i + 3);
-        tl.fromTo(ch,
-            { opacity: 0, x: -s.x, y: -s.y, rotate: -s.rotate },
-            { opacity: 1, x: 0, y: 0, rotate: 0, duration: 0.55, ease: 'power3.out' },
-            t + 0.85 + (i % 13) * 0.02);
-    });
+    // The domain label is derived from timeline time rather than set by tween
+    // callbacks: under scrub only the advancing tween fires, so a callback-driven
+    // label desyncs the moment someone scrolls quickly.
+    if (domainEl) {
+        tl.eventCallback('onUpdate', () => {
+            const now = tl.time();
+            let pair = 0;
+            for (let i = 0; i < chars.length; i++) if (now >= lineAt(i)) pair = i >> 1;
+            const next = DOMAINS[Math.min(pair, DOMAINS.length - 1)];
+            if (domainEl.textContent !== next) domainEl.textContent = next;
+        });
+    }
 
     return () => {
-        gsap.set([wrap, ...briefChars, ...codeChars], { clearProps: 'opacity,transform' });
+        tl.eventCallback('onUpdate', null);
+        gsap.set([wrap, ...all], { clearProps: 'opacity,transform' });
     };
 });

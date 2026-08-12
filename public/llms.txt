@@ -1,10 +1,13 @@
 # Bhavya Dhoot
 
-> Quantitative developer and AI systems engineer based in Dubai, UAE. Builds and
-> operates production AI, automation, and quantitative trading systems. Works as
-> a hands-on AI automation consultant from a founder's office, alongside
-> quantitative research in Indian equity derivatives. CS undergraduate at
-> Vellore Institute of Technology, class of 2027. Open to quant and AI roles.
+> Quantitative developer and AI systems engineer based in Dubai, UAE, working as
+> a forward deployed engineer: embeds with a business, finds where it is losing
+> time or money, and ships the system that fixes it. That work spans finance,
+> sales, supply chain, planning and support — reconciliation, reporting,
+> document extraction, demand planning, voice agents — alongside production
+> quantitative trading systems and research in Indian equity derivatives. CS
+> undergraduate at Vellore Institute of Technology, class of 2027. Open to quant
+> and AI roles and to automation consulting engagements.
 
 Site: https://bhavya-dhoot.vercel.app/
 Full text: https://bhavya-dhoot.vercel.app/llms-full.txt
@@ -15,6 +18,11 @@ Last updated: 2026-08-13
 
 ## What he does
 
+- **Forward deployed engineering** — sits with the operators, finds the process
+  that is leaking time or money, and ships the system that closes it. Not one
+  domain: finance reconciliation, sales reporting, supply-chain document
+  extraction, production planning, and after-hours support have all been the
+  brief. The deliverable is a system that keeps running once he leaves.
 - **AI automation consulting** — scopes, builds, deploys, and operates production
   AI systems end to end: LLM document-extraction pipelines, deterministic
   citation-backed insight engines, voice agents (n8n, RetellAI), and unattended

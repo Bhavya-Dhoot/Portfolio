@@ -95,9 +95,11 @@ registerActRenderer('signal', (act, tl, { phaseAt, reduced }) => {
         ctx.clearRect(0, 0, w, h);
 
         const nx = w * 0.14;                 // source column
-        const fx = w * 0.62;                 // fusion node
-        const ox = w * 0.88;                 // output
+        const fx = w * 0.60;                 // fusion node
+        const lineEnd = w * 0.76;            // where the output rail stops
+        const ox = w * 0.79;                 // output text, left-aligned from here
         const cy = h / 2;
+        const RING = 17;
         const span = h * 0.72;
         const ys = scored.map((_, i) => cy - span / 2 + (span * i) / (scored.length - 1));
 
@@ -113,13 +115,16 @@ registerActRenderer('signal', (act, tl, { phaseAt, reduced }) => {
             // Arc from source to fusion, drawn in proportion to `link`
             const t = gsap.utils.clamp(0, 1, state.link * scored.length - i * 0.6);
             if (t > 0) {
+                // Stop at the ring's edge, not its centre: run them to fx and the
+                // five inputs visibly cross through the fusion node.
+                const arcEnd = fx - RING - 3;
                 ctx.strokeStyle = `rgba(${PAPER}, ${0.1 + 0.25 * t})`;
                 ctx.beginPath();
                 ctx.moveTo(nx + 6, y);
                 const steps = 40;
                 for (let s = 1; s <= steps * t; s++) {
                     const p = s / steps;
-                    const mx = nx + (fx - nx) * p;
+                    const mx = nx + (arcEnd - nx) * p;
                     const my = y + (cy - y) * (p * p * (3 - 2 * p));   // smoothstep
                     ctx.lineTo(mx, my);
                 }
@@ -140,37 +145,57 @@ registerActRenderer('signal', (act, tl, { phaseAt, reduced }) => {
             ctx.fillText(`${l.z >= 0 ? '+' : ''}${l.z.toFixed(2)}`, nx + 12, y - 12);
         });
 
-        // Fusion node: a ring that closes as the inputs land
+        // Fusion node. The socket is always a closed circle and the progress arc
+        // rides on top of it — drawing only the arc left the ring visibly broken
+        // at every scroll position short of the very end.
         if (state.link > 0) {
             const k = gsap.utils.clamp(0, 1, state.link);
-            ctx.strokeStyle = `rgba(${ACCENT}, ${0.35 + 0.5 * k})`;
             ctx.lineWidth = 1.25;
+
+            ctx.strokeStyle = `rgba(${ACCENT}, 0.22)`;
             ctx.beginPath();
-            ctx.arc(fx, cy, 16, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * k);
+            ctx.arc(fx, cy, RING, 0, Math.PI * 2);
             ctx.stroke();
+
+            ctx.strokeStyle = `rgba(${ACCENT}, ${0.45 + 0.55 * k})`;
+            ctx.lineCap = 'round';
+            ctx.beginPath();
+            ctx.arc(fx, cy, RING, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * k);
+            ctx.stroke();
+            ctx.lineCap = 'butt';
             ctx.lineWidth = 1;
 
             ctx.textAlign = 'center';
             ctx.fillStyle = `rgba(${PAPER}, ${0.45 * k})`;
-            ctx.fillText('FUSE', fx, cy + 32);
+            ctx.fillText('FUSE', fx, cy + RING + 16);
         }
 
-        // Output: composite value and regime
+        // Output: the composite, then the regime it implies
         if (state.fuse > 0) {
             const k = gsap.utils.clamp(0, 1, state.fuse);
+            const start = fx + RING + 3;
             ctx.strokeStyle = `rgba(${ACCENT}, ${0.5 * k})`;
             ctx.beginPath();
-            ctx.moveTo(fx + 18, cy);
-            ctx.lineTo(fx + 18 + (ox - fx - 18) * k, cy);
+            ctx.moveTo(start, cy);
+            ctx.lineTo(start + (lineEnd - start) * k, cy);
             ctx.stroke();
 
-            ctx.textAlign = 'center';
+            // Left-aligned past the end of the rail. Centred on the rail's own
+            // end point, the line ran underneath the digits.
+            ctx.textAlign = 'left';
             ctx.font = '16px "JetBrains Mono", monospace';
             ctx.fillStyle = `rgba(${ACCENT}, ${k})`;
-            ctx.fillText(`${composite >= 0 ? '+' : ''}${(composite * k).toFixed(3)}`, ox, cy - 6);
-            ctx.font = '10px "JetBrains Mono", monospace';
-            ctx.fillStyle = `rgba(${PAPER}, ${0.6 * k})`;
-            ctx.fillText(regime.toUpperCase(), ox, cy + 16);
+            const shown = composite * k;
+            ctx.fillText(`${shown >= 0 ? '+' : ''}${shown.toFixed(3)}`, ox, cy - 6);
+
+            // The regime only appears once the number has actually settled —
+            // labelling a mid-count figure "NEUTRAL" asserts something that has
+            // not been computed yet.
+            if (k > 0.97) {
+                ctx.font = '10px "JetBrains Mono", monospace';
+                ctx.fillStyle = `rgba(${PAPER}, 0.6)`;
+                ctx.fillText(regime.toUpperCase(), ox, cy + 16);
+            }
         }
     }
 

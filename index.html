@@ -54,7 +54,7 @@
       "url": "https://bhavya-dhoot.vercel.app/",
       "image": "https://bhavya-dhoot.vercel.app/og.jpg",
       "jobTitle": "Quantitative Developer & AI Systems Engineer",
-      "description": "Quantitative developer and AI systems engineer who builds and operates production AI, automation, and quantitative trading systems. Also works as a hands-on AI automation consultant.",
+      "description": "Quantitative developer and AI systems engineer who works as a forward deployed engineer: embeds with a business, finds where it is losing time or money, and ships the system that fixes it. Work spans finance, sales, supply chain, planning and support, alongside production quantitative trading systems.",
       "email": "mailto:dhoot.bhavya1@gmail.com",
       "address": {
         "@type": "PostalAddress",
@@ -73,6 +73,12 @@
           "name": "AI Systems Engineer",
           "occupationalCategory": "15-2051.01",
           "skills": "LLM integration, RAG pipelines, FAISS, ChromaDB, multi-agent systems, PyTorch, LightGBM, reinforcement learning"
+        },
+        {
+          "@type": "Occupation",
+          "name": "Forward Deployed Engineer",
+          "occupationalCategory": "15-1252.00",
+          "skills": "Embedding with a client team, scoping business problems end to end, reconciliation and exception matching, reporting automation, document extraction, demand and production planning, voice agents, ERP integration"
         },
         {
           "@type": "Occupation",
@@ -121,7 +127,11 @@
         "Production Automation",
         "Implied Volatility Solvers",
         "Reconciliation and Exception Matching",
-        "Market Regime Detection"
+        "Market Regime Detection",
+        "Forward Deployed Engineering",
+        "Business Process Automation",
+        "Document Extraction",
+        "Demand and Production Planning"
       ],
       "sameAs": [
         "https://www.linkedin.com/in/bhavya-dhoot/",
@@ -418,31 +428,48 @@
        BRIEF ACT: a sentence becomes a running system
   ============================================================ -->
   <section id="brief" aria-labelledby="brief-heading">
-    <div class="act" data-act="brief" data-act-scale="1.15">
+    <div class="act" data-act="brief" data-act-scale="1.0">
       <div class="act__pin">
         <div class="act__stichwort">
           <h2 id="brief-heading" class="section-heading">
-            A sentence,<br />then a system.
+            Whatever the<br />business is losing.
           </h2>
         </div>
 
         <div class="act__stage">
-          <!-- Phase 1: the brief reforms as the rule -->
-          <div class="act__phase brief-phase" data-hold="2.4" aria-hidden="true">
+          <!-- Phase 1: five briefs, each landing as the system that answered it -->
+          <!-- Not aria-hidden: unlike the other acts' opening phases, these five
+               lines are unique content and say what the work actually is. -->
+          <div class="act__phase brief-phase" data-hold="4.8">
             <div class="brief">
-              <span class="brief__cap font-mono">The brief</span>
-              <p class="brief__line">&ldquo;Just tell me every morning which payments did not land.&rdquo;</p>
-              <p class="brief__code font-mono">match(bank, ledger) &rarr; exact, then tolerance, then exceptions</p>
+              <span class="brief__cap font-mono" data-brief-domain>Finance</span>
+              <div class="brief__reel">
+                <p class="brief__line">&ldquo;Just tell me every morning which payments did not land.&rdquo;</p>
+                <p class="brief__code font-mono">reconcile(bank, ledger) &rarr; exact, tolerance, exceptions with reasons</p>
+
+                <p class="brief__line">&ldquo;I need yesterday&rsquo;s sales by SKU before my nine o&rsquo;clock.&rdquo;</p>
+                <p class="brief__code font-mono">ingest(ERP, quick&#8209;commerce) &rarr; one cited dashboard, by 06:00</p>
+
+                <p class="brief__line">&ldquo;Our supply paperwork lives in a WhatsApp folder.&rdquo;</p>
+                <p class="brief__code font-mono">extract(documents) &rarr; typed ledger rows, same day</p>
+
+                <p class="brief__line">&ldquo;Production plans against last week&rsquo;s numbers.&rdquo;</p>
+                <p class="brief__code font-mono">plan(demand, stock) &rarr; a daily schedule, no analyst in the loop</p>
+
+                <p class="brief__line">&ldquo;Nobody picks up after seven.&rdquo;</p>
+                <p class="brief__code font-mono">agent(voice) &rarr; qualified, logged, routed, transcript attached</p>
+              </div>
             </div>
           </div>
 
           <!-- Phase 2: the rule, run -->
           <div class="act__phase">
             <p class="demo-lede">
-              Two passes. Exact reference and amount first, then a normalised
-              reference inside an amount and date tolerance, because feeds disagree
-              about spacing, casing and value dates. What survives both is an
-              exception with a stated reason &mdash; never a silent drop.
+              Here is the first one, running. Two passes: exact reference and amount,
+              then a normalised reference inside an amount and date tolerance, because
+              feeds disagree about spacing, casing and value dates. What survives both
+              is an exception with a stated reason &mdash; never a silent drop. The
+              other four are the same job in a different part of the business.
             </p>
 
             <div class="pipe-grid">

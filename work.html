@@ -36,111 +36,121 @@
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://bhavya-dhoot.vercel.app/#website",
-        "url": "https://bhavya-dhoot.vercel.app/",
-        "name": "Bhavya Dhoot Portfolio"
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://bhavya-dhoot.vercel.app/#website",
+      "url": "https://bhavya-dhoot.vercel.app/",
+      "name": "Bhavya Dhoot Portfolio"
+    },
+    {
+      "@type": "CollectionPage",
+      "@id": "https://bhavya-dhoot.vercel.app/work#collection",
+      "url": "https://bhavya-dhoot.vercel.app/work",
+      "name": "Work by Bhavya Dhoot",
+      "isPartOf": {
+        "@id": "https://bhavya-dhoot.vercel.app/#website"
       },
-      {
-        "@type": "CollectionPage",
-        "@id": "https://bhavya-dhoot.vercel.app/work#collection",
-        "url": "https://bhavya-dhoot.vercel.app/work",
-        "name": "Work by Bhavya Dhoot",
-        "isPartOf": {
-          "@id": "https://bhavya-dhoot.vercel.app/#website"
-        },
-        "about": {
-          "@id": "https://bhavya-dhoot.vercel.app/#person"
-        }
-      },
-      {
-        "@type": "Person",
-        "@id": "https://bhavya-dhoot.vercel.app/#person",
-        "name": "Bhavya Dhoot",
-        "givenName": "Bhavya",
-        "familyName": "Dhoot",
-        "url": "https://bhavya-dhoot.vercel.app/",
-        "image": "https://bhavya-dhoot.vercel.app/og.jpg",
-        "jobTitle": "Quantitative Developer & AI Systems Engineer",
-        "description": "Quantitative developer and AI systems engineer who builds and operates production AI, automation, and quantitative trading systems. Also works as a hands-on AI automation consultant.",
-        "email": "mailto:dhoot.bhavya1@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Dubai",
-          "addressCountry": "AE"
-        },
-        "hasOccupation": [
-          {
-            "@type": "Occupation",
-            "name": "Quantitative Developer",
-            "occupationalCategory": "15-2051.00",
-            "skills": "Options pricing, Black-Scholes, Greeks, SPAN margin, cross-sectional momentum, factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series analysis"
-          },
-          {
-            "@type": "Occupation",
-            "name": "AI Systems Engineer",
-            "occupationalCategory": "15-2051.01",
-            "skills": "LLM integration, RAG pipelines, FAISS, ChromaDB, multi-agent systems, PyTorch, LightGBM, reinforcement learning"
-          },
-          {
-            "@type": "Occupation",
-            "name": "AI Automation Consultant",
-            "occupationalCategory": "15-1252.00",
-            "skills": "n8n workflow automation, voice agents, LLM document extraction, production automation, ERP integration"
-          }
-        ],
-        "worksFor": [
-          {
-            "@type": "Organization",
-            "name": "JM Financial",
-            "url": "https://www.jmfl.com/"
-          },
-          {
-            "@type": "Organization",
-            "name": "The Health Factory"
-          },
-          {
-            "@type": "Organization",
-            "name": "GoHappyClub"
-          }
-        ],
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Vellore Institute of Technology",
-          "sameAs": "https://vit.ac.in/"
-        },
-        "seeks": {
-          "@type": "Demand",
-          "name": "Quantitative developer and AI systems engineering roles, and AI automation consulting engagements"
-        },
-        "knowsLanguage": "en",
-        "knowsAbout": [
-          "Quantitative Finance",
-          "Options Pricing",
-          "Algorithmic Trading",
-          "Systematic Momentum Strategies",
-          "Backtesting Infrastructure",
-          "Machine Learning",
-          "LLM Systems",
-          "RAG Pipelines",
-          "Multi-Agent Systems",
-          "Workflow Automation",
-          "Time Series Analysis",
-          "Production Automation",
-          "Implied Volatility Solvers",
-          "Reconciliation and Exception Matching",
-          "Market Regime Detection"
-        ],
-        "sameAs": [
-          "https://www.linkedin.com/in/bhavya-dhoot/",
-          "https://github.com/Bhavya-Dhoot"
-        ]
+      "about": {
+        "@id": "https://bhavya-dhoot.vercel.app/#person"
       }
-    ]
-  }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://bhavya-dhoot.vercel.app/#person",
+      "name": "Bhavya Dhoot",
+      "givenName": "Bhavya",
+      "familyName": "Dhoot",
+      "url": "https://bhavya-dhoot.vercel.app/",
+      "image": "https://bhavya-dhoot.vercel.app/og.jpg",
+      "jobTitle": "Quantitative Developer & AI Systems Engineer",
+      "description": "Quantitative developer and AI systems engineer who works as a forward deployed engineer: embeds with a business, finds where it is losing time or money, and ships the system that fixes it. Work spans finance, sales, supply chain, planning and support, alongside production quantitative trading systems.",
+      "email": "mailto:dhoot.bhavya1@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dubai",
+        "addressCountry": "AE"
+      },
+      "hasOccupation": [
+        {
+          "@type": "Occupation",
+          "name": "Quantitative Developer",
+          "occupationalCategory": "15-2051.00",
+          "skills": "Options pricing, Black-Scholes, Greeks, SPAN margin, cross-sectional momentum, factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series analysis"
+        },
+        {
+          "@type": "Occupation",
+          "name": "AI Systems Engineer",
+          "occupationalCategory": "15-2051.01",
+          "skills": "LLM integration, RAG pipelines, FAISS, ChromaDB, multi-agent systems, PyTorch, LightGBM, reinforcement learning"
+        },
+        {
+          "@type": "Occupation",
+          "name": "Forward Deployed Engineer",
+          "occupationalCategory": "15-1252.00",
+          "skills": "Embedding with a client team, scoping business problems end to end, reconciliation and exception matching, reporting automation, document extraction, demand and production planning, voice agents, ERP integration"
+        },
+        {
+          "@type": "Occupation",
+          "name": "AI Automation Consultant",
+          "occupationalCategory": "15-1252.00",
+          "skills": "n8n workflow automation, voice agents, LLM document extraction, production automation, ERP integration"
+        }
+      ],
+      "worksFor": [
+        {
+          "@type": "Organization",
+          "name": "JM Financial",
+          "url": "https://www.jmfl.com/"
+        },
+        {
+          "@type": "Organization",
+          "name": "The Health Factory"
+        },
+        {
+          "@type": "Organization",
+          "name": "GoHappyClub"
+        }
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Vellore Institute of Technology",
+        "sameAs": "https://vit.ac.in/"
+      },
+      "seeks": {
+        "@type": "Demand",
+        "name": "Quantitative developer and AI systems engineering roles, and AI automation consulting engagements"
+      },
+      "knowsLanguage": "en",
+      "knowsAbout": [
+        "Quantitative Finance",
+        "Options Pricing",
+        "Algorithmic Trading",
+        "Systematic Momentum Strategies",
+        "Backtesting Infrastructure",
+        "Machine Learning",
+        "LLM Systems",
+        "RAG Pipelines",
+        "Multi-Agent Systems",
+        "Workflow Automation",
+        "Time Series Analysis",
+        "Production Automation",
+        "Implied Volatility Solvers",
+        "Reconciliation and Exception Matching",
+        "Market Regime Detection",
+        "Forward Deployed Engineering",
+        "Business Process Automation",
+        "Document Extraction",
+        "Demand and Production Planning"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/bhavya-dhoot/",
+        "https://github.com/Bhavya-Dhoot"
+      ]
+    }
+  ]
+}
   </script>
 
   <!-- Preconnect for fonts -->
