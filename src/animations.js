@@ -141,8 +141,9 @@ export function initAnimations(lenis) {
         );
     });
 
-    // ── Scroll acts ────────────────────────────────────────────────
+    // ── Scroll acts and sticky stack ───────────────────────────────
     buildActs();
+    buildStack();
 
     // ── Experience line expansion ──────────────────────────────────
     // Act phases are driven by the act timeline, so they are skipped here.
@@ -184,7 +185,7 @@ export function initAnimations(lenis) {
     });
 
     // ── Thesis Cards ───────────────────────────────────────────────
-    gsap.utils.toArray('.reveal-thesis').forEach((el, i) => {
+    gsap.utils.toArray('.reveal-thesis').filter(el => !el.closest('#thesis-grid')).forEach((el, i) => {
         gsap.fromTo(el,
             { opacity: 0, y: 25 },
             {
@@ -202,7 +203,7 @@ export function initAnimations(lenis) {
     });
 
     // ── Case Study Blocks ──────────────────────────────────────────
-    gsap.utils.toArray('.case-study-frame').forEach(frame => {
+    gsap.utils.toArray('.case-study-frame').filter(el => !el.closest('.act__stage')).forEach(frame => {
         const blocks = frame.querySelectorAll('.cs-block');
         if (!blocks.length) return;
         gsap.fromTo(blocks,
@@ -286,6 +287,37 @@ function buildActs() {
                 gsap.set(phases, { clearProps: 'opacity,transform' });
             };
         });
+    });
+}
+
+/**
+ * Sticky stack — each panel holds the viewport and recedes as the next
+ * arrives, so the three arguments are read in order rather than side by side.
+ */
+function buildStack() {
+    const panels = gsap.utils.toArray('#thesis-grid .thesis-card');
+    if (panels.length < 2 || REDUCED) return;
+
+    gsap.matchMedia().add('(min-width: 768px)', () => {
+        panels.forEach((panel, i) => {
+            if (i === panels.length - 1) return;
+            gsap.to(panel, {
+                opacity: 0.25,
+                y: -50,
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: panels[i + 1],
+                    start: 'top bottom',
+                    end: 'top top',
+                    scrub: true,
+                    invalidateOnRefresh: true,
+                },
+            });
+        });
+
+        return () => {
+            gsap.set(panels, { clearProps: 'opacity,transform' });
+        };
     });
 }
 

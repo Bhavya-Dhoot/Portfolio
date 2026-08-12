@@ -564,10 +564,12 @@
         Quant &amp; AI<br />case studies.
       </h2>
 
-      <div id="projects-list" role="list">
+      <div class="act" data-act="projects">
+        <div class="act__pin">
+          <div class="act__stage" id="projects-list" role="list">
 
         <!-- Case Study 1: NSE Momentum -->
-        <article class="project-card reveal-project" role="listitem" id="proj-momentum" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-momentum" tabindex="0">
           <div class="proj-number font-mono text-label text-muted">001</div>
           <div class="proj-body">
             <div class="proj-header">
@@ -616,7 +618,7 @@
         </article>
 
         <!-- Case Study 2: Kronos NSE -->
-        <article class="project-card reveal-project" role="listitem" id="proj-kronos" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-kronos" tabindex="0">
           <div class="proj-number font-mono text-label text-muted">002</div>
           <div class="proj-body">
             <div class="proj-header">
@@ -664,7 +666,7 @@
         </article>
 
         <!-- Case Study 3: Options Pricer -->
-        <article class="project-card reveal-project" role="listitem" id="proj-options" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-options" tabindex="0">
           <div class="proj-number font-mono text-label text-muted">003</div>
           <div class="proj-body">
             <div class="proj-header">
@@ -712,7 +714,7 @@
         </article>
 
         <!-- Case Study 4: The Health Factory -->
-        <article class="project-card reveal-project" role="listitem" id="proj-thf" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-thf" tabindex="0">
           <div class="proj-number font-mono text-label text-muted">004</div>
           <div class="proj-body">
             <div class="proj-header">
@@ -757,6 +759,9 @@
           <div class="proj-hover-line" aria-hidden="true"></div>
         </article>
 
+          </div>
+          <div class="act__ticks" aria-hidden="true"></div>
+        </div>
       </div>
 
       <!-- Further research & builds -->
@@ -933,7 +938,7 @@
       </h2>
 
       <div id="thesis-grid">
-        <article class="thesis-card reveal-thesis">
+        <article class="thesis-card">
           <span class="thesis-index font-mono text-label text-accent">I</span>
           <h3 class="thesis-title">Deterministic core, LLM at the edges</h3>
           <p class="thesis-body">
@@ -944,7 +949,7 @@
           </p>
         </article>
 
-        <article class="thesis-card reveal-thesis">
+        <article class="thesis-card">
           <span class="thesis-index font-mono text-label text-accent">II</span>
           <h3 class="thesis-title">Homogeneity is a systemic risk</h3>
           <p class="thesis-body">
@@ -954,7 +959,7 @@
           </p>
         </article>
 
-        <article class="thesis-card reveal-thesis">
+        <article class="thesis-card">
           <span class="thesis-index font-mono text-label text-accent">III</span>
           <h3 class="thesis-title">Verification is the edge</h3>
           <p class="thesis-body">

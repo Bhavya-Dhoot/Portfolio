@@ -610,6 +610,7 @@ section {
 ================================================================ */
 #projects {
   background: var(--ink);
+  overflow: visible;
 }
 
 #projects-list {
@@ -1445,23 +1446,56 @@ section {
 /* ── Market Thesis ────────────────────────────────────────────── */
 #thesis {
   background: var(--ink);
+  overflow: visible;
 }
 
+/* Sticky stack: each argument holds the viewport until the next arrives */
 #thesis-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  display: block;
 }
 
 .thesis-card {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: clamp(1.5rem, 2.5vw, 2rem);
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 62ch;
+  border: 0;
+  padding: clamp(1.5rem, 2.5vw, 2rem) 0;
   transition: border-color 0.3s;
 }
 
-.thesis-card:hover {
-  border-color: rgba(200, 255, 0, 0.2);
+/* Oversized numeral anchors each panel, matching the section's serif-free scale */
+.thesis-card .thesis-index {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .thesis-card {
+    position: static;
+    min-height: 0;
+    border-top: 1px solid var(--border);
+    padding-top: clamp(2rem, 6vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 3rem);
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .thesis-card:first-child {
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  .thesis-card .thesis-index {
+    font-size: 1.75rem;
+  }
 }
 
 .thesis-index {
