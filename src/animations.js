@@ -3,14 +3,20 @@
  */
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initAnimations(lenis) {
-    // Sync GSAP ScrollTrigger with Lenis
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
+    // Sync GSAP ScrollTrigger with Lenis (absent under reduced motion)
+    if (lenis) {
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+        ScrollTrigger.addEventListener('refresh', () => lenis.resize());
+    }
 
     // ── Section labels ─────────────────────────────────────────────
     gsap.utils.toArray('.section-label').forEach(el => {
@@ -216,7 +222,23 @@ export function initAnimations(lenis) {
  * Hero entrance animation — called once on page load
  */
 export function initHeroAnimation() {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const tagline = document.querySelector('.hero-role');
+    const taglineText = tagline ? tagline.textContent.replace(/\s+/g, ' ').trim() : '';
+
+    if (REDUCED) {
+        gsap.set('.hero-eyebrow, #hero-tagline, .data-label, #hero-scroll-cue, #hero-ctas', {
+            opacity: 1, x: 0, y: 0,
+        });
+        gsap.set('.hero-line-inner', { y: '0%', opacity: 1 });
+        return null;
+    }
+
+    // Per-character reveal needs final glyph metrics, so this runs after fonts load
+    const split = new SplitType('.hero-line-inner', { types: 'chars', tagName: 'span' });
+    gsap.set('.hero-line-inner', { y: '0%', opacity: 1 });
+    gsap.set(split.chars, { yPercent: 120, opacity: 0, rotateX: -85 });
+
+    const tl = gsap.timeline({ delay: 0.15 });
 
     // Eyebrow line
     tl.to('.hero-eyebrow', {
@@ -226,24 +248,50 @@ export function initHeroAnimation() {
         ease: 'expo.out',
     });
 
-    // Name lines — slide up from masked container
-    tl.to('.hero-line-inner', {
-        y: '0%',
+    // Name: characters fly up and rotate into place
+    tl.to(split.chars, {
+        yPercent: 0,
         opacity: 1,
-        duration: 1.1,
-        stagger: 0.12,
-        ease: 'expo.out',
-    }, '-=0.5');
+        rotateX: 0,
+        duration: 0.95,
+        stagger: 0.02,
+        ease: 'power3.out',
+    }, '-=0.55');
 
-    // Tagline
-    tl.to('#hero-tagline', {
+    // Tagline types in. The authored markup is never destroyed: a sibling span
+    // carries the typed text and the real spans are only hidden once typing has
+    // actually begun, so if the ticker never runs the copy still renders.
+    tl.set('#hero-tagline', { opacity: 1, y: 0 });
+    if (tagline && taglineText) {
+        const typed = document.createElement('span');
+        typed.className = 'hero-typed';
+        typed.setAttribute('aria-hidden', 'true');
+        tagline.appendChild(typed);
+
+        const state = { n: 0 };
+        tl.to(state, {
+            n: taglineText.length,
+            duration: taglineText.length * 0.055,
+            ease: 'none',
+            onStart: () => tagline.classList.add('is-typing'),
+            onUpdate: () => {
+                typed.textContent = taglineText.slice(0, Math.round(state.n));
+            },
+            onComplete: () => {
+                tagline.classList.remove('is-typing');
+                typed.remove();
+            },
+        }, '-=0.25');
+    }
+
+    // CTAs, then the peripheral data labels
+    tl.to('#hero-ctas', {
         opacity: 1,
         y: 0,
-        duration: 0.8,
+        duration: 0.7,
         ease: 'expo.out',
-    }, '-=0.5');
+    }, '-=0.35');
 
-    // Data labels
     tl.to('.data-label', {
         opacity: 1,
         x: 0,

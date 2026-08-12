@@ -1671,3 +1671,36 @@ a:focus-visible,
     display: none;
   }
 }
+/* ── Hero typed tagline ────────────────────────────────────────── */
+/* Real spans hide only while the typed stand-in is running */
+.hero-role.is-typing .role-segment,
+.hero-role.is-typing .role-dot {
+  display: none;
+}
+
+.hero-typed {
+  color: var(--paper);
+}
+
+.hero-role.is-typing::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 0.15em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Reserve the tagline's height so typing does not shift the CTAs below it */
+#hero-tagline { min-height: 1.6em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-role.is-typing::after { animation: none; }
+}
