@@ -130,7 +130,9 @@ export function initSkills() {
             ctx.restore();
         });
 
-        animFrame = requestAnimationFrame(draw);
+        // Guarded: a frame already in flight when the loop is stopped would
+        // otherwise queue a fresh one and restart itself.
+        if (running) animFrame = requestAnimationFrame(draw);
     }
 
     function hexToRgba(hex, alpha) {
@@ -169,15 +171,31 @@ export function initSkills() {
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(canvas.parentElement);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let running = false;
+
     if (reduced) {
         draw(0);               // single static frame
         cancelAnimationFrame(animFrame);
-    } else {
-        animFrame = requestAnimationFrame(draw);
+        return () => resizeObserver.disconnect();
     }
+
+    // Only run while on screen. Ungated this loop does ~210 pairwise distance
+    // checks per frame for the whole session, including while the visitor is
+    // reading a completely different part of the page.
+    const visibility = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !running) {
+            running = true;
+            animFrame = requestAnimationFrame(draw);
+        } else if (!entry.isIntersecting && running) {
+            running = false;
+            cancelAnimationFrame(animFrame);
+        }
+    }, { rootMargin: '10% 0px' });
+    visibility.observe(canvas);
 
     return () => {
         cancelAnimationFrame(animFrame);
+        visibility.disconnect();
         resizeObserver.disconnect();
     };
 }

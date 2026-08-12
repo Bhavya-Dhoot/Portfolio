@@ -26,11 +26,20 @@ export function initCursor() {
         mouseX = e.clientX;
         mouseY = e.clientY;
         cursor.style.opacity = '1';
+        start();
     }, { passive: true });
 
     document.addEventListener('mouseleave', () => {
         cursor.style.opacity = '0';
     });
+
+    let running = false;
+
+    function start() {
+        if (running) return;
+        running = true;
+        animFrame = requestAnimationFrame(render);
+    }
 
     function render() {
         // Dot follows mouse precisely
@@ -43,25 +52,37 @@ export function initCursor() {
         ringY += (mouseY - ringY) * 0.12;
         ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
 
+        // Park the loop once the ring has caught up. Without this it runs for
+        // the whole session, animating a cursor that is not moving.
+        if (Math.abs(mouseX - ringX) < 0.1 && Math.abs(mouseY - ringY) < 0.1) {
+            running = false;
+            return;
+        }
         animFrame = requestAnimationFrame(render);
     }
-    render();
 
     // Magnetic hover
     const magneticEls = document.querySelectorAll('.magnetic');
     magneticEls.forEach(el => {
+        // Cached on enter rather than read per mousemove: this is a hover-only
+        // effect, so the rect cannot change while the pointer is inside it, and
+        // reading it every move is a forced layout per element per event.
+        let rect = null;
+
         el.addEventListener('mouseenter', () => {
+            rect = el.getBoundingClientRect();
             document.body.classList.add('cursor-hover');
         });
 
         el.addEventListener('mouseleave', () => {
+            rect = null;
             document.body.classList.remove('cursor-hover');
             // Reset magnetic translate
             el.style.transform = '';
         });
 
         el.addEventListener('mousemove', (e) => {
-            const rect = el.getBoundingClientRect();
+            if (!rect) return;
             const relX = e.clientX - rect.left - rect.width / 2;
             const relY = e.clientY - rect.top - rect.height / 2;
             const strength = 0.35;

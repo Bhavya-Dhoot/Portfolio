@@ -213,6 +213,16 @@ export function initPayoff() {
         ].map(([k, v]) => `<div class="payoff-metric"><span>${k}</span><b>${v}</b></div>`).join('');
     }
 
+    // The readout is a live region, and draw() runs on every input tick while a
+    // slider is being dragged. Announcing only once the value settles keeps the
+    // canvas at full frame rate without flooding a screen reader.
+    let announceTimer = 0;
+    function announceLater() {
+        readout.setAttribute('aria-live', 'off');
+        clearTimeout(announceTimer);
+        announceTimer = setTimeout(() => readout.setAttribute('aria-live', 'polite'), 500);
+    }
+
     function syncLabel(el) {
         const out = root.querySelector(`[data-out="${el.dataset.in}"]`);
         if (out) out.textContent = el.value;
@@ -241,10 +251,15 @@ export function initPayoff() {
         draw();
     }
 
-    // Any manual adjustment means the visitor has left the preset behind
+    // Any manual adjustment means the visitor has left the preset behind.
+    // Guarded so that dragging a slider does not rewrite this live region on
+    // every input tick, which a screen reader would read out dozens of times.
+    const CUSTOM_NOTE = 'Custom inputs. Premium, Greeks and both curves are recomputed on every move.';
     function clearPreset() {
+        const wasPreset = presetBtns.some((b) => b.classList.contains('is-active'));
+        if (!wasPreset) return;
         presetBtns.forEach((b) => b.classList.remove('is-active'));
-        if (note) note.textContent = 'Custom inputs. Premium, Greeks and both curves are recomputed on every move.';
+        if (note) note.textContent = CUSTOM_NOTE;
     }
 
     presetBtns.forEach((btn) => {
@@ -255,6 +270,7 @@ export function initPayoff() {
         el.addEventListener('input', () => {
             syncLabel(el);
             clearPreset();
+            announceLater();
             draw();
         });
         syncLabel(el);

@@ -88,10 +88,16 @@
           {
             "@type": "Occupation",
             "name": "AI Automation Consultant",
+            "occupationalCategory": "15-1252.00",
             "skills": "n8n workflow automation, voice agents, LLM document extraction, production automation, ERP integration"
           }
         ],
         "worksFor": [
+          {
+            "@type": "Organization",
+            "name": "JM Financial",
+            "url": "https://www.jmfl.com/"
+          },
           {
             "@type": "Organization",
             "name": "The Health Factory"
@@ -123,7 +129,10 @@
           "Multi-Agent Systems",
           "Workflow Automation",
           "Time Series Analysis",
-          "Production Automation"
+          "Production Automation",
+          "Implied Volatility Solvers",
+          "Reconciliation and Exception Matching",
+          "Market Regime Detection"
         ],
         "sameAs": [
           "https://www.linkedin.com/in/bhavya-dhoot/",
@@ -192,20 +201,20 @@
         <span class="font-mono text-label text-muted tracking-widest uppercase">Case Studies</span>
       </div>
 
-      <h2 id="projects-heading" class="section-heading reveal-heading">
+      <h1 id="projects-heading" class="section-heading reveal-heading">
         Quant &amp; AI<br />case studies.
-      </h2>
+      </h1>
 
       <div class="act" data-act="projects">
         <div class="act__pin">
           <div class="act__stage" id="projects-list" role="list">
 
         <!-- Case Study 1: NSE Momentum -->
-        <article class="project-card act__phase" role="listitem" id="proj-momentum" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-momentum">
           <div class="proj-number font-mono text-label text-muted">001</div>
           <div class="proj-body">
             <div class="proj-header">
-              <h3 class="proj-title">NSE Momentum · Dual-Engine Quant Research</h3>
+              <h2 class="proj-title">NSE Momentum · Dual-Engine Quant Research</h2>
               <div class="proj-tags">
                 <span class="proj-tag">Factor Research</span>
                 <span class="proj-tag">Backtesting</span>
@@ -250,11 +259,11 @@
         </article>
 
         <!-- Case Study 2: Kronos NSE -->
-        <article class="project-card act__phase" role="listitem" id="proj-kronos" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-kronos">
           <div class="proj-number font-mono text-label text-muted">002</div>
           <div class="proj-body">
             <div class="proj-header">
-              <h3 class="proj-title">Kronos NSE · Real-Time Market Variance Engine</h3>
+              <h2 class="proj-title">Kronos NSE · Real-Time Market Variance Engine</h2>
               <div class="proj-tags">
                 <span class="proj-tag">Foundation Models</span>
                 <span class="proj-tag">Real-Time Systems</span>
@@ -298,11 +307,11 @@
         </article>
 
         <!-- Case Study 3: Options Pricer -->
-        <article class="project-card act__phase" role="listitem" id="proj-options" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-options">
           <div class="proj-number font-mono text-label text-muted">003</div>
           <div class="proj-body">
             <div class="proj-header">
-              <h3 class="proj-title">Options Pricer &amp; Paper Trading Terminal</h3>
+              <h2 class="proj-title">Options Pricer &amp; Paper Trading Terminal</h2>
               <div class="proj-tags">
                 <span class="proj-tag">Derivatives</span>
                 <span class="proj-tag">Pricing Engines</span>
@@ -346,11 +355,11 @@
         </article>
 
         <!-- Case Study 4: The Health Factory -->
-        <article class="project-card act__phase" role="listitem" id="proj-thf" tabindex="0">
+        <article class="project-card act__phase" role="listitem" id="proj-thf">
           <div class="proj-number font-mono text-label text-muted">004</div>
           <div class="proj-body">
             <div class="proj-header">
-              <h3 class="proj-title">The Health Factory · AI Operations Suite</h3>
+              <h2 class="proj-title">The Health Factory · AI Operations Suite</h2>
               <div class="proj-tags">
                 <span class="proj-tag">Production Automation</span>
                 <span class="proj-tag">ERP Integration</span>
@@ -398,14 +407,14 @@
 
       <!-- Further research & builds -->
       <div id="mini-projects">
-        <h3 id="mini-heading" class="font-mono text-label text-muted tracking-widest uppercase">
+        <h2 id="mini-heading" class="font-mono text-label text-muted tracking-widest uppercase">
           Further research &amp; builds
         </h3>
         <div id="mini-grid" role="list">
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">LLM Flash Crash</h4>
+              <h3 class="mini-title">LLM Flash Crash</h3>
               <a href="https://github.com/Bhavya-Dhoot/LLM-flash-crash" target="_blank" rel="noopener noreferrer"
                 class="mini-link font-mono" aria-label="LLM Flash Crash on GitHub">GitHub <span aria-hidden="true">↗</span></a>
             </div>
@@ -417,7 +426,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">India Quant System</h4>
+              <h3 class="mini-title">India Quant System</h3>
             </div>
             <p class="mini-desc">Nightly ML signal pipeline for NIFTY/BANKNIFTY: 6-model ensemble
               (HMM, GJR-GARCH, LightGBM, LSTM, meta-model) over 80+ features, with VaR limits and
@@ -427,7 +436,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">Viveka · Equity-Research RAG</h4>
+              <h3 class="mini-title">Viveka · Equity-Research RAG</h3>
             </div>
             <p class="mini-desc">Forensic RAG engine answering investor questions over Indian
               listed-company filings, with citations to the exact filing, year, and page across a
@@ -437,7 +446,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">ARAS · Autonomous Research Agents</h4>
+              <h3 class="mini-title">ARAS · Autonomous Research Agents</h3>
               <a href="https://github.com/Bhavya-Dhoot/Autonomous-Research-Agent-System-ARAS-" target="_blank"
                 rel="noopener noreferrer" class="mini-link font-mono" aria-label="ARAS on GitHub">GitHub <span aria-hidden="true">↗</span></a>
             </div>
@@ -449,7 +458,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">DRL Quantum Sensing &amp; Routing</h4>
+              <h3 class="mini-title">DRL Quantum Sensing &amp; Routing</h3>
               <a href="https://github.com/Bhavya-Dhoot/drl-quantum-sensing-routing" target="_blank"
                 rel="noopener noreferrer" class="mini-link font-mono" aria-label="DRL Quantum Sensing on GitHub">GitHub <span aria-hidden="true">↗</span></a>
             </div>
@@ -461,7 +470,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">Quantum Cyclone Classification</h4>
+              <h3 class="mini-title">Quantum Cyclone Classification</h3>
               <a href="https://github.com/Bhavya-Dhoot/quantum-cyclone-classification" target="_blank"
                 rel="noopener noreferrer" class="mini-link font-mono" aria-label="Quantum Cyclone Classification on GitHub">GitHub <span aria-hidden="true">↗</span></a>
             </div>
@@ -473,7 +482,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">SubPlate · Subscription Food Delivery</h4>
+              <h3 class="mini-title">SubPlate · Subscription Food Delivery</h3>
             </div>
             <p class="mini-desc">pnpm/TypeScript monorepo: Expo/React Native app, Fastify 5 +
               PostgreSQL API, shared Zod contracts typed end-to-end, and Cashfree e-mandate
@@ -483,7 +492,7 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
-              <h4 class="mini-title">predictor-102 · Index Prediction</h4>
+              <h3 class="mini-title">predictor-102 · Index Prediction</h3>
               <a href="https://github.com/Bhavya-Dhoot/predictor-102" target="_blank" rel="noopener noreferrer"
                 class="mini-link font-mono" aria-label="predictor-102 on GitHub">GitHub <span aria-hidden="true">↗</span></a>
             </div>
@@ -507,7 +516,7 @@
         <span class="font-mono text-label text-muted">© 2026 Bhavya Dhoot</span>
       </div>
       <div class="footer-col footer-center">
-        <span class="font-mono text-label text-muted">Hand-built · vanilla JS, GSAP, Three.js, canvas</span>
+        <span class="font-mono text-label text-muted">Hand-built · vanilla JS, GSAP, canvas</span>
       </div>
       <div class="footer-col footer-right">
         <a href="#hero" class="footer-top magnetic font-mono text-label" aria-label="Back to top">

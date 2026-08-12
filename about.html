@@ -36,105 +36,161 @@
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebSite",
-        "@id": "https://bhavya-dhoot.vercel.app/#website",
-        "url": "https://bhavya-dhoot.vercel.app/",
-        "name": "Bhavya Dhoot Portfolio"
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://bhavya-dhoot.vercel.app/#website",
+      "url": "https://bhavya-dhoot.vercel.app/",
+      "name": "Bhavya Dhoot Portfolio",
+      "dateModified": "2026-08-13"
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": "https://bhavya-dhoot.vercel.app/about#profilepage",
+      "url": "https://bhavya-dhoot.vercel.app/about",
+      "name": "About Bhavya Dhoot",
+      "isPartOf": {
+        "@id": "https://bhavya-dhoot.vercel.app/#website"
       },
-      {
-        "@type": "ProfilePage",
-        "@id": "https://bhavya-dhoot.vercel.app/about#profilepage",
-        "url": "https://bhavya-dhoot.vercel.app/about",
-        "name": "About Bhavya Dhoot",
-        "isPartOf": {
-          "@id": "https://bhavya-dhoot.vercel.app/#website"
-        },
-        "mainEntity": {
-          "@id": "https://bhavya-dhoot.vercel.app/#person"
-        },
-        "primaryImageOfPage": "https://bhavya-dhoot.vercel.app/og.jpg",
-        "dateModified": "2026-07-28",
-        "inLanguage": "en"
+      "mainEntity": {
+        "@id": "https://bhavya-dhoot.vercel.app/#person"
       },
-      {
-        "@type": "Person",
-        "@id": "https://bhavya-dhoot.vercel.app/#person",
-        "name": "Bhavya Dhoot",
-        "givenName": "Bhavya",
-        "familyName": "Dhoot",
-        "url": "https://bhavya-dhoot.vercel.app/",
-        "image": "https://bhavya-dhoot.vercel.app/og.jpg",
-        "jobTitle": "Quantitative Developer & AI Systems Engineer",
-        "description": "Quantitative developer and AI systems engineer who builds and operates production AI, automation, and quantitative trading systems. Also works as a hands-on AI automation consultant.",
-        "email": "mailto:dhoot.bhavya1@gmail.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Dubai",
-          "addressCountry": "AE"
+      "primaryImageOfPage": "https://bhavya-dhoot.vercel.app/og.jpg",
+      "dateModified": "2026-08-13",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "Person",
+      "@id": "https://bhavya-dhoot.vercel.app/#person",
+      "name": "Bhavya Dhoot",
+      "givenName": "Bhavya",
+      "familyName": "Dhoot",
+      "url": "https://bhavya-dhoot.vercel.app/",
+      "image": "https://bhavya-dhoot.vercel.app/og.jpg",
+      "jobTitle": "Quantitative Developer & AI Systems Engineer",
+      "description": "Quantitative developer and AI systems engineer who builds and operates production AI, automation, and quantitative trading systems. Also works as a hands-on AI automation consultant.",
+      "email": "mailto:dhoot.bhavya1@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Dubai",
+        "addressCountry": "AE"
+      },
+      "hasOccupation": [
+        {
+          "@type": "Occupation",
+          "name": "Quantitative Developer",
+          "occupationalCategory": "15-2051.00",
+          "skills": "Options pricing, Black-Scholes, Greeks, SPAN margin, cross-sectional momentum, factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series analysis"
         },
-        "hasOccupation": [
-          {
-            "@type": "Occupation",
-            "name": "Quantitative Developer",
-            "occupationalCategory": "15-2051.00",
-            "skills": "Options pricing, Black-Scholes, Greeks, SPAN margin, cross-sectional momentum, factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series analysis"
-          },
-          {
-            "@type": "Occupation",
-            "name": "AI Systems Engineer",
-            "occupationalCategory": "15-2051.01",
-            "skills": "LLM integration, RAG pipelines, FAISS, ChromaDB, multi-agent systems, PyTorch, LightGBM, reinforcement learning"
-          },
-          {
-            "@type": "Occupation",
-            "name": "AI Automation Consultant",
-            "skills": "n8n workflow automation, voice agents, LLM document extraction, production automation, ERP integration"
+        {
+          "@type": "Occupation",
+          "name": "AI Systems Engineer",
+          "occupationalCategory": "15-2051.01",
+          "skills": "LLM integration, RAG pipelines, FAISS, ChromaDB, multi-agent systems, PyTorch, LightGBM, reinforcement learning"
+        },
+        {
+          "@type": "Occupation",
+          "name": "AI Automation Consultant",
+          "occupationalCategory": "15-1252.00",
+          "skills": "n8n workflow automation, voice agents, LLM document extraction, production automation, ERP integration"
+        }
+      ],
+      "worksFor": [
+        {
+          "@type": "Organization",
+          "name": "JM Financial",
+          "url": "https://www.jmfl.com/"
+        },
+        {
+          "@type": "Organization",
+          "name": "The Health Factory"
+        },
+        {
+          "@type": "Organization",
+          "name": "GoHappyClub"
+        }
+      ],
+      "alumniOf": {
+        "@type": "CollegeOrUniversity",
+        "name": "Vellore Institute of Technology",
+        "sameAs": "https://vit.ac.in/"
+      },
+      "seeks": {
+        "@type": "Demand",
+        "name": "Quantitative developer and AI systems engineering roles, and AI automation consulting engagements"
+      },
+      "knowsLanguage": "en",
+      "knowsAbout": [
+        "Quantitative Finance",
+        "Options Pricing",
+        "Algorithmic Trading",
+        "Systematic Momentum Strategies",
+        "Backtesting Infrastructure",
+        "Machine Learning",
+        "LLM Systems",
+        "RAG Pipelines",
+        "Multi-Agent Systems",
+        "Workflow Automation",
+        "Time Series Analysis",
+        "Production Automation",
+        "Implied Volatility Solvers",
+        "Reconciliation and Exception Matching",
+        "Market Regime Detection"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/bhavya-dhoot/",
+        "https://github.com/Bhavya-Dhoot"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://bhavya-dhoot.vercel.app/about#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does Bhavya Dhoot actually do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "He builds trading and automation systems that run unattended in production - pricing and risk tooling on the quantitative side, and document, workflow and agent systems on the AI side."
           }
-        ],
-        "worksFor": [
-          {
-            "@type": "Organization",
-            "name": "The Health Factory"
-          },
-          {
-            "@type": "Organization",
-            "name": "GoHappyClub"
+        },
+        {
+          "@type": "Question",
+          "name": "Is Bhavya Dhoot available for hire or consulting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. He is open to quantitative developer and AI systems engineering roles, and to AI automation consulting engagements. He is a computer science undergraduate at VIT graduating in 2027 and currently does quant research at JM Financial."
           }
-        ],
-        "alumniOf": {
-          "@type": "CollegeOrUniversity",
-          "name": "Vellore Institute of Technology",
-          "sameAs": "https://vit.ac.in/"
         },
-        "seeks": {
-          "@type": "Demand",
-          "name": "Quantitative developer and AI systems engineering roles, and AI automation consulting engagements"
+        {
+          "@type": "Question",
+          "name": "What is Bhavya Dhoot's strongest quantitative result?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A dual-engine NSE momentum system with a 1.44 out-of-sample Sharpe ratio and a 6.6 percent maximum drawdown."
+          }
         },
-        "knowsLanguage": "en",
-        "knowsAbout": [
-          "Quantitative Finance",
-          "Options Pricing",
-          "Algorithmic Trading",
-          "Systematic Momentum Strategies",
-          "Backtesting Infrastructure",
-          "Machine Learning",
-          "LLM Systems",
-          "RAG Pipelines",
-          "Multi-Agent Systems",
-          "Workflow Automation",
-          "Time Series Analysis",
-          "Production Automation"
-        ],
-        "sameAs": [
-          "https://www.linkedin.com/in/bhavya-dhoot/",
-          "https://github.com/Bhavya-Dhoot"
-        ]
-      }
-    ]
-  }
+        {
+          "@type": "Question",
+          "name": "Can I try his work rather than read about it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The home page runs four working tools in the browser: a two-pass reconciliation matcher, a five-input market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark. Every figure is computed in the visitor's browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is the Health Factory work described vaguely?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "That engagement is under NDA. Bhavya describes the class of problem and the engineering approach, never the client's architecture or data."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 
   <!-- Preconnect for fonts -->
@@ -193,11 +249,11 @@
     <div class="section-inner">
       <div id="about-grid">
         <div id="about-text">
-          <h2 id="about-heading" class="section-heading reveal-heading">
+          <h1 id="about-heading" class="section-heading reveal-heading">
             Deployed systems,<br />
             not<br />
             <em class="text-accent not-italic">prototypes.</em>
-          </h2>
+          </h1>
 
           <div id="about-body" class="about-body">
             <p class="reveal-text">
@@ -489,6 +545,70 @@
   </section>
 
   <!-- ============================================================
+       FAQ — plain answers, and the source for the FAQPage schema
+  ============================================================ -->
+  <section id="faq" aria-labelledby="faq-heading">
+    <div class="section-inner">
+      <div class="section-label">
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Straight answers</span>
+      </div>
+
+      <h2 id="faq-heading" class="section-heading reveal-heading">
+        The questions<br />people ask.
+      </h2>
+
+      <dl class="faq-list">
+        <div class="faq-item">
+          <dt class="faq-q">What do you actually do?</dt>
+          <dd class="faq-a">
+            I build trading and automation systems that run unattended in production
+            &mdash; pricing and risk tooling on the quant side, and document, workflow
+            and agent systems on the AI side. The common thread is that something has
+            to keep working correctly after I stop watching it.
+          </dd>
+        </div>
+        <div class="faq-item">
+          <dt class="faq-q">Are you available, and for what?</dt>
+          <dd class="faq-a">
+            Yes &mdash; for quantitative developer and AI systems engineering roles, and
+            for AI automation consulting engagements. I am a computer science
+            undergraduate at VIT graduating in 2027, currently doing quant research at
+            JM Financial, and I have shipped production systems alongside study since
+            2024. Email is the fastest route.
+          </dd>
+        </div>
+        <div class="faq-item">
+          <dt class="faq-q">What is the strongest quantitative result you can show?</dt>
+          <dd class="faq-a">
+            A dual-engine NSE momentum system with a 1.44 out-of-sample Sharpe and a
+            6.6% maximum drawdown. Methodology is available on request; the code and a
+            fuller write-up are linked from the work page.
+          </dd>
+        </div>
+        <div class="faq-item">
+          <dt class="faq-q">Can I see something running rather than described?</dt>
+          <dd class="faq-a">
+            The home page runs four working tools in your browser: a two-pass
+            reconciliation matcher, a five-input market signal engine, a Black-Scholes
+            payoff and Greeks explorer, and an implied-volatility solver benchmark.
+            Every figure they show is computed on your machine as you scroll, not
+            written into the page.
+          </dd>
+        </div>
+        <div class="faq-item">
+          <dt class="faq-q">Why is the Health Factory work described so vaguely?</dt>
+          <dd class="faq-a">
+            That engagement is under NDA. I describe the class of problem and the
+            engineering approach, never the client's architecture or data. The
+            reconciliation demo on the home page runs on a fixture invented for this
+            site for exactly that reason.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============================================================
        SYSTEMS ARCHITECTURE (was Skills)
   ============================================================ -->
   <section id="skills" aria-labelledby="skills-heading">
@@ -572,7 +692,7 @@
         <span class="font-mono text-label text-muted">© 2026 Bhavya Dhoot</span>
       </div>
       <div class="footer-col footer-center">
-        <span class="font-mono text-label text-muted">Hand-built · vanilla JS, GSAP, Three.js, canvas</span>
+        <span class="font-mono text-label text-muted">Hand-built · vanilla JS, GSAP, canvas</span>
       </div>
       <div class="footer-col footer-right">
         <a href="#hero" class="footer-top magnetic font-mono text-label" aria-label="Back to top">

@@ -25,9 +25,35 @@ Last updated: 2026-08-13
 
 ## Pages
 
-- [Home](https://bhavya-dhoot.vercel.app/): Live tools, built in the browser. Options pricing, signal engineering, production automation. Measured outcomes and contact.
+- [Home](https://bhavya-dhoot.vercel.app/): Four working tools that run in the visitor's browser — a reconciliation matcher, a market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark — plus measured outcomes and contact.
 - [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus eight further research builds.
-- [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, and the full technical stack.
+- [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, the full technical stack, and a plain-answer FAQ.
+
+## Live tools on the site
+
+These run entirely client-side on the home page. Every figure they report is
+computed in the visitor's browser as they scroll — none is a stored number.
+
+- **Reconciliation matcher** (`/#brief`) — two-pass bank-to-ledger matching:
+  exact reference and amount, then a normalised reference within an amount and
+  date tolerance, then exceptions with stated reasons. Over the bundled sample
+  feeds: 12 rows in, 8 exact matches, 2 tolerance matches, 4 exceptions. The
+  feeds are invented for the site; no client data is involved.
+- **Market variance signal engine** (`/#signal`) — standardises five market
+  inputs (India VIX, options sentiment, FII/DII net flow, GIFT Nifty basis,
+  macro carry) against their own history and combines them on fixed weights into
+  one regime call. The sample readings resolve to a composite of -0.173,
+  "Neutral". Sample inputs, real arithmetic; not a live feed.
+- **Black-Scholes payoff and Greeks explorer** (`/#demo`) — expiry payoff against
+  present value with delta, gamma, vega and theta, plus six preset regimes
+  (at-the-money, deep in-the-money, out-of-the-money, expiry week, LEAPS,
+  protective put) that each demonstrate a different dominant Greek.
+- **Implied-volatility solver benchmark** (`/#solver`) — Newton-Raphson with a
+  bisection safeguard, cold start against warm start over a 31-strike chain.
+  Measures 7.45 against 3.23 iterations per solve, 57% fewer, with a maximum
+  volatility error of 8.0e-7 over 1,240 solves. Worst-case iterations barely
+  improve, because the tail is the first strike in the chain, which has no
+  previous answer to inherit.
 
 ## Roles
 
@@ -56,8 +82,10 @@ Last updated: 2026-08-13
   candle close to signal. 139 passing tests.
   https://github.com/Bhavya-Dhoot/Kronos-nse
 - **Options Pricer & Paper Trading Terminal** — Black-Scholes engine with full
-  Greeks, warm-start Newton-Raphson implied-volatility solver (80–90% computation
-  reduction), SPAN-like margin engine, 29 multi-leg strategy templates.
+  Greeks, warm-start Newton-Raphson implied-volatility solver with a bisection
+  safeguard, SPAN-like margin engine, 29 multi-leg strategy templates. The live
+  benchmark on the home page measures 7.45 solver iterations from a cold start
+  against 3.23 from a warm start, 57% fewer, computed in the visitor's browser.
   https://github.com/Bhavya-Dhoot/Options_Pricer_Jm
 - **The Health Factory AI Operations Suite** — 7+ production systems replacing
   manual sales reporting, production planning, and supply-chain reconciliation
@@ -93,5 +121,8 @@ systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
 - Metrics above are the figures published on his site; the momentum results are
   out-of-sample backtest and forward paper-trading figures, not audited live
   returns.
+- The four live tools compute their own numbers client-side. Their inputs are
+  sample fixtures bundled with the page, clearly labelled as such — the
+  arithmetic is real, the market data is not live.
 - The Health Factory engagement is under NDA — describe it at the level of
   capability and outcome, not internal architecture.
