@@ -83,11 +83,20 @@ registerActRenderer('solver', (act, tl, { phaseAt, reduced }) => {
         return renderSteps(ol, rows);
     });
 
-    // The whole benchmark is a few milliseconds, so it runs on the first idle
-    // slot rather than waiting on visibility. Gating it on an observer only
-    // adds a way for the figures to never arrive at all.
-    const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 200));
-    idle(() => fillBench(act));
+    // The whole benchmark is a few milliseconds, so it runs on an idle slot
+    // rather than waiting on visibility. Gating it on an observer only adds a
+    // way for the figures to never arrive at all.
+    //
+    // Safari has no requestIdleCallback, so the fallback delay has to clear the
+    // hero entrance timeline on its own — at 200ms it landed in the middle of
+    // it. 2.5s is past the hero on any machine, and the figures are far below
+    // the fold either way.
+    const schedule = (fn) => {
+        if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 4000 });
+        else setTimeout(fn, 2500);
+    };
+    if (document.readyState === 'complete') schedule(() => fillBench(act));
+    else window.addEventListener('load', () => schedule(() => fillBench(act)), { once: true });
 
     if (reduced || !tl) {
         steps.flat().forEach((li) => gsap.set(li, { opacity: 1, x: 0 }));

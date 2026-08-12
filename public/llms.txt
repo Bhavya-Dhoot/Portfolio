@@ -7,6 +7,7 @@
 > Vellore Institute of Technology, class of 2027. Open to quant and AI roles.
 
 Site: https://bhavya-dhoot.vercel.app/
+Full text: https://bhavya-dhoot.vercel.app/llms-full.txt
 Contact: dhoot.bhavya1@gmail.com
 GitHub: https://github.com/Bhavya-Dhoot
 LinkedIn: https://www.linkedin.com/in/bhavya-dhoot/

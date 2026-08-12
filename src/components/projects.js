@@ -20,11 +20,21 @@ function initProjectCanvas(n, drawFn) {
     // offsetWidth/Height ignore the .proj-visual pre-reveal scale(0.95)
     // transform; getBoundingClientRect() would bake that 5% into the buffer.
     function resize() {
+        // setTransform, not scale: scale() compounds on every call, so a second
+        // resize would double the device-pixel factor.
         canvas.width = canvas.offsetWidth * window.devicePixelRatio;
         canvas.height = canvas.offsetHeight * window.devicePixelRatio;
-        ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+        ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
     }
     resize();
+
+    // Sized once, the buffer went stale on rotation or any viewport change and
+    // the card's visual stretched. Redraw only if it is currently animating.
+    const resizeObserver = new ResizeObserver(() => {
+        resize();
+        if (!animFrame) drawFn(ctx, canvas.offsetWidth, canvas.offsetHeight, t);
+    });
+    resizeObserver.observe(canvas);
 
     let t = 0;
     let animFrame = null;

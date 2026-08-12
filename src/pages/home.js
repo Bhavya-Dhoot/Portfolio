@@ -3,7 +3,7 @@
  */
 
 import { initCore, onFontsReady } from '../core.js';
-import { initHeroAnimation } from '../animations.js';
+import { initHeroAnimation } from '../hero.js';
 import { initGrid } from '../svg/grid.js';
 import { initDashboard } from '../components/dashboard.js';
 import { initPayoff } from '../components/payoff.js';

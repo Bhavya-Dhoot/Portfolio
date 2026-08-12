@@ -51,4 +51,17 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+# Bulk training scrapers that surface no citation and are widely reported to
+# ignore crawl-delay. Nothing to gain here: they cannot cite this profile back
+# to anyone asking for a quant developer, which is the whole point of the
+# allowances above.
+User-agent: Bytespider
+Disallow: /
+
+User-agent: ImagesiftBot
+Disallow: /
+
+User-agent: Scrapy
+Disallow: /
+
 Sitemap: https://bhavya-dhoot.vercel.app/sitemap.xml
