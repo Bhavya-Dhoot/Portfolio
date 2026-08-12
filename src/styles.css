@@ -1740,6 +1740,14 @@ a:focus-visible,
   padding: 0 clamp(1.5rem, 5vw, 4rem);
 }
 
+/* The list ids carry display:flex from the pre-act layout, and an id outranks
+   a class, so the stage rule has to match on both to win. */
+#experience-list.act__stage,
+#projects-list.act__stage {
+  display: grid;
+  place-items: center;
+}
+
 /* Every phase occupies the same cell; the timeline decides which is lit */
 .act__phase {
   grid-area: 1 / 1;
@@ -1775,7 +1783,9 @@ a:focus-visible,
     overflow: visible;
   }
 
-  .act__stage {
+  .act__stage,
+  #experience-list.act__stage,
+  #projects-list.act__stage {
     display: block;
     padding: 0;
   }
