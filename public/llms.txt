@@ -30,6 +30,7 @@ Last updated: 2026-07-28
 - [Case studies](https://bhavya-dhoot.vercel.app/#projects): Four detailed builds plus eight further research projects.
 - [Measured outcomes](https://bhavya-dhoot.vercel.app/#dashboard): Verifiable metrics from shipped systems.
 - [Systems thinking](https://bhavya-dhoot.vercel.app/#thesis): How he approaches system design and verification.
+- [Live demo](https://bhavya-dhoot.vercel.app/#demo): Interactive Black-Scholes payoff and Greeks explorer running in the browser.
 - [Technical stack](https://bhavya-dhoot.vercel.app/#skills): Languages, quant methods, AI/ML, infrastructure.
 - [Contact](https://bhavya-dhoot.vercel.app/#contact): Email, LinkedIn, GitHub.
 

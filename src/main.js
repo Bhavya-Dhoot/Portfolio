@@ -1,22 +1,26 @@
 /**
  * main.js — Entry point
- * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, skills, projects, pipeline, dashboard, contact-3d
+ * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, portrait, skills, projects, dashboard
  */
 
 import Lenis from 'lenis';
 import { initCursor }     from './cursor.js';
 import { initNav }        from './components/nav.js';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initAnimations, initHeroAnimation } from './animations.js';
 import { initGrid }       from './svg/grid.js';
 import { initPortrait }   from './components/portrait.js';
 import { initSkills }     from './components/skills.js';
 import { initProjects }   from './components/projects.js';
-import { initContact3D }  from './components/contact-3d.js';
 
 import { initDashboard }  from './components/dashboard.js';
+import { initPayoff }     from './components/payoff.js';
+
+const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // ── 1. Smooth Scroll (Lenis) ────────────────────────────────────
-const lenis = new Lenis({
+// Not initialized under reduced motion: these users get native scroll.
+const lenis = prefersReduced ? null : new Lenis({
     duration: 1.25,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
@@ -41,7 +45,20 @@ initPortrait();
 initAnimations(lenis);
 
 // ── 7. Hero Entrance ────────────────────────────────────────────
-initHeroAnimation();
+// Gated on fonts: the per-character reveal splits text, so it needs final
+// glyph metrics or the characters land at the wrong offsets.
+let booted = false;
+function boot() {
+    if (booted) return;
+    booted = true;
+    initHeroAnimation();
+}
+if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(boot);
+    setTimeout(boot, 1500);          // safety net if fonts never resolve
+} else {
+    boot();
+}
 
 // ── 8. Skills Canvas ────────────────────────────────────────────
 initSkills();
@@ -53,8 +70,9 @@ initProjects();
 // ── 11. KPI Dashboard ───────────────────────────────────────────
 initDashboard();
 
-// ── 12. Contact 3D Scene ────────────────────────────────────────
-initContact3D();
+// ── 12. Options payoff explorer ─────────────────────────────────
+initPayoff();
+
 
 // ── 13. Section label observer ──────────────────────────────────
 const labelObserver = new IntersectionObserver(
@@ -67,29 +85,21 @@ const labelObserver = new IntersectionObserver(
 );
 document.querySelectorAll('.section-label').forEach(el => labelObserver.observe(el));
 
-// ── 14. Scroll progress bar ─────────────────────────────────────
+// ── 14. Scroll progress bar (driven by ScrollTrigger, one scroll authority) ──
 const progressBar = document.getElementById('scroll-progress');
 if (progressBar) {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.scrollY;
-        const total = document.documentElement.scrollHeight - window.innerHeight;
-        progressBar.style.width = total > 0 ? `${(scrolled / total) * 100}%` : '0%';
-    }, { passive: true });
+    ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: (self) => {
+            progressBar.style.width = `${self.progress * 100}%`;
+        },
+    });
 }
 
 // ── 15. Availability badge reveal ───────────────────────────────
 const badge = document.getElementById('availability-badge');
 if (badge) setTimeout(() => badge.classList.add('visible'), 1800);
-
-// ── 16. Hero CTAs entrance ──────────────────────────────────────
-const ctaWrap = document.getElementById('hero-ctas');
-if (ctaWrap) {
-    setTimeout(() => {
-        ctaWrap.style.transition = 'opacity 0.7s 1.3s var(--ease-expo), transform 0.7s 1.3s var(--ease-expo)';
-        ctaWrap.style.opacity = '1';
-        ctaWrap.style.transform = 'none';
-    }, 50);
-}
 
 // ── 17. Section in-view class ───────────────────────────────────
 const sectionObserver = new IntersectionObserver(
@@ -116,17 +126,17 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         const target = document.getElementById(id);
         if (target) {
             e.preventDefault();
-            lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+            if (lenis) lenis.scrollTo(target, { duration: 1.4, easing: (t) => 1 - Math.pow(1 - t, 4) });
+            else target.scrollIntoView({ behavior: 'auto', block: 'start' });
         }
     });
 });
 
 // ── 20. Reduced motion fallback ─────────────────────────────────
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if (prefersReduced) {
     document.documentElement.style.setProperty('--ease-expo', 'linear');
     document.querySelectorAll(
-        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue, .exp-highlights li, .cs-block'
+        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, .exp-highlights li, .cs-block'
     ).forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';
@@ -134,7 +144,9 @@ if (prefersReduced) {
 }
 
 // ── 21. Page visibility — pause Lenis when hidden ───────────────
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden) lenis.stop();
-    else lenis.start();
-});
+if (lenis) {
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) lenis.stop();
+        else lenis.start();
+    });
+}

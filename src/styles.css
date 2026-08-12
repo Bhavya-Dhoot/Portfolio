@@ -363,25 +363,6 @@ section {
   font-size: 1.2em;
 }
 
-#hero-scroll-cue {
-  position: absolute;
-  left: clamp(1.5rem, 5vw, 4rem);
-  bottom: clamp(1.5rem, 4vh, 3rem);
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.75rem;
-  opacity: 0;
-}
-
-.scroll-cue-line {
-  width: 1px;
-  height: 60px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-  animation: scrollPulse 2.5s ease-in-out infinite;
-}
-
 @keyframes scrollPulse {
 
   0%,
@@ -487,6 +468,7 @@ section {
 ================================================================ */
 #experience {
   background: var(--surface);
+  overflow: visible;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -609,6 +591,7 @@ section {
 ================================================================ */
 #projects {
   background: var(--ink);
+  overflow: visible;
 }
 
 #projects-list {
@@ -1215,18 +1198,6 @@ section {
   background: #070707 !important;
 }
 
-#contact-3d-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-#contact-3d-wrap canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
 .contact-inner {
   position: relative;
   z-index: 1;
@@ -1318,10 +1289,6 @@ section {
   .hero-cta-secondary {
     justify-content: center;
   }
-
-  #contact-3d-wrap {
-    opacity: 0.35;
-  }
 }
 
 /* ================================================================
@@ -1329,13 +1296,6 @@ section {
 ================================================================ */
 
 /* ── Pipeline Section ─────────────────────────────────────────── */
-#pipeline {
-  position: relative;
-  height: 250vh;
-  background: #070707;
-  margin: 0;
-  padding: 0;
-}
 
 #pipeline-sticky {
   position: sticky;
@@ -1348,36 +1308,11 @@ section {
   overflow: hidden;
 }
 
-#pipeline-3d-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#pipeline-3d-wrap canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-
 #pipeline-phases {
   position: relative;
   z-index: 1;
   grid-column: 2;
   padding: clamp(2rem, 5vw, 5rem);
-}
-
-.pipeline-phase {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
-  position: absolute;
-  top: 50%;
-  max-width: 420px;
-  pointer-events: none;
 }
 
 .pipeline-phase.active {
@@ -1437,14 +1372,6 @@ section {
   z-index: 2;
 }
 
-.pipeline-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.3s, transform 0.3s;
-}
-
 .pipeline-dot.active {
   background: var(--accent);
   transform: scale(1.5);
@@ -1500,23 +1427,56 @@ section {
 /* ── Market Thesis ────────────────────────────────────────────── */
 #thesis {
   background: var(--ink);
+  overflow: visible;
 }
 
+/* Sticky stack: each argument holds the viewport until the next arrives */
 #thesis-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
+  display: block;
 }
 
 .thesis-card {
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  padding: clamp(1.5rem, 2.5vw, 2rem);
+  position: sticky;
+  top: 0;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 62ch;
+  border: 0;
+  padding: clamp(1.5rem, 2.5vw, 2rem) 0;
   transition: border-color 0.3s;
 }
 
-.thesis-card:hover {
-  border-color: rgba(200, 255, 0, 0.2);
+/* Oversized numeral anchors each panel, matching the section's serif-free scale */
+.thesis-card .thesis-index {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  color: var(--accent);
+}
+
+@media (max-width: 767px) {
+  .thesis-card {
+    position: static;
+    min-height: 0;
+    border-top: 1px solid var(--border);
+    padding-top: clamp(2rem, 6vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 3rem);
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .thesis-card:first-child {
+    border-top: 0;
+    margin-top: 0;
+  }
+
+  .thesis-card .thesis-index {
+    font-size: 1.75rem;
+  }
 }
 
 .thesis-index {
@@ -1575,9 +1535,7 @@ section {
 @media (max-width: 900px) {
   #pipeline-sticky { grid-template-columns: 1fr; }
   #pipeline-phases { padding: clamp(1.5rem, 4vw, 3rem); }
-  .pipeline-phase { position: relative; top: auto; transform: none; max-width: 100%; }
   .pipeline-phase.active { transform: none; }
-  #pipeline-3d-wrap { opacity: 0.2; }
   #kpi-grid { grid-template-columns: repeat(2, 1fr); }
     #thesis-grid { grid-template-columns: 1fr; }
   .case-study-frame { grid-template-columns: 1fr; }
@@ -1585,7 +1543,6 @@ section {
 
 @media (max-width: 600px) {
   #kpi-grid { grid-template-columns: 1fr; }
-  #pipeline { height: 150vh; }
 }
 
 /* ================================================================
@@ -1728,5 +1685,301 @@ a:focus-visible,
      navigation. Add a hamburger if mobile analytics ever demand it. */
   #nav-links {
     display: none;
+  }
+}
+/* ── Hero typed tagline ────────────────────────────────────────── */
+/* Real spans hide only while the typed stand-in is running */
+.hero-role.is-typing .role-segment,
+.hero-role.is-typing .role-dot {
+  display: none;
+}
+
+.hero-typed {
+  color: var(--paper);
+}
+
+.hero-role.is-typing::after {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 0.15em;
+  background: var(--accent);
+  vertical-align: text-bottom;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+/* Reserve the tagline's height so typing does not shift the CTAs below it */
+#hero-tagline { min-height: 1.6em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-role.is-typing::after { animation: none; }
+}
+
+/* ================================================================
+   SCROLL ACTS — pinned stage where phases advance on scrub
+================================================================ */
+.act__pin {
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.act__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+/* The list ids carry display:flex from the pre-act layout, and an id outranks
+   a class, so the stage rule has to match on both to win. */
+#experience-list.act__stage,
+#projects-list.act__stage {
+  display: grid;
+  place-items: center;
+}
+
+/* Every phase occupies the same cell; the timeline decides which is lit */
+.act__phase {
+  grid-area: 1 / 1;
+  width: 100%;
+}
+
+/* Act progress ticks: which phase of how many */
+.act__ticks {
+  position: absolute;
+  left: clamp(1.5rem, 5vw, 4rem);
+  bottom: clamp(1.5rem, 4vh, 3rem);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.act__tick {
+  width: 22px;
+  height: 1px;
+  background: var(--border);
+  transition: background 0.35s var(--ease-expo);
+}
+
+.act__tick.is-active {
+  background: var(--accent);
+}
+
+/* Pins are disabled below 768px, so the stage returns to a normal stack */
+@media (max-width: 767px) {
+  .act__pin {
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .act__stage,
+  #experience-list.act__stage,
+  #projects-list.act__stage {
+    display: block;
+    padding: 0;
+  }
+
+  .act__phase {
+    opacity: 1 !important;
+    transform: none !important;
+    border-top: 1px solid var(--border);
+    padding-top: clamp(2rem, 6vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 3rem);
+  }
+
+  .act__phase:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .act__ticks {
+    display: none;
+  }
+}
+
+/* ================================================================
+   PAYOFF EXPLORER
+================================================================ */
+#demo {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.demo-lede {
+  font-size: clamp(0.9375rem, 1.3vw, 1.0625rem);
+  line-height: 1.7;
+  color: rgba(240, 237, 232, 0.6);
+  max-width: 60ch;
+  margin-top: -2rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+#payoff {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: stretch;
+}
+
+.payoff-chart {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1rem;
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+}
+
+.payoff-canvas {
+  width: 100%;
+  flex: 1;
+  min-height: 280px;
+  display: block;
+}
+
+.payoff-legend {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 0.75rem;
+}
+
+.payoff-key::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.payoff-key--payoff::before { background: var(--accent); }
+.payoff-key--value::before  { background: rgba(240, 237, 232, 0.5); }
+
+.payoff-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.payoff-types {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.payoff-type {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.payoff-type[aria-pressed='true'] {
+  color: var(--ink);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.payoff-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.payoff-control b {
+  color: var(--paper);
+  font-weight: 500;
+}
+
+.payoff-control input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 1px;
+  background: var(--border);
+  cursor: pointer;
+}
+
+.payoff-control input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.payoff-control input[type='range']::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.payoff-control input[type='range']:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.payoff-readout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  margin-top: auto;
+}
+
+.payoff-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.payoff-metric span {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.payoff-metric b {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--paper);
+}
+
+@media (max-width: 900px) {
+  #payoff {
+    grid-template-columns: 1fr;
   }
 }
