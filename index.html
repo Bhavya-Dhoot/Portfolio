@@ -332,6 +332,131 @@
   </section>
 
   <!-- ============================================================
+       BRIEF ACT: a sentence becomes a running system
+  ============================================================ -->
+  <section id="brief" aria-labelledby="brief-heading">
+    <div class="act" data-act="brief" data-act-scale="1.15">
+      <div class="act__pin">
+        <div class="act__stichwort">
+          <h2 id="brief-heading" class="section-heading">
+            A sentence,<br />then a system.
+          </h2>
+        </div>
+
+        <div class="act__stage">
+          <!-- Phase 1: the brief reforms as the rule -->
+          <div class="act__phase brief-phase" data-hold="2.4" aria-hidden="true">
+            <div class="brief">
+              <span class="brief__cap font-mono">The brief</span>
+              <p class="brief__line">&ldquo;Just tell me every morning which payments did not land.&rdquo;</p>
+              <p class="brief__code font-mono">match(bank, ledger) &rarr; exact, then tolerance, then exceptions</p>
+            </div>
+          </div>
+
+          <!-- Phase 2: the rule, run -->
+          <div class="act__phase">
+            <p class="demo-lede">
+              Two passes. Exact reference and amount first, then a normalised
+              reference inside an amount and date tolerance, because feeds disagree
+              about spacing, casing and value dates. What survives both is an
+              exception with a stated reason &mdash; never a silent drop.
+            </p>
+
+            <div class="pipe-grid">
+              <div class="pipe-stats">
+                <div class="pipe-stat">
+                  <span class="font-mono">Rows in</span>
+                  <b class="font-mono" data-pipe="rows">&mdash;</b>
+                </div>
+                <div class="pipe-stat">
+                  <span class="font-mono">Exact</span>
+                  <b class="font-mono" data-pipe="exact">&mdash;</b>
+                </div>
+                <div class="pipe-stat">
+                  <span class="font-mono">Tolerance</span>
+                  <b class="font-mono" data-pipe="fuzzy">&mdash;</b>
+                </div>
+                <div class="pipe-stat pipe-stat--hero">
+                  <span class="font-mono">Exceptions</span>
+                  <b class="font-mono" data-pipe="exceptions">&mdash;</b>
+                </div>
+              </div>
+
+              <div class="pipe-panel">
+                <span class="pipe-panel__cap font-mono">Matched &mdash; first four</span>
+                <ul class="pipe-sample"></ul>
+                <span class="pipe-panel__cap font-mono">Exceptions &mdash; all, with reasons</span>
+                <ul class="pipe-exceptions"></ul>
+              </div>
+            </div>
+
+            <p class="bench-foot font-mono">
+              Sample bank and ledger feeds bundled with this page, invented for it.
+              No client data, and nothing about any client's architecture. The
+              matching logic is real and runs in your browser; the counts above are
+              whatever it just produced.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SIGNAL ACT: five inputs, one regime call
+  ============================================================ -->
+  <section id="signal" aria-labelledby="signal-heading">
+    <div class="act" data-act="signal" data-act-scale="1.1">
+      <div class="act__pin">
+        <div class="act__stichwort">
+          <h2 id="signal-heading" class="section-heading">
+            Five inputs,<br />one call.
+          </h2>
+        </div>
+
+        <div class="act__stage">
+          <!-- Phase 1: the engine assembling itself -->
+          <div class="act__phase signal-phase" data-hold="2.4" aria-hidden="true">
+            <div class="signalviz">
+              <canvas class="signalviz__canvas" role="img"
+                aria-label="Five market inputs converging on a variance engine and resolving into one regime call"></canvas>
+            </div>
+          </div>
+
+          <!-- Phase 2: the arithmetic, shown -->
+          <div class="act__phase">
+            <p class="demo-lede">
+              The variance engine standardises every input against its own history,
+              then combines them on fixed weights. One number, one regime, and every
+              term in the sum visible.
+            </p>
+
+            <div class="signal-rows"></div>
+
+            <div class="signal-out">
+              <div class="signal-out__cell">
+                <span class="font-mono">Composite</span>
+                <b class="font-mono" data-signal="composite">&mdash;</b>
+              </div>
+              <div class="signal-out__cell signal-out__cell--hero">
+                <span class="font-mono">Regime</span>
+                <b class="font-mono" data-signal="regime">&mdash;</b>
+              </div>
+            </div>
+
+            <p class="bench-foot font-mono">
+              The five readings are a sample bundled with this page, not a live feed.
+              The z-scores, the weighted composite and the regime call are computed
+              from them in your browser. This is the shape of the Kronos NSE engine,
+              not its production data.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        LIVE DEMO: options payoff explorer
   ============================================================ -->
   <section id="demo" aria-labelledby="demo-heading">
@@ -493,9 +618,11 @@
 
             <p class="bench-foot font-mono">
               Newton-Raphson with a bisection safeguard, checked against a round-trip
-              through Black-Scholes before it runs. Iterations, not milliseconds:
-              at this size wall clock is dominated by timer resolution and JIT warm-up,
-              while the iteration count is exact and is what bounds latency.
+              through Black-Scholes before it runs. Iterations, not milliseconds: at
+              this size wall clock is dominated by timer resolution and JIT warm-up,
+              while the iteration count is exact. Note the worst case barely moves &mdash;
+              warming the start cuts the mean, not the tail, because the tail is the
+              first strike in the chain, which has no previous answer to inherit.
             </p>
           </div>
         </div>

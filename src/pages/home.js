@@ -9,6 +9,8 @@ import { initDashboard } from '../components/dashboard.js';
 import { initPayoff } from '../components/payoff.js';
 import '../acts/pricing.js';   // registers the pricing act renderer
 import '../acts/solver.js';    // registers the solver act renderer
+import '../acts/signal.js';    // registers the signal act renderer
+import '../acts/brief.js';     // registers the brief act renderer
 
 initCore();
 initGrid();
