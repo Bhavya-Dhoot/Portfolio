@@ -487,6 +487,7 @@ section {
 ================================================================ */
 #experience {
   background: var(--surface);
+  overflow: visible;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
@@ -1703,4 +1704,82 @@ a:focus-visible,
 
 @media (prefers-reduced-motion: reduce) {
   .hero-role.is-typing::after { animation: none; }
+}
+
+/* ================================================================
+   SCROLL ACTS — pinned stage where phases advance on scrub
+================================================================ */
+.act__pin {
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.act__stage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+}
+
+/* Every phase occupies the same cell; the timeline decides which is lit */
+.act__phase {
+  grid-area: 1 / 1;
+  width: 100%;
+}
+
+/* Act progress ticks: which phase of how many */
+.act__ticks {
+  position: absolute;
+  left: clamp(1.5rem, 5vw, 4rem);
+  bottom: clamp(1.5rem, 4vh, 3rem);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.act__tick {
+  width: 22px;
+  height: 1px;
+  background: var(--border);
+  transition: background 0.35s var(--ease-expo);
+}
+
+.act__tick.is-active {
+  background: var(--accent);
+}
+
+/* Pins are disabled below 768px, so the stage returns to a normal stack */
+@media (max-width: 767px) {
+  .act__pin {
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+
+  .act__stage {
+    display: block;
+    padding: 0;
+  }
+
+  .act__phase {
+    opacity: 1 !important;
+    transform: none !important;
+    border-top: 1px solid var(--border);
+    padding-top: clamp(2rem, 6vw, 3rem);
+    margin-top: clamp(2rem, 6vw, 3rem);
+  }
+
+  .act__phase:first-child {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .act__ticks {
+    display: none;
+  }
 }

@@ -141,8 +141,12 @@ export function initAnimations(lenis) {
         );
     });
 
+    // ── Scroll acts ────────────────────────────────────────────────
+    buildActs();
+
     // ── Experience line expansion ──────────────────────────────────
-    gsap.utils.toArray('.exp-item').forEach(item => {
+    // Act phases are driven by the act timeline, so they are skipped here.
+    gsap.utils.toArray('.exp-item').filter(el => !el.closest('.act__stage')).forEach(item => {
         const highlights = item.querySelectorAll('.exp-highlights li');
         if (!highlights.length) return;
         gsap.fromTo(highlights,
@@ -215,6 +219,73 @@ export function initAnimations(lenis) {
                 },
             }
         );
+    });
+}
+
+/**
+ * Scroll acts — a pinned stage whose phases advance as you scrub through it.
+ * Pinning is confined to >=768px: mobile browsers handle 100svh pins badly, so
+ * there the stage falls back to a plain stacked list (see the CSS).
+ */
+function buildActs() {
+    const acts = gsap.utils.toArray('.act');
+    if (!acts.length) return;
+
+    acts.forEach((act) => {
+        const pin = act.querySelector('.act__pin');
+        const phases = gsap.utils.toArray(act.querySelectorAll('.act__phase'));
+        if (!pin || phases.length < 2) return;
+
+        // Progress ticks, one per phase
+        const ticks = act.querySelector('.act__ticks');
+        if (ticks && !ticks.children.length) {
+            phases.forEach(() => {
+                const t = document.createElement('span');
+                t.className = 'act__tick';
+                ticks.appendChild(t);
+            });
+        }
+        const tickEls = ticks ? Array.from(ticks.children) : [];
+        const markActive = (i) => tickEls.forEach((t, n) => t.classList.toggle('is-active', n === i));
+
+        if (REDUCED) {
+            gsap.set(phases, { opacity: 1, y: 0 });
+            markActive(0);
+            return;
+        }
+
+        gsap.matchMedia().add('(min-width: 768px)', () => {
+            gsap.set(phases, { opacity: 0, y: 40 });
+            gsap.set(phases[0], { opacity: 1, y: 0 });
+            markActive(0);
+
+            const tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: act,
+                    start: 'top top',
+                    end: () => `+=${(phases.length - 1) * window.innerHeight * 0.85}`,
+                    pin: pin,
+                    scrub: 1,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true,
+                    onUpdate: (self) => {
+                        const i = Math.round(self.progress * (phases.length - 1));
+                        markActive(i);
+                    },
+                },
+            });
+
+            phases.forEach((phase, i) => {
+                if (i === 0) return;
+                tl.to(phases[i - 1], { opacity: 0, y: -40, duration: 0.4, ease: 'none' }, i - 1)
+                  .fromTo(phase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: 'none' }, i - 1 + 0.15);
+            });
+
+            // matchMedia cleanup reverts the tween-set inline styles
+            return () => {
+                gsap.set(phases, { clearProps: 'opacity,transform' });
+            };
+        });
     });
 }
 
