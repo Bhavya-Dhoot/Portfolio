@@ -7,6 +7,7 @@ import { initHeroAnimation } from '../animations.js';
 import { initGrid } from '../svg/grid.js';
 import { initDashboard } from '../components/dashboard.js';
 import { initPayoff } from '../components/payoff.js';
+import '../acts/pricing.js';   // registers the pricing act renderer
 
 initCore();
 initGrid();

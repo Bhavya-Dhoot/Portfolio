@@ -335,17 +335,34 @@
        LIVE DEMO: options payoff explorer
   ============================================================ -->
   <section id="demo" aria-labelledby="demo-heading">
-    <div class="section-inner">
-      <h2 id="demo-heading" class="section-heading reveal-heading">
-        Price an option,<br />live.
-      </h2>
+    <div class="act" data-act="pricing" data-act-scale="1.15">
+      <div class="act__pin">
+        <div class="act__stichwort">
+          <h2 id="demo-heading" class="section-heading">
+            Price an option,<br />live.
+          </h2>
+        </div>
 
-      <p class="demo-lede reveal-text">
-        The same Black-Scholes engine from the pricing terminal, running in your browser.
-        Move the inputs and watch the payoff, the present value, and the Greeks respond.
-      </p>
+        <div class="act__stage">
+          <!-- Phase 1: the stack, exploded, with a pulse falling through it -->
+          <div class="act__phase stack-phase" data-hold="2.6" aria-hidden="true">
+            <div class="stackviz">
+              <div class="stackviz__plate" data-layer="0"><span class="stackviz__co font-mono">Market data</span></div>
+              <div class="stackviz__plate" data-layer="1"><span class="stackviz__co font-mono">Black-Scholes core</span></div>
+              <div class="stackviz__plate" data-layer="2"><span class="stackviz__co font-mono">Greeks</span></div>
+              <div class="stackviz__plate" data-layer="3"><span class="stackviz__co font-mono">Margin</span></div>
+              <div class="stackviz__pulse" aria-hidden="true"></div>
+            </div>
+          </div>
 
-      <div id="payoff" class="reveal-text">
+          <!-- Phase 2: the working pricer -->
+          <div class="act__phase">
+            <p class="demo-lede">
+              The same Black-Scholes engine from the pricing terminal, running in your browser.
+              Move the inputs and watch the payoff, the present value, and the Greeks respond.
+            </p>
+
+            <div id="payoff">
         <div class="payoff-chart">
           <canvas class="payoff-canvas" role="img"
             aria-label="Option payoff at expiry against present theoretical value across a range of spot prices"></canvas>
@@ -379,8 +396,45 @@
           </label>
 
           <div class="payoff-readout font-mono" aria-live="polite"></div>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WORK TEASER
+  ============================================================ -->
+  <section id="selected" aria-labelledby="selected-heading">
+    <div class="section-inner">
+      <h2 id="selected-heading" class="section-heading reveal-heading">
+        Things I have<br />shipped.
+      </h2>
+
+      <div id="selected-grid">
+        <a class="selected-card reveal-project" href="/work#proj-momentum">
+          <span class="selected-metric font-mono">1.44</span>
+          <span class="selected-label font-mono">OOS Sharpe</span>
+          <span class="selected-title">NSE Momentum</span>
+          <span class="selected-desc">Survivorship-free cross-sectional momentum, cross-validated in Rust.</span>
+        </a>
+        <a class="selected-card reveal-project" href="/work#proj-kronos">
+          <span class="selected-metric font-mono">&lt;340ms</span>
+          <span class="selected-label font-mono">Candle to signal</span>
+          <span class="selected-title">Kronos NSE</span>
+          <span class="selected-desc">A 24.7M-parameter model feeding a five-layer market variance engine.</span>
+        </a>
+        <a class="selected-card reveal-project" href="/work#proj-options">
+          <span class="selected-metric font-mono">80-90%</span>
+          <span class="selected-label font-mono">Compute cut</span>
+          <span class="selected-title">Options Pricer</span>
+          <span class="selected-desc">Warm-start implied-vol solver and a SPAN-like margin engine.</span>
+        </a>
+      </div>
+
+      <a href="/work" class="selected-all font-mono">All work <span aria-hidden="true">&#8599;</span></a>
     </div>
   </section>
 

@@ -84,6 +84,20 @@ export function buildActs() {
             return;
         }
 
+        // Below the pin breakpoint there is no timeline, so the act resolves to
+        // its finished state and any renderer draws once, statically.
+        gsap.matchMedia().add('(max-width: 767px)', () => {
+            gsap.set(phases, { opacity: 1, y: 0 });
+            gsap.set(stichwort, { opacity: 1, y: 0, scale: 1, filter: 'none' });
+            markActive(0);
+            act.classList.add('is-settled');
+            const cleanup = renderer ? renderer(act, null, { phases, phaseAt: () => 0, reduced: true }) : null;
+            return () => {
+                if (typeof cleanup === 'function') cleanup();
+                gsap.set(phases, { clearProps: 'opacity,transform' });
+            };
+        });
+
         gsap.matchMedia().add(DESKTOP, () => {
             if (phases.length) {
                 gsap.set(phases, { opacity: 0, y: 40 });
@@ -97,7 +111,9 @@ export function buildActs() {
                     trigger: act,
                     start: 'top top',
                     end: () => {
-                        const steps = Math.max(1, phases.length - 1);
+                        const held = gsap.utils.toArray(act.querySelectorAll('.act__phase'))
+                            .reduce((a, p) => a + parseFloat(p.dataset.hold || '0'), 0);
+                        const steps = Math.max(1, phases.length - 1) + held;
                         return `+=${(steps + 1.7) * window.innerHeight * 0.9 * scale}`;
                     },
                     pin: pin,
@@ -117,12 +133,18 @@ export function buildActs() {
             });
 
             const t0 = stichwortBeat(tl, stichwort);
-            const phaseAt = (i) => t0 + i;
+            // A phase may reserve extra timeline units before the next one
+            // arrives, via data-hold, so a renderer can play out inside it.
+            const holds = phases.map((p) => parseFloat(p.dataset.hold || '0'));
+            const phaseAt = (i) => t0 + i + holds.slice(0, i).reduce((a, b) => a + b, 0);
 
             phases.forEach((phase, i) => {
                 if (i === 0) return;
-                tl.to(phases[i - 1], { opacity: 0, y: -40, duration: 0.4, ease: 'none' }, phaseAt(i - 1))
-                  .fromTo(phase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: 'none' }, phaseAt(i - 1) + 0.15);
+                // The handoff begins one unit before this phase is due, so any
+                // hold the previous phase reserved has already played out.
+                const at = phaseAt(i) - 1;
+                tl.to(phases[i - 1], { opacity: 0, y: -40, duration: 0.4, ease: 'none' }, at)
+                  .fromTo(phase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: 'none' }, at + 0.15);
             });
 
             const cleanupRenderer = renderer

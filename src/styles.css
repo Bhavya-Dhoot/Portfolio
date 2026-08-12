@@ -1983,3 +1983,175 @@ a:focus-visible,
     grid-template-columns: 1fr;
   }
 }
+
+/* ================================================================
+   WORK TEASER
+================================================================ */
+#selected {
+  background: var(--ink);
+  border-top: 1px solid var(--border);
+}
+
+#selected-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.selected-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  transition: border-color 0.3s, background 0.3s, transform 0.4s var(--ease-expo);
+}
+
+.selected-card:hover {
+  border-color: rgba(200, 255, 0, 0.25);
+  background: rgba(200, 255, 0, 0.02);
+  transform: translateY(-3px);
+}
+
+.selected-metric {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 300;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.selected-label {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.selected-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--paper);
+}
+
+.selected-desc {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: rgba(240, 237, 232, 0.6);
+}
+
+.selected-all {
+  display: inline-block;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: 1px solid rgba(200, 255, 0, 0.25);
+  padding-bottom: 3px;
+  transition: border-color 0.25s;
+}
+
+.selected-all:hover {
+  border-color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  #selected-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ================================================================
+   ACT: PRICING STACK
+================================================================ */
+.act__stichwort {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 clamp(1.5rem, 5vw, 4rem);
+  pointer-events: none;
+}
+
+.act__stichwort .section-heading {
+  margin-bottom: 0;
+  max-width: 1400px;
+  width: 100%;
+  margin-inline: auto;
+}
+
+/* Exploded layer diagram */
+.stackviz {
+  position: relative;
+  width: min(420px, 70vw);
+  height: 320px;
+  margin: 0 auto;
+  perspective: 900px;
+  transform-style: preserve-3d;
+}
+
+.stackviz__plate {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 74px;
+  transform: translate(-50%, -50%) rotateX(58deg);
+  border: 1px solid var(--border);
+  background: rgba(20, 20, 20, 0.6);
+  border-radius: 2px;
+  transform-style: preserve-3d;
+  transition: border-color 0.3s;
+}
+
+.stackviz__plate.is-lit {
+  border-color: rgba(200, 255, 0, 0.55);
+  background: rgba(200, 255, 0, 0.05);
+}
+
+.stackviz__co {
+  position: absolute;
+  left: calc(100% + 1.25rem);
+  top: 50%;
+  transform: translateY(-50%) rotateX(-58deg) translateZ(1px);
+  white-space: nowrap;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+
+.stackviz__plate.is-lit .stackviz__co {
+  color: var(--accent);
+}
+
+.stackviz__pulse {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 14px rgba(200, 255, 0, 0.7);
+  opacity: 0;
+}
+
+@media (max-width: 767px) {
+  .act__stichwort {
+    position: static;
+    padding: 0 0 2rem;
+  }
+
+  .stackviz {
+    height: 260px;
+    margin-bottom: 2rem;
+  }
+}
