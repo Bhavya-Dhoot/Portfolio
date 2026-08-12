@@ -1,6 +1,6 @@
 /**
  * main.js — Entry point
- * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, skills, projects, pipeline, dashboard, contact-3d
+ * Orchestrates: Lenis, GSAP, cursor, nav, SVG grid, portrait, skills, projects, dashboard
  */
 
 import Lenis from 'lenis';
@@ -11,7 +11,6 @@ import { initGrid }       from './svg/grid.js';
 import { initPortrait }   from './components/portrait.js';
 import { initSkills }     from './components/skills.js';
 import { initProjects }   from './components/projects.js';
-import { initContact3D }  from './components/contact-3d.js';
 
 import { initDashboard }  from './components/dashboard.js';
 
@@ -53,8 +52,6 @@ initProjects();
 // ── 11. KPI Dashboard ───────────────────────────────────────────
 initDashboard();
 
-// ── 12. Contact 3D Scene ────────────────────────────────────────
-initContact3D();
 
 // ── 13. Section label observer ──────────────────────────────────
 const labelObserver = new IntersectionObserver(
