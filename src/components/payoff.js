@@ -49,6 +49,36 @@ export function blackScholes(S, K, T, sigma, r, isCall) {
     return { price, delta, gamma, vega, theta: thetaYear / 365 };
 }
 
+// ── Scenario presets ───────────────────────────────────────────────
+// Each one is a regime where a different Greek dominates, so stepping through
+// them is a tour of what the numbers actually mean.
+const PRESETS = {
+    atm: {
+        spot: 100, strike: 100, vol: 20, days: 30, call: true,
+        note: 'At the money, one month out. Gamma and vega are at their peak per rupee of premium — the most sensitive point on the surface, and the hardest to hedge.',
+    },
+    itm: {
+        spot: 130, strike: 100, vol: 20, days: 90, call: true,
+        note: 'Deep in the money. Delta approaches 1, so the option tracks the underlying almost one for one; gamma and vega collapse. You are paying for leverage, not optionality.',
+    },
+    otm: {
+        spot: 100, strike: 112, vol: 45, days: 21, call: true,
+        note: 'Out of the money, three weeks left. Low delta and heavy theta: the premium is cheap, but it bleeds every day the spot fails to move.',
+    },
+    expiry: {
+        spot: 100, strike: 100, vol: 30, days: 3, call: true,
+        note: 'Expiry week, pinned at the strike. Gamma spikes as T goes to zero — delta swings between 0 and 1 on small moves, which is exactly where hedging costs blow out.',
+    },
+    leaps: {
+        spot: 100, strike: 100, vol: 25, days: 365, call: true,
+        note: 'A year to run. Vega dominates and theta is barely visible; this position is a view on volatility far more than a view on direction.',
+    },
+    hedge: {
+        spot: 100, strike: 90, vol: 25, days: 60, call: false,
+        note: 'Protective put, ten percent below spot. Negative delta offsets a long book, and the premium is the explicit price of that downside insurance.',
+    },
+};
+
 // ── Component ──────────────────────────────────────────────────────
 export function initPayoff() {
     const root = document.getElementById('payoff');
@@ -183,24 +213,62 @@ export function initPayoff() {
         ].map(([k, v]) => `<div class="payoff-metric"><span>${k}</span><b>${v}</b></div>`).join('');
     }
 
-    Object.values(inputs).forEach((el) => {
-        el.addEventListener('input', () => {
-            const out = root.querySelector(`[data-out="${el.dataset.in}"]`);
-            if (out) out.textContent = el.value;
-            draw();
-        });
+    function syncLabel(el) {
         const out = root.querySelector(`[data-out="${el.dataset.in}"]`);
         if (out) out.textContent = el.value;
+    }
+
+    function setType(call) {
+        isCall = call;
+        typeBtns.forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.type === 'call') === call)));
+    }
+
+    // ── Presets ────────────────────────────────────────────────────
+    const presetBtns = Array.from(root.querySelectorAll('[data-preset]'));
+    const note = root.querySelector('.payoff-note');
+
+    function applyPreset(key) {
+        const p = PRESETS[key];
+        if (!p) return;
+        inputs.spot.value = p.spot;
+        inputs.strike.value = p.strike;
+        inputs.vol.value = p.vol;
+        inputs.days.value = p.days;
+        Object.values(inputs).forEach(syncLabel);
+        setType(p.call);
+        if (note) note.textContent = p.note;
+        presetBtns.forEach((b) => b.classList.toggle('is-active', b.dataset.preset === key));
+        draw();
+    }
+
+    // Any manual adjustment means the visitor has left the preset behind
+    function clearPreset() {
+        presetBtns.forEach((b) => b.classList.remove('is-active'));
+        if (note) note.textContent = 'Custom inputs. Premium, Greeks and both curves are recomputed on every move.';
+    }
+
+    presetBtns.forEach((btn) => {
+        btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+    });
+
+    Object.values(inputs).forEach((el) => {
+        el.addEventListener('input', () => {
+            syncLabel(el);
+            clearPreset();
+            draw();
+        });
+        syncLabel(el);
     });
 
     typeBtns.forEach((btn) => {
         btn.addEventListener('click', () => {
-            isCall = btn.dataset.type === 'call';
-            typeBtns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+            setType(btn.dataset.type === 'call');
+            clearPreset();
             draw();
         });
     });
 
     new ResizeObserver(resize).observe(canvas);
     resize();
+    applyPreset('atm');
 }

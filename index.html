@@ -347,10 +347,20 @@
           <!-- Phase 1: the stack, exploded, with a pulse falling through it -->
           <div class="act__phase stack-phase" data-hold="2.6" aria-hidden="true">
             <div class="stackviz">
-              <div class="stackviz__plate" data-layer="0"><span class="stackviz__co font-mono">Market data</span></div>
-              <div class="stackviz__plate" data-layer="1"><span class="stackviz__co font-mono">Black-Scholes core</span></div>
-              <div class="stackviz__plate" data-layer="2"><span class="stackviz__co font-mono">Greeks</span></div>
-              <div class="stackviz__plate" data-layer="3"><span class="stackviz__co font-mono">Margin</span></div>
+              <div class="stackviz__spine"></div>
+              <div class="stackviz__beam"></div>
+              <div class="stackviz__plate" data-layer="0">
+                <span class="stackviz__co font-mono"><b>01 &nbsp;Market data</b><i>S &middot; K &middot; T &middot; r &middot; &sigma;</i></span>
+              </div>
+              <div class="stackviz__plate" data-layer="1">
+                <span class="stackviz__co font-mono"><b>02 &nbsp;Black-Scholes core</b><i>d&#8321; = [ln(S/K) + (r + &sigma;&sup2;/2)T] / &sigma;&radic;T</i></span>
+              </div>
+              <div class="stackviz__plate" data-layer="2">
+                <span class="stackviz__co font-mono"><b>03 &nbsp;Greeks</b><i>&Delta; &nbsp;&Gamma; &nbsp;&nu; &nbsp;&Theta; &nbsp;&mdash; analytic, not bumped</i></span>
+              </div>
+              <div class="stackviz__plate" data-layer="3">
+                <span class="stackviz__co font-mono"><b>04 &nbsp;Margin</b><i>SPAN + exposure, per position</i></span>
+              </div>
               <div class="stackviz__pulse" aria-hidden="true"></div>
             </div>
           </div>
@@ -363,6 +373,15 @@
             </p>
 
             <div id="payoff">
+        <div class="payoff-presets" role="group" aria-label="Scenario presets">
+          <button type="button" class="payoff-preset font-mono" data-preset="atm">ATM 30d</button>
+          <button type="button" class="payoff-preset font-mono" data-preset="itm">Deep ITM</button>
+          <button type="button" class="payoff-preset font-mono" data-preset="otm">OTM lottery</button>
+          <button type="button" class="payoff-preset font-mono" data-preset="expiry">Expiry week</button>
+          <button type="button" class="payoff-preset font-mono" data-preset="leaps">LEAPS</button>
+          <button type="button" class="payoff-preset font-mono" data-preset="hedge">Protective put</button>
+        </div>
+
         <div class="payoff-chart">
           <canvas class="payoff-canvas" role="img"
             aria-label="Option payoff at expiry against present theoretical value across a range of spot prices"></canvas>
@@ -395,7 +414,10 @@
             <input type="range" data-in="days" min="1" max="365" step="1" value="30" />
           </label>
 
-          <div class="payoff-readout font-mono" aria-live="polite"></div>
+          <p class="payoff-note font-mono" aria-live="polite"></p>
+        </div>
+
+        <div class="payoff-readout font-mono" aria-live="polite"></div>
             </div>
           </div>
           </div>

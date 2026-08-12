@@ -1829,10 +1829,61 @@ a:focus-visible,
 
 #payoff {
   display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: clamp(1.5rem, 4vw, 3rem);
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+  grid-template-areas:
+    'presets presets'
+    'chart   panel'
+    'readout readout';
+  column-gap: clamp(1.5rem, 4vw, 3rem);
+  row-gap: clamp(1.25rem, 2.5vw, 2rem);
   align-items: stretch;
 }
+
+/* Scenario presets — each one is a textbook regime, not a random slider set */
+.payoff-presets {
+  grid-area: presets;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.payoff-preset {
+  padding: 0.5rem 0.875rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s, background-color 0.25s;
+}
+
+.payoff-preset:hover {
+  color: var(--paper);
+  border-color: rgba(240, 237, 232, 0.35);
+}
+
+.payoff-preset.is-active {
+  color: var(--accent);
+  border-color: rgba(200, 255, 0, 0.5);
+  background: rgba(200, 255, 0, 0.06);
+}
+
+.payoff-note {
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  border-left: 1px solid rgba(200, 255, 0, 0.4);
+  padding-left: 0.875rem;
+  margin-top: auto;
+  min-height: 3.3em;
+}
+
+.payoff-chart { grid-area: chart; }
+.payoff-panel { grid-area: panel; }
 
 .payoff-chart {
   position: relative;
@@ -1951,12 +2002,12 @@ a:focus-visible,
 }
 
 .payoff-readout {
+  grid-area: readout;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(5, 1fr);
   gap: 0.75rem 1rem;
   border-top: 1px solid var(--border);
   padding-top: 1.25rem;
-  margin-top: auto;
 }
 
 .payoff-metric {
@@ -1973,14 +2024,40 @@ a:focus-visible,
 }
 
 .payoff-metric b {
-  font-size: 1rem;
+  font-size: clamp(1rem, 1.6vw, 1.375rem);
   font-weight: 400;
   color: var(--paper);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: 900px) {
   #payoff {
     grid-template-columns: 1fr;
+    grid-template-areas: 'presets' 'chart' 'panel' 'readout';
+  }
+
+  .payoff-readout {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Short laptop viewports: the whole widget has to clear a pinned 100svh stage */
+@media (min-width: 768px) and (max-height: 820px) {
+  .demo-lede {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .payoff-chart {
+    min-height: 250px;
+  }
+
+  .payoff-canvas {
+    min-height: 200px;
+  }
+
+  .payoff-panel {
+    gap: 0.875rem;
   }
 }
 
@@ -2085,51 +2162,154 @@ a:focus-visible,
   margin-inline: auto;
 }
 
-/* Exploded layer diagram */
+/* Exploded layer diagram.
+   The labels hang off the right edge, so the plate block is pushed left by the
+   label column to keep the whole composition optically centred. */
+.stack-phase {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .stackviz {
   position: relative;
-  width: min(420px, 70vw);
-  height: 320px;
-  margin: 0 auto;
-  perspective: 900px;
+  width: min(520px, 44vw);
+  height: 340px;
+  /* Matches the label column, so plates + labels centre as one unit */
+  margin-right: min(220px, 22vw);
+  perspective: 1000px;
   transform-style: preserve-3d;
+}
+
+/* Vertical spine the pulse travels down, behind the plates.
+   Centred with margins, not translate(-50%), so GSAP owns the transform
+   channel outright and can tween y/scale without fighting a CSS offset. */
+.stackviz__spine,
+.stackviz__beam {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1px;
+  height: 320px;
+  margin: -160px 0 0 -0.5px;
+}
+
+.stackviz__spine {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(240, 237, 232, 0.14) 12%,
+    rgba(240, 237, 232, 0.14) 88%,
+    transparent
+  );
+}
+
+.stackviz__beam {
+  background: linear-gradient(to bottom, rgba(200, 255, 0, 0.85), rgba(200, 255, 0, 0));
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+  opacity: 0;
 }
 
 .stackviz__plate {
   position: absolute;
-  left: 50%;
+  left: 0;
   top: 50%;
   width: 100%;
   height: 74px;
-  transform: translate(-50%, -50%) rotateX(58deg);
+  margin-top: -37px;
+  transform: rotateX(58deg);
   border: 1px solid var(--border);
-  background: rgba(20, 20, 20, 0.6);
+  /* Faint ruled grid so each plate reads as a plane carrying data, not a slab */
+  background-color: rgba(20, 20, 20, 0.6);
+  background-image:
+    repeating-linear-gradient(to right, rgba(240, 237, 232, 0.05) 0 1px, transparent 1px 34px),
+    repeating-linear-gradient(to bottom, rgba(240, 237, 232, 0.05) 0 1px, transparent 1px 18px);
   border-radius: 2px;
   transform-style: preserve-3d;
+  transition: border-color 0.3s, background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Corner ticks: engineering-drawing cue, and something for the light to catch */
+.stackviz__plate::before,
+.stackviz__plate::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border: 1px solid rgba(240, 237, 232, 0.22);
   transition: border-color 0.3s;
+}
+
+.stackviz__plate::before {
+  left: -1px;
+  top: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.stackviz__plate::after {
+  right: -1px;
+  bottom: -1px;
+  border-left: 0;
+  border-top: 0;
 }
 
 .stackviz__plate.is-lit {
   border-color: rgba(200, 255, 0, 0.55);
-  background: rgba(200, 255, 0, 0.05);
+  background-color: rgba(200, 255, 0, 0.05);
+  box-shadow: 0 0 30px rgba(200, 255, 0, 0.09);
+}
+
+.stackviz__plate.is-lit::before,
+.stackviz__plate.is-lit::after {
+  border-color: rgba(200, 255, 0, 0.7);
 }
 
 .stackviz__co {
   position: absolute;
-  left: calc(100% + 1.25rem);
+  left: calc(100% + 1.75rem);
   top: 50%;
   transform: translateY(-50%) rotateX(-58deg) translateZ(1px);
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
   white-space: nowrap;
+}
+
+/* Connector from the plate edge to its label */
+.stackviz__co::before {
+  content: '';
+  position: absolute;
+  right: calc(100% + 0.5rem);
+  top: 50%;
+  width: 1.25rem;
+  height: 1px;
+  background: rgba(240, 237, 232, 0.2);
+  transition: background-color 0.3s;
+}
+
+.stackviz__co b {
   font-size: 0.625rem;
-  letter-spacing: 0.12em;
+  font-weight: 400;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   transition: color 0.3s;
 }
 
-.stackviz__plate.is-lit .stackviz__co {
-  color: var(--accent);
+.stackviz__co i {
+  font-style: normal;
+  font-size: 0.625rem;
+  letter-spacing: 0.02em;
+  /* Dormant, not invisible: var(--border) here reads as a rendering fault */
+  color: rgba(240, 237, 232, 0.3);
+  transition: color 0.3s;
 }
+
+.stackviz__plate.is-lit .stackviz__co b { color: var(--accent); }
+.stackviz__plate.is-lit .stackviz__co i { color: rgba(240, 237, 232, 0.6); }
+.stackviz__plate.is-lit .stackviz__co::before { background: rgba(200, 255, 0, 0.6); }
 
 .stackviz__pulse {
   position: absolute;
@@ -2150,8 +2330,28 @@ a:focus-visible,
     padding: 0 0 2rem;
   }
 
+  /* Centring the plates pushes the labels off-screen at this width, so the
+     diagram hugs the left edge and the labels take the rest of the line. */
+  .stack-phase {
+    justify-content: flex-start;
+    padding-left: 1.5rem;
+  }
+
   .stackviz {
-    height: 260px;
+    width: min(170px, 42vw);
+    height: 280px;
+    margin-right: 0;
     margin-bottom: 2rem;
   }
+
+  .stackviz__spine,
+  .stackviz__beam {
+    height: 260px;
+    margin-top: -130px;
+  }
+
+  /* No room for the detail column at this width; keep the layer names only */
+  .stackviz__co { left: calc(100% + 1rem); }
+  .stackviz__co i { display: none; }
+  .stackviz__co b { font-size: 0.5625rem; letter-spacing: 0.08em; }
 }
