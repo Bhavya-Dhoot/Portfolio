@@ -14,6 +14,7 @@ import { initSkills }     from './components/skills.js';
 import { initProjects }   from './components/projects.js';
 
 import { initDashboard }  from './components/dashboard.js';
+import { initPayoff }     from './components/payoff.js';
 
 const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -68,6 +69,9 @@ initProjects();
 
 // ── 11. KPI Dashboard ───────────────────────────────────────────
 initDashboard();
+
+// ── 12. Options payoff explorer ─────────────────────────────────
+initPayoff();
 
 
 // ── 13. Section label observer ──────────────────────────────────
@@ -132,7 +136,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 if (prefersReduced) {
     document.documentElement.style.setProperty('--ease-expo', 'linear');
     document.querySelectorAll(
-        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, #hero-scroll-cue, .exp-highlights li, .cs-block'
+        '.reveal-heading, .reveal-text, .reveal-stat, .reveal-exp, .reveal-project, .reveal-skill-group, .reveal-kpi, .reveal-thesis, .section-label, .hero-eyebrow, .hero-line-inner, #hero-tagline, .data-label, .exp-highlights li, .cs-block'
     ).forEach(el => {
         el.style.opacity = '1';
         el.style.transform = 'none';

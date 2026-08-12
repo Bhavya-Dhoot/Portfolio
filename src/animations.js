@@ -329,7 +329,7 @@ export function initHeroAnimation() {
     const taglineText = tagline ? tagline.textContent.replace(/\s+/g, ' ').trim() : '';
 
     if (REDUCED) {
-        gsap.set('.hero-eyebrow, #hero-tagline, .data-label, #hero-scroll-cue, #hero-ctas', {
+        gsap.set('.hero-eyebrow, #hero-tagline, .data-label, #hero-ctas', {
             opacity: 1, x: 0, y: 0,
         });
         gsap.set('.hero-line-inner', { y: '0%', opacity: 1 });
@@ -403,12 +403,6 @@ export function initHeroAnimation() {
         ease: 'expo.out',
     }, '-=0.4');
 
-    // Scroll cue
-    tl.to('#hero-scroll-cue', {
-        opacity: 1,
-        duration: 0.6,
-        ease: 'expo.out',
-    }, '-=0.2');
 
     return tl;
 }

@@ -21,7 +21,7 @@
   <meta property="og:image" content="https://bhavya-dhoot.vercel.app/og.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Bhavya Dhoot — Quantitative Developer and AI Systems Engineer" />
+  <meta property="og:image:alt" content="Bhavya Dhoot, Quantitative Developer and AI Systems Engineer" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter Card -->
@@ -229,9 +229,6 @@
 
     </div>
 
-    <!-- Scroll cue (anchored to hero bottom-left, outside the centered column) -->
-    <div id="hero-scroll-cue" aria-label="Scroll down">
-      <div class="scroll-cue-line" aria-hidden="true"></div>
       <span class="font-mono text-label text-muted tracking-widest uppercase">Scroll</span>
     </div>
 
@@ -295,10 +292,6 @@
   ============================================================ -->
   <section id="about" aria-labelledby="about-heading">
     <div class="section-inner">
-      <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">01 / Thesis</span>
-      </div>
-
       <div id="about-grid">
         <div id="about-text">
           <h2 id="about-heading" class="section-heading reveal-heading">
@@ -352,7 +345,7 @@
   <section id="experience" aria-labelledby="experience-heading">
     <div class="section-inner">
       <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">02 / Operating History</span>
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Operating History</span>
       </div>
 
       <h2 id="experience-heading" class="section-heading reveal-heading">
@@ -557,7 +550,7 @@
   <section id="projects" aria-labelledby="projects-heading">
     <div class="section-inner">
       <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">03 / Case Studies</span>
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Case Studies</span>
       </div>
 
       <h2 id="projects-heading" class="section-heading reveal-heading">
@@ -871,10 +864,6 @@
   ============================================================ -->
   <section id="dashboard" aria-labelledby="dashboard-heading">
     <div class="section-inner">
-      <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">04 / Measured Outcomes</span>
-      </div>
-
       <h2 id="dashboard-heading" class="section-heading reveal-heading">
         Numbers that<br />survive diligence.
       </h2>
@@ -929,10 +918,6 @@
   ============================================================ -->
   <section id="thesis" aria-labelledby="thesis-heading">
     <div class="section-inner">
-      <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">05 / Systems Thinking</span>
-      </div>
-
       <h2 id="thesis-heading" class="section-heading reveal-heading">
         How I think<br />about systems.
       </h2>
@@ -974,12 +959,65 @@
   </section>
 
   <!-- ============================================================
+       LIVE DEMO: options payoff explorer
+  ============================================================ -->
+  <section id="demo" aria-labelledby="demo-heading">
+    <div class="section-inner">
+      <h2 id="demo-heading" class="section-heading reveal-heading">
+        Price an option,<br />live.
+      </h2>
+
+      <p class="demo-lede reveal-text">
+        The same Black-Scholes engine from the pricing terminal, running in your browser.
+        Move the inputs and watch the payoff, the present value, and the Greeks respond.
+      </p>
+
+      <div id="payoff" class="reveal-text">
+        <div class="payoff-chart">
+          <canvas class="payoff-canvas" role="img"
+            aria-label="Option payoff at expiry against present theoretical value across a range of spot prices"></canvas>
+          <div class="payoff-legend font-mono">
+            <span class="payoff-key payoff-key--payoff">At expiry</span>
+            <span class="payoff-key payoff-key--value">Today</span>
+          </div>
+        </div>
+
+        <div class="payoff-panel">
+          <div class="payoff-types" role="group" aria-label="Option type">
+            <button type="button" class="payoff-type font-mono" data-type="call" aria-pressed="true">Call</button>
+            <button type="button" class="payoff-type font-mono" data-type="put" aria-pressed="false">Put</button>
+          </div>
+
+          <label class="payoff-control">
+            <span class="font-mono">Spot <b data-out="spot"></b></span>
+            <input type="range" data-in="spot" min="60" max="140" step="1" value="100" />
+          </label>
+          <label class="payoff-control">
+            <span class="font-mono">Strike <b data-out="strike"></b></span>
+            <input type="range" data-in="strike" min="60" max="140" step="1" value="100" />
+          </label>
+          <label class="payoff-control">
+            <span class="font-mono">Volatility <b data-out="vol"></b>%</span>
+            <input type="range" data-in="vol" min="5" max="80" step="1" value="20" />
+          </label>
+          <label class="payoff-control">
+            <span class="font-mono">Days to expiry <b data-out="days"></b></span>
+            <input type="range" data-in="days" min="1" max="365" step="1" value="30" />
+          </label>
+
+          <div class="payoff-readout font-mono" aria-live="polite"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        SYSTEMS ARCHITECTURE (was Skills)
   ============================================================ -->
   <section id="skills" aria-labelledby="skills-heading">
     <div class="section-inner">
       <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">06 / Systems Architecture</span>
+        <span class="font-mono text-label text-muted tracking-widest uppercase">Systems Architecture</span>
       </div>
 
       <h2 id="skills-heading" class="section-heading reveal-heading">
@@ -1053,10 +1091,6 @@
   ============================================================ -->
   <section id="contact" aria-labelledby="contact-heading">
     <div class="section-inner contact-inner">
-      <div class="section-label">
-        <span class="font-mono text-label text-muted tracking-widest uppercase">07 / Contact</span>
-      </div>
-
       <div id="contact-body">
         <h2 id="contact-heading" class="section-heading contact-heading reveal-heading">
           Let's build<br />
