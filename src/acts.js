@@ -36,17 +36,26 @@ export function registerActRenderer(name, setup) {
 }
 
 /**
- * Headline punches in, holds, then dissolves. Occupies the first ~1.5 units of
- * the act timeline; phases begin after it.
+ * Headline punches in, holds fully legible, then dissolves.
+ *
+ * The hold is the point: at 0.3 units the headline was only settled for about a
+ * fifth of its scroll budget, so it read as something flying past rather than a
+ * statement. Nothing is captured — this is scroll distance over which the text
+ * simply stays put.
  */
+const STICHWORT_IN = 0.8;
+const STICHWORT_OUT = 1.5;            // holds legible from 0.8 to 1.5
+const STICHWORT_UNITS = 2.1;          // total budget before phases begin
+
 function stichwortBeat(tl, el) {
     if (!el) return 0;
     tl.fromTo(el,
         { opacity: 0, y: 54, scale: 1.09 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: 'power3.out' }, 0);
+        { opacity: 1, y: 0, scale: 1, duration: STICHWORT_IN, ease: 'power3.out' }, 0);
     tl.to(el,
-        { opacity: 0, y: -44, scale: 0.97, filter: 'blur(6px)', duration: 0.6, ease: 'power2.in' }, 1.1);
-    return 1.7;                       // phases start here
+        { opacity: 0, y: -44, scale: 0.97, filter: 'blur(6px)', duration: 0.6, ease: 'power2.in' },
+        STICHWORT_OUT);
+    return STICHWORT_UNITS;           // phases start here
 }
 
 export function buildActs() {
@@ -114,7 +123,9 @@ export function buildActs() {
                         const held = gsap.utils.toArray(act.querySelectorAll('.act__phase'))
                             .reduce((a, p) => a + parseFloat(p.dataset.hold || '0'), 0);
                         const steps = Math.max(1, phases.length - 1) + held;
-                        return `+=${(steps + 1.7) * window.innerHeight * 0.9 * scale}`;
+                        // Same constant the beat returns, so the scroll budget
+                        // cannot drift out of step with the headline's timing.
+                        return `+=${(steps + STICHWORT_UNITS) * window.innerHeight * 0.9 * scale}`;
                     },
                     pin: pin,
                     scrub: 1,

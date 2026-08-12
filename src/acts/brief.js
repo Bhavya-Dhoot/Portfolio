@@ -59,9 +59,10 @@ const DOMAINS = ['Finance', 'Sales', 'Supply chain', 'Planning', 'Support'];
 
 registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
     const reel = act.querySelector('.brief__reel');
+    const pairs = gsap.utils.toArray(act.querySelectorAll('.brief__pair'));
     const lines = gsap.utils.toArray(act.querySelectorAll('.brief__line, .brief__code'));
     const domainEl = act.querySelector('[data-brief-domain]');
-    if (!reel || lines.length < 2) return null;
+    if (!reel || !pairs.length) return null;
 
     assertPipeline();
     const { matched, exceptions, stats } = reconcile();
@@ -96,8 +97,15 @@ registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
             </li>`).join('');
     }
 
-    const chars = lines.map(splitChars);
-    const all = chars.flat();
+    // Glyphs grouped by the pair they belong to, so a brief and the system it
+    // became are animated as one unit.
+    const lineIndex = new Map(
+        pairs.map((pairEl) => [
+            pairEl,
+            gsap.utils.toArray(pairEl.querySelectorAll('.brief__line, .brief__code')).map(splitChars),
+        ]),
+    );
+    const all = [...lineIndex.values()].flat(2);
 
     if (reduced || !tl) {
         // No scroll to drive the reel. Showing only the first pair would throw
@@ -123,37 +131,49 @@ registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
     gsap.set(all, { opacity: 0 });
 
     const t = phaseAt(0);
-    // Each line lands, settles, then leaves just before the next arrives. The
-    // land and leave windows barely overlap on purpose: when they do, two
-    // different sentences are in flight at once and it reads as noise.
-    const STEP = 0.42;                  // scroll units per line
-    const LAND = 0.24;
-    const LEAVE_AT = STEP - 0.12;
-    const lineAt = (i) => t + 0.35 + i * STEP;
+
+    // The brief and the system it became arrive together and hold together, so
+    // the ask and the answer are readable as one statement. Each pair assembles
+    // quickly, then simply stays put for most of its scroll budget before
+    // leaving. Nothing is captured beyond the act's existing pin — the dwell is
+    // scroll distance over which the text does not move, so the reader can
+    // always keep scrolling straight past it.
+    const LAND = 0.2;
+    const LEAVE = 0.12;
+    const STEP = 0.72;                 // ~0.38 units of it fully settled
+
+    const pairAt = (i) => t + 0.35 + i * STEP;
 
     tl.to(wrap, { opacity: 1, duration: 0.25, ease: 'none' }, t);
 
-    chars.forEach((glyphs, line) => {
-        const at = lineAt(line);
+    pairs.forEach((pairEl, p) => {
+        const at = pairAt(p);
+        // Both lines of the pair, quote first then its system line a beat later
+        const groups = lineIndex.get(pairEl);
 
-        // Land: glyphs converge from their scattered positions
-        glyphs.forEach((ch, i) => {
-            const s = scatter(i + line * 3);
-            tl.fromTo(ch,
-                { opacity: 0, x: -s.x, y: -s.y, rotate: -s.rotate },
-                { opacity: 1, x: 0, y: 0, rotate: 0, duration: LAND, ease: 'power3.out' },
-                at + (i % 13) * 0.01);
-        });
+        groups.forEach((glyphs, row) => {
+            const lead = row * 0.06;
 
-        // Leave: it comes apart again as the next line arrives. The last line
-        // stays put — it hands over to the working pipeline instead.
-        if (line === chars.length - 1) return;
-        glyphs.forEach((ch, i) => {
-            const s = scatter(i + line * 3);
-            tl.to(ch, {
-                opacity: 0, x: s.x, y: s.y, rotate: s.rotate,
-                duration: 0.14, ease: 'power2.in',
-            }, at + LEAVE_AT + (i % 11) * 0.008);
+            glyphs.forEach((ch, i) => {
+                const s = scatter(i + p * 3 + row);
+                tl.fromTo(ch,
+                    { opacity: 0, x: -s.x, y: -s.y, rotate: -s.rotate },
+                    // power4.out decelerates hard into place, so the glyphs are
+                    // effectively settled well before the tween formally ends —
+                    // the line arrives and calms rather than snapping.
+                    { opacity: 1, x: 0, y: 0, rotate: 0, duration: LAND, ease: 'power4.out' },
+                    at + lead + (i % 13) * 0.008);
+            });
+
+            // The last pair stays put: it hands over to the working pipeline.
+            if (p === pairs.length - 1) return;
+            glyphs.forEach((ch, i) => {
+                const s = scatter(i + p * 3 + row);
+                tl.to(ch, {
+                    opacity: 0, x: s.x, y: s.y, rotate: s.rotate,
+                    duration: LEAVE, ease: 'power2.in',
+                }, at + STEP - LEAVE + (i % 11) * 0.006);
+            });
         });
     });
 
@@ -163,9 +183,9 @@ registerActRenderer('brief', (act, tl, { phaseAt, reduced }) => {
     if (domainEl) {
         tl.eventCallback('onUpdate', () => {
             const now = tl.time();
-            let pair = 0;
-            for (let i = 0; i < chars.length; i++) if (now >= lineAt(i)) pair = i >> 1;
-            const next = DOMAINS[Math.min(pair, DOMAINS.length - 1)];
+            let idx = 0;
+            for (let i = 0; i < pairs.length; i++) if (now >= pairAt(i)) idx = i;
+            const next = DOMAINS[Math.min(idx, DOMAINS.length - 1)];
             if (domainEl.textContent !== next) domainEl.textContent = next;
         });
     }

@@ -2193,6 +2193,13 @@ a:focus-visible,
   grid-area: 1 / 1;
 }
 
+/* The ask and the system it became, held together as one statement */
+.brief__pair {
+  display: grid;
+  gap: clamp(0.875rem, 2vw, 1.5rem);
+  place-items: center;
+}
+
 /* Below the pin breakpoint, and under reduced motion, there is no scroll to
    advance the reel — so the pairs stack and are all readable at once. */
 .brief__reel.is-static {
@@ -2222,10 +2229,11 @@ a:focus-visible,
   color: var(--muted);
 }
 
-/* The sentence and the rule occupy the same cell: one leaves as the other lands */
+/* The pair now owns the stacking, so these flow as its two rows. Pinning them
+   both to one cell (as the earlier single-line design did) drops the system
+   line straight through the middle of the wrapped quote. */
 .brief__line,
 .brief__code {
-  grid-area: 2 / 1;
   margin: 0;
 }
 
