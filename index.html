@@ -427,6 +427,83 @@
   </section>
 
   <!-- ============================================================
+       SOLVER BENCHMARK: implied vol, cold start vs warm start
+  ============================================================ -->
+  <section id="solver" aria-labelledby="solver-heading">
+    <div class="act" data-act="solver" data-act-scale="1.1">
+      <div class="act__pin">
+        <div class="act__stichwort">
+          <h2 id="solver-heading" class="section-heading">
+            Then solve it<br />in fewer steps.
+          </h2>
+        </div>
+
+        <div class="act__stage">
+          <!-- Phase 1: the same option solved twice, real Newton iterates -->
+          <div class="act__phase solve-phase" data-hold="2.2" aria-hidden="true">
+            <div class="solveviz">
+              <div class="solveviz__col" data-run="cold">
+                <span class="solveviz__cap font-mono">Cold start &mdash; fixed guess</span>
+                <ol class="solveviz__steps font-mono"></ol>
+                <span class="solveviz__count font-mono" data-count></span>
+              </div>
+              <div class="solveviz__col" data-run="warm">
+                <span class="solveviz__cap font-mono">Warm start &mdash; neighbouring strike</span>
+                <ol class="solveviz__steps font-mono"></ol>
+                <span class="solveviz__count font-mono" data-count></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phase 2: the measured benchmark -->
+          <div class="act__phase">
+            <p class="demo-lede">
+              Adjacent strikes carry adjacent implied vols, so the previous answer is
+              already close to the next one. Seeding Newton with it instead of a fixed
+              guess is most of the cost gone. The figures below were measured in your
+              browser, on this page, a moment ago.
+            </p>
+
+            <div id="bench">
+              <div class="bench-metric">
+                <span class="font-mono">Iterations, cold</span>
+                <b class="font-mono" data-bench="cold">&mdash;</b>
+              </div>
+              <div class="bench-metric">
+                <span class="font-mono">Iterations, warm</span>
+                <b class="font-mono" data-bench="warm">&mdash;</b>
+              </div>
+              <div class="bench-metric bench-metric--hero">
+                <span class="font-mono">Fewer iterations</span>
+                <b class="font-mono" data-bench="cut">&mdash;</b>
+              </div>
+              <div class="bench-metric">
+                <span class="font-mono">Solves timed</span>
+                <b class="font-mono" data-bench="n">&mdash;</b>
+              </div>
+              <div class="bench-metric">
+                <span class="font-mono">Worst case, cold / warm</span>
+                <b class="font-mono" data-bench="worst">&mdash;</b>
+              </div>
+              <div class="bench-metric">
+                <span class="font-mono">Max vol error</span>
+                <b class="font-mono" data-bench="err">&mdash;</b>
+              </div>
+            </div>
+
+            <p class="bench-foot font-mono">
+              Newton-Raphson with a bisection safeguard, checked against a round-trip
+              through Black-Scholes before it runs. Iterations, not milliseconds:
+              at this size wall clock is dominated by timer resolution and JIT warm-up,
+              while the iteration count is exact and is what bounds latency.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
        WORK TEASER
   ============================================================ -->
   <section id="selected" aria-labelledby="selected-heading">

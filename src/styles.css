@@ -1446,6 +1446,22 @@ section {
   border: 0;
   padding: clamp(1.5rem, 2.5vw, 2rem) 0;
   transition: border-color 0.3s;
+  isolation: isolate;
+}
+
+/* Opaque full-bleed backing. Without it the sticky cards are transparent and
+   the outgoing panel reads through the incoming one; with it, each card wipes
+   the previous away as its top edge rises. */
+.thesis-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 -50vw;
+  background: var(--ink);
+  z-index: -1;
+}
+
+.thesis-card + .thesis-card::before {
+  border-top: 1px solid var(--border);
 }
 
 /* Oversized numeral anchors each panel, matching the section's serif-free scale */
@@ -1472,6 +1488,12 @@ section {
   .thesis-card:first-child {
     border-top: 0;
     margin-top: 0;
+  }
+
+  /* Stacked, not sticky, at this width: the backing would just paint over
+     the section padding. */
+  .thesis-card::before {
+    display: none;
   }
 
   .thesis-card .thesis-index {
@@ -2059,6 +2081,124 @@ a:focus-visible,
   .payoff-panel {
     gap: 0.875rem;
   }
+}
+
+/* ================================================================
+   SOLVER ACT
+================================================================ */
+#solver {
+  background: var(--ink);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Two columns of real Newton iterates, revealed in step */
+.solveviz {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 5vw, 4rem);
+  width: min(760px, 90vw);
+  margin: 0 auto;
+}
+
+.solveviz__col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1rem;
+}
+
+.solveviz__col[data-run='warm'] {
+  border-top-color: rgba(200, 255, 0, 0.5);
+}
+
+.solveviz__cap {
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.solveviz__col[data-run='warm'] .solveviz__cap {
+  color: var(--accent);
+}
+
+.solveviz__steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  /* Reserve the taller column's height so the shorter one finishing early
+     reads as "done", not as a layout shift */
+  min-height: 13em;
+}
+
+.solveviz__step {
+  display: flex;
+  gap: 0.875rem;
+  font-size: 0.6875rem;
+  color: rgba(240, 237, 232, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+.solveviz__n { color: var(--muted); }
+.solveviz__err { color: var(--muted); margin-left: auto; }
+
+.solveviz__count {
+  font-size: 0.625rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+}
+
+.solveviz__col[data-run='warm'] .solveviz__count { color: var(--accent); }
+
+#bench {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--border);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+}
+
+.bench-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bench-metric span {
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.bench-metric b {
+  font-size: clamp(1.25rem, 2.4vw, 2rem);
+  font-weight: 400;
+  color: var(--paper);
+  font-variant-numeric: tabular-nums;
+}
+
+.bench-metric--hero b { color: var(--accent); }
+
+.bench-foot {
+  font-size: 0.625rem;
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 70ch;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+@media (max-width: 767px) {
+  .solveviz { grid-template-columns: 1fr; }
+  .solveviz__steps { min-height: 0; }
+  #bench { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ================================================================

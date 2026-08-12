@@ -143,8 +143,11 @@ export function buildActs() {
                 // The handoff begins one unit before this phase is due, so any
                 // hold the previous phase reserved has already played out.
                 const at = phaseAt(i) - 1;
-                tl.to(phases[i - 1], { opacity: 0, y: -40, duration: 0.4, ease: 'none' }, at)
-                  .fromTo(phase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: 'none' }, at + 0.15);
+                // Overlapping rather than cutting is the house style, but the
+                // window is kept short: two text-dense phases readable at once
+                // just looks like a rendering fault.
+                tl.to(phases[i - 1], { opacity: 0, y: -40, duration: 0.34, ease: 'none' }, at)
+                  .fromTo(phase, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.4, ease: 'none' }, at + 0.28);
             });
 
             const cleanupRenderer = renderer
@@ -171,14 +174,17 @@ export function buildStack(selector = '#thesis-grid .thesis-card') {
     gsap.matchMedia().add(DESKTOP, () => {
         panels.forEach((panel, i) => {
             if (i === panels.length - 1) return;
+            // The next panel's opaque backing does the covering; this only has
+            // to make the sliver still showing above it look deliberate.
             gsap.to(panel, {
-                opacity: 0.25,
-                y: -50,
+                opacity: 0.12,
+                y: -60,
+                filter: 'blur(3px)',
                 ease: 'none',
                 scrollTrigger: {
                     trigger: panels[i + 1],
                     start: 'top bottom',
-                    end: 'top top',
+                    end: 'top 30%',
                     scrub: true,
                     invalidateOnRefresh: true,
                 },
@@ -186,7 +192,7 @@ export function buildStack(selector = '#thesis-grid .thesis-card') {
         });
 
         return () => {
-            gsap.set(panels, { clearProps: 'opacity,transform' });
+            gsap.set(panels, { clearProps: 'opacity,transform,filter' });
         };
     });
 }
