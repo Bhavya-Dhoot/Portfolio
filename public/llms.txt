@@ -10,7 +10,7 @@ Site: https://bhavya-dhoot.vercel.app/
 Contact: dhoot.bhavya1@gmail.com
 GitHub: https://github.com/Bhavya-Dhoot
 LinkedIn: https://www.linkedin.com/in/bhavya-dhoot/
-Last updated: 2026-07-28
+Last updated: 2026-08-13
 
 ## What he does
 
@@ -23,16 +23,11 @@ Last updated: 2026-07-28
 - **Applied ML research** — RAG pipelines, multi-agent systems, reinforcement
   learning, and agent-based simulation of market dynamics.
 
-## Sections
+## Pages
 
-- [Thesis](https://bhavya-dhoot.vercel.app/#about): Positioning — deployed systems, not prototypes.
-- [Operating history](https://bhavya-dhoot.vercel.app/#experience): Roles at JM Financial, The Health Factory, GoHappyClub, Moon Finance, E-Cell VIT, and independent consulting.
-- [Case studies](https://bhavya-dhoot.vercel.app/#projects): Four detailed builds plus eight further research projects.
-- [Measured outcomes](https://bhavya-dhoot.vercel.app/#dashboard): Verifiable metrics from shipped systems.
-- [Systems thinking](https://bhavya-dhoot.vercel.app/#thesis): How he approaches system design and verification.
-- [Live demo](https://bhavya-dhoot.vercel.app/#demo): Interactive Black-Scholes payoff and Greeks explorer running in the browser.
-- [Technical stack](https://bhavya-dhoot.vercel.app/#skills): Languages, quant methods, AI/ML, infrastructure.
-- [Contact](https://bhavya-dhoot.vercel.app/#contact): Email, LinkedIn, GitHub.
+- [Home](https://bhavya-dhoot.vercel.app/): Live tools, built in the browser. Options pricing, signal engineering, production automation. Measured outcomes and contact.
+- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus eight further research builds.
+- [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, and the full technical stack.
 
 ## Roles
 

@@ -5,6 +5,11 @@ export default defineConfig({
     target: 'es2020',
     minify: 'esbuild',
     rollupOptions: {
+      input: {
+        main: 'index.html',
+        work: 'work.html',
+        about: 'about.html',
+      },
       output: {
         manualChunks: {
           gsap: ['gsap'],
