@@ -30,8 +30,12 @@ npm-debug.log*
 .cache/
 .vite/
 
-# Local-only: resume source (contains personal contact details) + agent tooling
+# Local-only: resume sources (contain personal contact details) + agent tooling
 main.md
+cv-*.tex
+cv-*.pdf
+*.aux
+*.out
 .claude/
 
 # Source photo (public/portrait.jpg is the derived, served asset)

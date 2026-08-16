@@ -1,10 +1,12 @@
 # Bhavya Dhoot — Portfolio
 
-> Quantitative Developer · Finance Researcher · AI Engineer
+> Quantitative Developer · AI Systems Engineer · Forward Deployed Engineer
 
-A world-class interactive portfolio built from scratch — no templates, no React. Inspired by the design language of [monopo.vn](https://monopo.vn): extreme minimalism, physics-based scroll, cursor-reactive SVG graphics, and a premium technical feel.
+A hand-built three-page site with no framework and no templates. The premise: instead of
+describing what I build, the page **runs four working tools in your browser** as you scroll. Every
+number they show is computed on your machine at read time — none of it is a stored figure.
 
-**Live →** [portfolio-bhavya-dhoot.vercel.app](https://portfolio-bhavya-dhoot.vercel.app)
+**Live →** [bhavya-dhoot.vercel.app](https://bhavya-dhoot.vercel.app)
 
 ---
 
@@ -12,95 +14,133 @@ A world-class interactive portfolio built from scratch — no templates, no Reac
 
 | Layer | Technology |
 |-------|-----------|
-| Build | [Vite](https://vitejs.dev/) v5 |
-| Styling | [TailwindCSS](https://tailwindcss.com/) v3 + custom CSS |
-| Animations | [GSAP](https://gsap.com/) + ScrollTrigger |
-| Smooth Scroll | [Lenis](https://lenis.darkroom.engineering/) |
-| 3D Scene | [Three.js](https://threejs.org/) |
-| Graphics | Programmatic SVG + Canvas 2D |
-| Fonts | Inter + JetBrains Mono |
+| Build | [Vite](https://vitejs.dev/) 5, multi-page (three HTML entry points) |
+| Styling | [TailwindCSS](https://tailwindcss.com/) 3 + custom CSS |
+| Animation | [GSAP](https://gsap.com/) + ScrollTrigger |
+| Smooth scroll | [Lenis](https://lenis.darkroom.engineering/) |
+| Type splitting | [SplitType](https://github.com/lukePeavey/SplitType) (home page only) |
+| Graphics | Canvas 2D + programmatic SVG |
+| Fonts | Archivo + JetBrains Mono |
+
+Three runtime dependencies total: `gsap`, `lenis`, `split-type`.
 
 ---
 
-## Features
+## Pages
 
-- **Hero** — GSAP name reveal (slide-up lines), cursor-reactive SVG grid that warps in real-time
-- **Custom cursor** — Dual-ring with mix-blend-mode & magnetic hover on all interactive elements
-- **Marquee ticker** — Scrolling skills bar between Hero and About
-- **Scroll progress bar** — Lime glow bar tracking reading position
-- **Availability badge** — Pulsing "Open to opportunities" pill
-- **Experience** — Accent bar that animates in on scroll per entry
-- **Projects** — Hover-triggered canvas animations (candlesticks, ROC curve, bar chart)
-- **Skills** — Real-time floating node graph with mouse repulsion physics
-- **Contact** — Three.js wireframe icosahedron with particle constellation, mouse parallax
-- **Performance** — Code-split chunks, lazy-loaded 3D, GPU-only transforms
+| Route | Contents |
+|-------|----------|
+| `/` | Hero, proof metrics, and the four scroll-driven acts |
+| `/work` | Four case studies plus eight research builds |
+| `/about` | Operating history, systems-thinking panels, FAQ, technical stack |
 
 ---
 
-## Getting Started
+## The four acts
+
+Each act pins to the viewport and is driven by scroll position. Each ends in something that
+actually computes.
+
+1. **Whatever the business is losing** — five real client briefs, in their own words, each
+   reforming glyph-by-glyph into the system that answered it. Hands off to a **two-pass
+   reconciliation matcher**: exact reference and amount, then a normalised reference within an
+   amount and date tolerance, then exceptions with stated reasons. Runs over a fixture invented for
+   this page — no client data.
+2. **Five inputs, one call** — a market-variance engine on canvas. Standardises five inputs against
+   their own history and combines them on fixed weights into one regime call. Sample readings, real
+   arithmetic.
+3. **Price an option, live** — four layers explode apart, a pulse falls through them, then they
+   collapse into a working **Black-Scholes payoff and Greeks explorer** with six preset regimes,
+   each demonstrating a different dominant Greek.
+4. **Then solve it in fewer steps** — the same option solved twice, stepping through real
+   Newton-Raphson iterates, then an **implied-volatility solver benchmark** measured in your
+   browser: cold start vs warm start over a 31-strike chain.
+
+Design notes that matter more than they look:
+
+- Every act resolves to a readable static state below 768px and under `prefers-reduced-motion` —
+  the pins are gated by `gsap.matchMedia()`, and each renderer has a reduced-motion branch.
+- Lit/active state is derived from **timeline time**, not from per-tween callbacks. Under scrub
+  only the advancing tween fires, so callback-driven state silently desyncs when you scroll fast.
+- Text holds still for roughly half its scroll budget. A statement that is only legible mid-flight
+  is a statement nobody reads.
+
+---
+
+## Getting started
 
 ```bash
-# Install dependencies
 npm install
-
-# Dev server → http://localhost:5173
-npm run dev
-
-# Production build → dist/
-npm run build
-
-# Preview production build
+npm run dev        # http://localhost:5173
+npm run build      # dist/ + regenerates llms-full.txt
 npm run preview
 ```
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
-├── index.html
-├── vite.config.js
-├── tailwind.config.js
-├── vercel.json
+├── index.html · work.html · about.html   ← three Vite entry points
+├── vite.config.js · tailwind.config.js · vercel.json
+├── scripts/
+│   └── gen-llms-full.mjs      ← postbuild: full-text dump for AI crawlers
+├── public/                    ← llms.txt, robots.txt, sitemap.xml, og.jpg
 └── src/
-    ├── main.js              ← Entry point
-    ├── styles.css           ← Global styles + design tokens
-    ├── animations.js        ← GSAP ScrollTrigger animations
-    ├── cursor.js            ← Custom cursor + magnetic effects
-    ├── components/
-    │   ├── nav.js           ← Floating nav + active section indicator
-    │   ├── projects.js      ← Canvas mini-visualizations per project
-    │   ├── skills.js        ← Floating node graph (Canvas 2D)
-    │   └── contact-3d.js   ← Three.js wireframe scene
-    └── svg/
-        └── grid.js          ← Cursor-reactive SVG hero grid
+    ├── core.js                ← shared per-page init (Lenis, nav, observers)
+    ├── hero.js                ← hero entrance; home-only, keeps SplitType out of the shared chunk
+    ├── acts.js                ← pinned-act + sticky-stack builders, renderer registry
+    ├── animations.js · cursor.js · styles.css
+    ├── pages/                 ← home.js · work.js · about.js
+    ├── acts/                  ← brief.js · signal.js · pricing.js · solver.js
+    ├── components/            ← payoff.js · solver.js · pipeline.js · portrait.js
+    │                             skills.js · projects.js · dashboard.js · nav.js
+    └── svg/grid.js
 ```
+
+The engines are plain modules with assertions that run before anything touches the DOM:
+`payoff.js` checks against known Black-Scholes values and put-call parity, `solver.js` round-trips
+implied vol through the pricer, `pipeline.js` locks the fixture's match and exception counts.
 
 ---
 
-## Design Tokens
+## SEO / AEO
+
+- `public/llms.txt` — structured summary for AI answer engines
+- `/llms-full.txt` — generated from the **built HTML** at deploy time by
+  `scripts/gen-llms-full.mjs`, so it cannot drift from what is published
+- `public/robots.txt` — explicitly welcomes AI search crawlers; disallows bulk training scrapers
+  that surface no citation
+- JSON-LD `@graph` per page (`WebSite`, `Person`, `ProfilePage`, `CollectionPage`, `FAQPage`,
+  `SoftwareApplication` for each live tool), distinct canonical and OG tags per route
+
+Proof figures are baked into the markup rather than injected by JavaScript — a crawler with no JS
+still reads the real numbers, and the count-up animation zeroes them at init instead.
+
+---
+
+## Design tokens
 
 | Token | Value |
 |-------|-------|
 | Background | `#0a0a0a` |
+| Surface | `#111111` |
 | Text | `#f0ede8` |
 | Muted | `#6b6b6b` |
-| Accent | `#c8ff00` (electric lime) |
+| Accent | `#c8ff00` |
 | Easing | `cubic-bezier(0.16, 1, 0.3, 1)` |
 
 ---
 
-## Deploying to Vercel
+## Deploying
 
-This project is Vercel-ready out of the box.
-
-1. Import the repo at [vercel.com/new](https://vercel.com/new)
-2. Vercel auto-detects Vite — no config needed
-3. Every `git push` triggers a new deployment automatically
+Vercel-ready. `cleanUrls` is on, so `work.html` serves at `/work`. Every push to `main` deploys.
 
 ---
 
 ## Contact
 
-**Bhavya Dhoot**  
-[dhoot.bhavya1@gmail.com](mailto:dhoot.bhavya1@gmail.com) · [LinkedIn](https://www.linkedin.com/in/bhavya-dhoot/) · [GitHub](https://github.com/Bhavya-Dhoot)
+**Bhavya Dhoot**
+[dhoot.bhavya1@gmail.com](mailto:dhoot.bhavya1@gmail.com) ·
+[LinkedIn](https://www.linkedin.com/in/bhavya-dhoot/) ·
+[GitHub](https://github.com/Bhavya-Dhoot)
