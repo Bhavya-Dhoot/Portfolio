@@ -32,6 +32,7 @@ npm-debug.log*
 
 # Local-only: resume sources (contain personal contact details) + agent tooling
 main.md
+context-*.md
 cv-*.tex
 cv-*.pdf
 *.aux
