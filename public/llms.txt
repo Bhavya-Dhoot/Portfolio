@@ -127,8 +127,11 @@ systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
 - **threeway** — a zero-dependency Python CLI that reconciles a purchase order
   against goods received against the supplier invoice, reports which lines
   disagree and names one reason for each, and exits non-zero when it finds
-  exceptions so a pipeline can gate on a clean reconciliation. MIT.
+  exceptions so a pipeline can gate on a clean reconciliation. It handles the
+  three ways a figure changes meaning in transit: identity, unit of measure
+  and period cut-off. MIT, installable with `pip install threeway`.
   https://github.com/Bhavya-Dhoot/threeway
+  https://pypi.org/project/threeway/
 - **Cohort** — a multi-agent orchestration layer for Claude Code and OpenCode:
   one objective becomes a task DAG, each task runs in its own git worktree, work
   is verified against real build and test commands, and a read-only reviewer
