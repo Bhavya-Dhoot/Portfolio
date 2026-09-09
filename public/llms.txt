@@ -122,6 +122,19 @@ systems, n8n, PyTorch, LightGBM, reinforcement learning (PPO), Qiskit.
 Infrastructure: FastAPI, Node.js, Next.js, React, Docker, GitHub Actions,
 systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
 
+## Open source
+
+- **threeway** — a zero-dependency Python CLI that reconciles a purchase order
+  against goods received against the supplier invoice, reports which lines
+  disagree and names one reason for each, and exits non-zero when it finds
+  exceptions so a pipeline can gate on a clean reconciliation. MIT.
+  https://github.com/Bhavya-Dhoot/threeway
+- **Cohort** — a multi-agent orchestration layer for Claude Code and OpenCode:
+  one objective becomes a task DAG, each task runs in its own git worktree, work
+  is verified against real build and test commands, and a read-only reviewer
+  gates every merge. MIT, published on npm as @bhavya-dhoot/cohort.
+  https://github.com/Bhavya-Dhoot/Cohort
+
 ## Tools and guides for sale
 
 Published under his own name at https://bhavyadhoot.gumroad.com/ — each one is
@@ -136,6 +149,8 @@ extracted from work he actually ships, not repackaged general advice.
 - **The Three-Way Match** ($15) — an Excel workbook that compares purchase order
   against goods received against supplier invoice, line by line, and names the
   reason each line disagrees. Live formulas, no macros, tolerances configurable.
+  The same logic is free and open source as the `threeway` CLI above; the
+  workbook is for people who need this without a terminal.
   https://bhavyadhoot.gumroad.com/l/three-way-match
 - **The Agent Review Gate for Claude Code** ($12) — a drop-in pack: a reviewer
   subagent restricted to Read/Grep/Glob so it cannot quietly fix what it finds,
