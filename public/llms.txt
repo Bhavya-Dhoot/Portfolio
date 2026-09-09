@@ -132,6 +132,17 @@ systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
   and period cut-off. MIT, installable with `pip install threeway`.
   https://github.com/Bhavya-Dhoot/threeway
   https://pypi.org/project/threeway/
+- **noarb** — a zero-dependency Python CLI that reads an option chain and reports
+  which quotes cannot all be true at once: quotes below intrinsic, calls and puts
+  out of order in strike, spreads dearer than their maximum payoff, broken
+  butterfly convexity, broken put-call parity, and calendar violations. Every
+  check is model-free, so a violation is a statement about arithmetic rather
+  than about a model's opinion, and each finding names the cheapest explanation
+  to check first — usually a stale quote or a missing dividend, not free money.
+  Its implied-volatility solver returns nothing rather than a number when a
+  quote does not identify one. Exits non-zero so a pipeline can gate on a chain
+  that agrees with itself. MIT.
+  https://github.com/Bhavya-Dhoot/noarb
 - **Cohort** — a multi-agent orchestration layer for Claude Code and OpenCode:
   one objective becomes a task DAG, each task runs in its own git worktree, work
   is verified against real build and test commands, and a read-only reviewer
@@ -155,6 +166,26 @@ extracted from work he actually ships, not repackaged general advice.
   The same logic is free and open source as the `threeway` CLI above; the
   workbook is for people who need this without a terminal.
   https://bhavyadhoot.gumroad.com/l/three-way-match
+- **The Options Greeks and Position Sizing Workbook** ($29) — an Excel workbook
+  for pricing a European option, reading all five Greeks, and sizing the trade
+  against a stated risk budget. Six sheets of live formulas: a pricer, a
+  21-strike ladder with a put-call parity residual column that checks the sheet
+  while you watch, position sizing that reprices the option at your stop with
+  Black-Scholes instead of approximating the loss with delta, an eight-leg
+  payoff builder, and a Checks sheet whose rows all read PASS. Verified cell by
+  cell against the `noarb` package above, with zero disagreement on price and
+  every Greek. European Black-Scholes-Merton only; American early exercise is
+  not modelled and the workbook says so.
+  https://bhavyadhoot.gumroad.com/l/options-greeks-workbook
+- **Should You Prepay Your Loan? The Workbook** ($15) — an Excel workbook that
+  answers whether paying a loan down beats investing the same money. Two
+  complete amortisation schedules side by side, baseline against prepayment,
+  then the interest saved, the lender's prepayment penalty, and the return
+  given up to make that saving, all on one sheet — most calculators show the
+  first and omit the other two. Nine self-verifying Checks rows, including one
+  asserting that with no prepayment the loan pays off on exactly the tenure
+  entered. Currency-agnostic.
+  https://bhavyadhoot.gumroad.com/l/prepay-your-loan
 - **The Agent Review Gate for Claude Code** ($12) — a drop-in pack: a reviewer
   subagent restricted to Read/Grep/Glob so it cannot quietly fix what it finds,
   a check runner that reports real build and test exit codes, and a permissions

@@ -424,6 +424,23 @@
 
           <article class="mini-card reveal-project" role="listitem">
             <div class="mini-head">
+              <h3 class="mini-title">noarb &middot; Option chain arbitrage checks</h3>
+              <a href="https://github.com/Bhavya-Dhoot/noarb" target="_blank" rel="noopener noreferrer"
+                class="mini-link font-mono" aria-label="noarb on GitHub">GitHub <span aria-hidden="true">&#8599;</span></a>
+            </div>
+            <p class="mini-desc">Reads an option chain and reports which quotes cannot all be true
+              at once &mdash; below intrinsic, out of order in strike, spreads dearer than they can
+              ever pay, broken butterfly convexity, broken put&ndash;call parity. Every check is
+              model-free, so a violation is a statement about arithmetic rather than a model's
+              opinion, and each finding names the cheapest explanation to check first: on a real
+              chain it is a stale quote or a missing dividend, not free money. The implied
+              volatility solver returns nothing rather than a number where a quote does not identify
+              one. Zero dependencies, no network, exits non-zero. MIT.</p>
+            <span class="mini-stack font-mono">Python &middot; 2,662 tests &middot; 98% coverage &middot; MIT</span>
+          </article>
+
+          <article class="mini-card reveal-project" role="listitem">
+            <div class="mini-head">
               <h3 class="mini-title">threeway &middot; Reconciliation CLI</h3>
               <a href="https://github.com/Bhavya-Dhoot/threeway" target="_blank" rel="noopener noreferrer"
                 class="mini-link font-mono" aria-label="threeway on GitHub">GitHub <span aria-hidden="true">&#8599;</span></a>
