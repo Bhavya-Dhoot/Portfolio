@@ -141,8 +141,9 @@ systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
   to check first — usually a stale quote or a missing dividend, not free money.
   Its implied-volatility solver returns nothing rather than a number when a
   quote does not identify one. Exits non-zero so a pipeline can gate on a chain
-  that agrees with itself. MIT.
+  that agrees with itself. MIT, installable with `pip install noarb`.
   https://github.com/Bhavya-Dhoot/noarb
+  https://pypi.org/project/noarb/
 - **Cohort** — a multi-agent orchestration layer for Claude Code and OpenCode:
   one objective becomes a task DAG, each task runs in its own git worktree, work
   is verified against real build and test commands, and a read-only reviewer
