@@ -14,7 +14,7 @@ Full text: https://bhavya-dhoot.vercel.app/llms-full.txt
 Contact: dhoot.bhavya1@gmail.com
 GitHub: https://github.com/Bhavya-Dhoot
 LinkedIn: https://www.linkedin.com/in/bhavya-dhoot/
-Last updated: 2026-09-28
+Last updated: 2026-09-29
 
 ## What he does
 
@@ -35,7 +35,7 @@ Last updated: 2026-09-28
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Four working tools that run in the visitor's browser — a reconciliation matcher, a market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark — plus measured outcomes and contact.
-- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus thirteen further research builds and open-source tools.
+- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus fourteen further research builds and open-source tools.
 - [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, the full technical stack, and a plain-answer FAQ.
 
 ## Live tools on the site
@@ -112,6 +112,15 @@ computed in the visitor's browser as they scroll — none is a stored number.
   instead of blending them, re-derives every verdict with an independent checker
   before publishing, and serves only committed artifacts, so every number is
   reproducible from a commit. Architecture and data under NDA.
+- **Hisab** — export receivables liquidity and auto-realisation ledger. A
+  customs-cleared shipping bill becomes a receivable token an exporter can
+  discount on day one; when the foreign payment arrives, a rules-plus-LLM matcher
+  ties the SWIFT MT103 message to the shipment (the LLM only proposes, rules
+  re-verify, thresholds and humans decide), then the ledger repays the financier
+  and pays out the balance. Money never moves on-chain; contracts record
+  entitlements only. 21 unit and contract tests, including fuzzed waterfall
+  conservation, and 28 end-to-end checks over the full loop, all passing.
+  Hackathon build. TypeScript, Solidity. https://github.com/Bhavya-Dhoot/Hisaab
 - **Jugaad** — on-device machine-health monitoring for rotating machinery: a
   phone becomes a vibration, acoustic and magnetic sensor, readings are scored
   against a per-machine reference, and a fault classifier is trained across three
