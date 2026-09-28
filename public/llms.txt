@@ -35,7 +35,7 @@ Last updated: 2026-09-29
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Four working tools that run in the visitor's browser — a reconciliation matcher, a market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark — plus measured outcomes and contact.
-- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus fourteen further research builds and open-source tools.
+- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus fifteen further research builds and open-source tools.
 - [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, the full technical stack, and a plain-answer FAQ.
 
 ## Live tools on the site
@@ -128,6 +128,13 @@ computed in the visitor's browser as they scroll — none is a stored number.
   build for the iQOO hackathon; he wrote the federated learning, anomaly scoring
   and peer-to-peer sync, about 60% of the code. Kotlin, TFLite.
   https://github.com/black1plague2/jugaad-agent
+- **Aegis** — reference engine for an on-device Android safety layer that works
+  offline: watermark detection for AI-generated images and video frames with a
+  local classifier fallback, and phishing scoring for links in web pages, SMS and
+  email. An always-on triage pass decides what escalates to the heavier model;
+  nothing leaves the device and the event log is encrypted. TypeScript, 50 tests;
+  the Android and NPU binding is the next phase.
+  https://github.com/Bhavya-Dhoot/Kavach
 - **ProductIQ** — physics-checked extraction of industrial product specs: an LLM
   extracts the fields, then every number is asserted into the Z3 theorem prover as
   physics and domain constraints, and impossible combinations come back as the
