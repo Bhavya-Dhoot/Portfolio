@@ -35,7 +35,7 @@ Last updated: 2026-09-28
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Four working tools that run in the visitor's browser — a reconciliation matcher, a market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark — plus measured outcomes and contact.
-- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus eight further research builds.
+- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus thirteen further research builds and open-source tools.
 - [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, the full technical stack, and a plain-answer FAQ.
 
 ## Live tools on the site
@@ -112,6 +112,23 @@ computed in the visitor's browser as they scroll — none is a stored number.
   instead of blending them, re-derives every verdict with an independent checker
   before publishing, and serves only committed artifacts, so every number is
   reproducible from a commit. Architecture and data under NDA.
+- **Jugaad** — on-device machine-health monitoring for rotating machinery: a
+  phone becomes a vibration, acoustic and magnetic sensor, readings are scored
+  against a per-machine reference, and a fault classifier is trained across three
+  or more phones by federated averaging over Wi-Fi Direct, with no cloud. A team
+  build for the iQOO hackathon; he wrote the federated learning, anomaly scoring
+  and peer-to-peer sync, about 60% of the code. Kotlin, TFLite.
+  https://github.com/black1plague2/jugaad-agent
+- **ProductIQ** — physics-checked extraction of industrial product specs: an LLM
+  extracts the fields, then every number is asserted into the Z3 theorem prover as
+  physics and domain constraints, and impossible combinations come back as the
+  minimal contradicting set in plain language. UNIHACK build; private repository.
+- **Model Collapse** — research on how much real data a self-consuming loop of
+  tabular generative models (Gaussian copula, CTGAN, TVAE) needs to avoid
+  collapse, on three public datasets against closed-form theory. Finding:
+  rank-based copulas do not collapse in variance; the damage moves into
+  dependence, support and utility. Paper pending conference presentation.
+  https://github.com/Bhavya-Dhoot/Model_collapse
 - **LLM Flash Crash** — Agent-based simulation (500 agents, 160 Monte Carlo runs)
   of systemic risk from homogeneous LLM traders; +30.3% drawdown amplification at
   full adoption. https://github.com/Bhavya-Dhoot/LLM-flash-crash

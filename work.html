@@ -145,7 +145,10 @@
         "Demand and Production Planning",
         "Root Cause Analysis",
         "Material Requirements Planning",
-        "Paper Trading Systems"
+        "Paper Trading Systems",
+        "Federated Learning",
+        "Formal Verification",
+        "Generative Model Collapse"
       ],
       "sameAs": [
         "https://www.linkedin.com/in/bhavya-dhoot/",
@@ -457,6 +460,47 @@
               it on machines where installing a library is a conversation with IT. Exits non-zero
               on exceptions so a pipeline can gate on a clean reconciliation. MIT.</p>
             <span class="mini-stack font-mono">Python &middot; 106 tests &middot; MIT</span>
+          </article>
+
+          <article class="mini-card reveal-project" role="listitem">
+            <div class="mini-head">
+              <h3 class="mini-title">Jugaad &middot; On-device machine health</h3>
+              <a href="https://github.com/black1plague2/jugaad-agent" target="_blank" rel="noopener noreferrer"
+                class="mini-link font-mono" aria-label="Jugaad team repository on GitHub">GitHub <span aria-hidden="true">&#8599;</span></a>
+            </div>
+            <p class="mini-desc">Turns a phone into a vibration, acoustic and magnetic sensor for rotating
+              machinery, scores each reading against a per-machine reference, and trains one fault
+              classifier across three or more phones over Wi-Fi Direct with no cloud. A team build for
+              the iQOO hackathon; I wrote the federated learning, anomaly scoring and peer-to-peer sync,
+              about 60% of the code.</p>
+            <span class="mini-stack font-mono">Kotlin &middot; Jetpack Compose &middot; TFLite &middot; federated averaging</span>
+          </article>
+
+          <article class="mini-card reveal-project" role="listitem">
+            <div class="mini-head">
+              <h3 class="mini-title">ProductIQ &middot; Physics-checked product data</h3>
+            </div>
+            <p class="mini-desc">Extracts specs from messy industrial product text, then asserts every
+              number into the Z3 theorem prover as physics and domain constraints. When the values cannot
+              coexist &mdash; a bearing bore wider than its outer diameter, power that is not volts times
+              amps &mdash; it returns the smallest contradicting set as a plain-language reason, with
+              outlier, duplicate and drift checks on top. The LLM extracts; the solver decides. UNIHACK
+              build.</p>
+            <span class="mini-stack font-mono">Python &middot; Z3 &middot; LLM tool-calling</span>
+          </article>
+
+          <article class="mini-card reveal-project" role="listitem">
+            <div class="mini-head">
+              <h3 class="mini-title">Model Collapse &middot; Real-data anchoring</h3>
+              <a href="https://github.com/Bhavya-Dhoot/Model_collapse" target="_blank" rel="noopener noreferrer"
+                class="mini-link font-mono" aria-label="Model collapse research on GitHub">GitHub <span aria-hidden="true">&#8599;</span></a>
+            </div>
+            <p class="mini-desc">How much real data does a self-consuming loop of tabular generative
+              models need before it stops collapsing? Gaussian copula, CTGAN and TVAE on three public
+              datasets, measured against closed-form theory. One finding: rank-based copulas never collapse
+              in variance &mdash; the damage moves into dependence, support and downstream utility instead.
+              Paper pending conference presentation.</p>
+            <span class="mini-stack font-mono">Python &middot; CTGAN &middot; TVAE &middot; copulas</span>
           </article>
 
           <article class="mini-card reveal-project" role="listitem">
