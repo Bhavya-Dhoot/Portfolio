@@ -142,7 +142,10 @@
         "Forward Deployed Engineering",
         "Business Process Automation",
         "Document Extraction",
-        "Demand and Production Planning"
+        "Demand and Production Planning",
+        "Root Cause Analysis",
+        "Material Requirements Planning",
+        "Paper Trading Systems"
       ],
       "sameAs": [
         "https://www.linkedin.com/in/bhavya-dhoot/",
@@ -227,7 +230,7 @@
               <h2 class="proj-title">NSE Momentum · Dual-Engine Quant Research</h2>
               <div class="proj-tags">
                 <span class="proj-tag">Factor Research</span>
-                <span class="proj-tag">Backtesting</span>
+                <span class="proj-tag">Paper Trading</span>
                 <span class="proj-tag">Rust</span>
               </div>
             </div>
@@ -239,15 +242,16 @@
               </div>
               <div class="cs-block">
                 <span class="cs-label font-mono text-label text-muted">System</span>
-                <p>Survivorship-free cross-sectional momentum on NSE small/mid-caps; roughly 20
-                  strategy families tested and rejected. Python research engine cross-validated
-                  against an independently written Rust engine, agreeing to the decimal.</p>
+                <p>Survivorship-free momentum on NSE small/mid-caps. 44 ideas logged, one promoted,
+                  42 rejected with reasons recorded. Python research matched to the decimal by an
+                  independent Rust engine; orders blocked by default behind two approvals and nine
+                  gates.</p>
               </div>
               <div class="cs-block">
                 <span class="cs-label font-mono text-label text-muted">Result</span>
                 <p>OOS Sharpe near 1.44, +23% CAGR, max drawdown -6.6%, Fama-MacBeth
-                  Newey-West t of about 2.7. Now running a live forward paper-trading book
-                  from a 650-stock monthly universe.</p>
+                  Newey-West t of about 2.7. Runs as a paper-trading desk on a 650-stock
+                  universe, with 200+ tests.</p>
               </div>
             </div>
             <div class="proj-footer">
@@ -255,7 +259,7 @@
                 <span class="text-accent">↑</span> 1.44 OOS Sharpe
               </span>
               <span class="proj-metric font-mono">
-                <span class="text-accent">◆</span> -6.6% max drawdown
+                <span class="text-accent">◆</span> 1 of 44 ideas promoted
               </span>
               <a href="mailto:dhoot.bhavya1@gmail.com?subject=NSE%20Momentum%20methodology"
                 class="proj-link font-mono" aria-label="Request the momentum methodology by email">methodology
@@ -379,20 +383,21 @@
             <div class="case-study-frame">
               <div class="cs-block">
                 <span class="cs-label font-mono text-label text-muted">Problem</span>
-                <p>Two FMCG companies ran sales reporting, production planning, and supply-chain
-                  reconciliation as slow, manual, error-prone processes.</p>
+                <p>Two FMCG companies ran sales reporting, production planning, procurement and
+                  reconciliation as slow, manual processes, over data sources that disagree.</p>
               </div>
               <div class="cs-block">
                 <span class="cs-label font-mono text-label text-muted">System</span>
-                <p>A portfolio of independent systems built on one pattern: deterministic
-                  pipelines over ERP and channel data, LLM document extraction behind compliance
-                  gates, and automated distribution, each shipped as a self-running service.
-                  Full architecture under NDA.</p>
+                <p>Ten internal tools on one pattern &mdash; deterministic pipelines, LLM
+                  extraction behind compliance gates, automated distribution &mdash; spanning volume
+                  root-cause analysis, material planning, goods-receipt extraction, recipe
+                  reformulation, paid-media monitoring and HR announcements. Architecture under NDA.</p>
               </div>
               <div class="cs-block">
                 <span class="cs-label font-mono text-label text-muted">Result</span>
-                <p>Work that took days of manual effort now runs unattended on daily cycles,
-                  with delivery confirmation, retries, and audit trails throughout.</p>
+                <p>Days of manual work now run unattended. The root-cause dashboard alone: 600+
+                  hand-written commits in six weeks, sources kept side by side rather than blended,
+                  and independent checkers that re-derive every verdict before it ships.</p>
               </div>
             </div>
             <div class="proj-footer">
@@ -400,7 +405,7 @@
                 <span class="text-accent">↑</span> 7+ systems in production
               </span>
               <span class="proj-metric font-mono">
-                <span class="text-accent">◆</span> architecture under NDA
+                <span class="text-accent">◆</span> 600+ commits in six weeks
               </span>
             </div>
           </div>

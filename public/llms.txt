@@ -14,7 +14,7 @@ Full text: https://bhavya-dhoot.vercel.app/llms-full.txt
 Contact: dhoot.bhavya1@gmail.com
 GitHub: https://github.com/Bhavya-Dhoot
 LinkedIn: https://www.linkedin.com/in/bhavya-dhoot/
-Last updated: 2026-09-09
+Last updated: 2026-09-28
 
 ## What he does
 
@@ -67,8 +67,8 @@ computed in the visitor's browser as they scroll — none is a stored number.
 ## Roles
 
 - **AI Consultant, Founder's Office — The Health Factory** (2026–present). Owns AI
-  and automation infrastructure across two sister FMCG companies; 7+ production
-  systems in operation. Full architecture is under NDA.
+  and automation infrastructure across two sister FMCG companies; ten internal
+  tools built, 7+ in production. Full architecture is under NDA.
 - **Equity Research Intern — JM Financial** (2026). Quantitative research and
   trading infrastructure for Indian equity derivatives.
 - **AI Automation Intern — GoHappyClub** (2026–present). Built ARAS, a six-agent
@@ -85,7 +85,12 @@ computed in the visitor's browser as they scroll — none is a stored number.
 - **NSE Momentum** — Survivorship-free cross-sectional momentum on NSE small and
   mid-caps. Out-of-sample Sharpe near 1.44, +23% CAGR, maximum drawdown -6.6%,
   Fama-MacBeth Newey-West t of about 2.7. Python research engine cross-validated
-  against an independently written Rust engine. Methodology available on request.
+  against an independently written Rust engine to the decimal. 44 candidate
+  strategies logged in a rejected-ideas ledger: one promoted to paper trading, one
+  more tracked on paper, 42 rejected with the reason recorded. Now runs as a
+  paper-trading desk with a live dashboard; the order path is blocked by default
+  behind a two-approval state machine, nine gates and a kill switch. 200+ tests
+  across Python and Rust. Private repository; methodology available on request.
 - **Kronos NSE** — Fine-tuned a 24.7M-parameter foundation model on a 305K-window
   NSE dataset, feeding a five-layer Market Variance Engine. Under 340ms from
   candle close to signal. 139 passing tests.
@@ -96,9 +101,17 @@ computed in the visitor's browser as they scroll — none is a stored number.
   benchmark on the home page measures 7.45 solver iterations from a cold start
   against 3.23 from a warm start, 57% fewer, computed in the visitor's browser.
   https://github.com/Bhavya-Dhoot/Options_Pricer_Jm
-- **The Health Factory AI Operations Suite** — 7+ production systems replacing
-  manual sales reporting, production planning, and supply-chain reconciliation
-  with unattended daily pipelines. Architecture under NDA.
+- **The Health Factory AI Operations Suite** — ten internal tools, 7+ in
+  production, replacing manual sales reporting, production planning, procurement
+  and reconciliation with unattended pipelines. They span volume root-cause
+  analysis, material requirements planning, consumption and runway forecasting,
+  goods-receipt document extraction, recipe reformulation, paid-media monitoring
+  and an HR announcements console. The flagship is a volume root-cause dashboard
+  built in six weeks (600+ hand-written commits, ~65K lines of Python and
+  TypeScript): it keeps disagreeing sources side by side with their provenance
+  instead of blending them, re-derives every verdict with an independent checker
+  before publishing, and serves only committed artifacts, so every number is
+  reproducible from a commit. Architecture and data under NDA.
 - **LLM Flash Crash** — Agent-based simulation (500 agents, 160 Monte Carlo runs)
   of systemic risk from homogeneous LLM traders; +30.3% drawdown amplification at
   full adoption. https://github.com/Bhavya-Dhoot/LLM-flash-crash
