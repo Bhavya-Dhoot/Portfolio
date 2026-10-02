@@ -2106,7 +2106,7 @@ a:focus-visible,
 }
 
 /* One plain-language line before the jargon starts, for the reader who does
-   not parse "cross-sectional momentum" */
+   not parse quant terms */
 .hero-plain {
   margin-top: clamp(0.875rem, 1.5vw, 1.25rem);
   max-width: 52ch;

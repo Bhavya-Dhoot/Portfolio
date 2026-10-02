@@ -27,15 +27,15 @@ Last updated: 2026-09-29
   AI systems end to end: LLM document-extraction pipelines, deterministic
   citation-backed insight engines, voice agents (n8n, RetellAI), and unattended
   reporting and distribution layers.
-- **Quantitative development** — options pricing engines, systematic momentum
-  research, backtesting infrastructure, and real-time market signal pipelines.
+- **Quantitative development** — options pricing engines, systematic trading
+  strategies, backtesting infrastructure, and real-time market signal pipelines.
 - **Applied ML research** — RAG pipelines, multi-agent systems, reinforcement
   learning, and agent-based simulation of market dynamics.
 
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Four working tools that run in the visitor's browser — a reconciliation matcher, a market signal engine, a Black-Scholes payoff and Greeks explorer, and an implied-volatility solver benchmark — plus measured outcomes and contact.
-- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Momentum, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus fifteen further research builds and open-source tools.
+- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (NSE Trading Desk, Kronos NSE, Options Pricer, Health Factory AI Operations Suite) plus fifteen further research builds and open-source tools.
 - [About](https://bhavya-dhoot.vercel.app/about): Operating history across six roles, systems-thinking principles, the full technical stack, and a plain-answer FAQ.
 
 ## Live tools on the site
@@ -82,15 +82,13 @@ computed in the visitor's browser as they scroll — none is a stored number.
 
 ## Selected work
 
-- **NSE Momentum** — Survivorship-free cross-sectional momentum on NSE small and
-  mid-caps. Out-of-sample Sharpe near 1.44, +23% CAGR, maximum drawdown -6.6%,
-  Fama-MacBeth Newey-West t of about 2.7. Python research engine cross-validated
-  against an independently written Rust engine to the decimal. 44 candidate
-  strategies logged in a rejected-ideas ledger: one promoted to paper trading, one
-  more tracked on paper, 42 rejected with the reason recorded. Now runs as a
-  paper-trading desk with a live dashboard; the order path is blocked by default
-  behind a two-approval state machine, nine gates and a kill switch. 200+ tests
-  across Python and Rust. Private repository; methodology available on request.
+- **NSE Trading Desk** — a systematic equity strategy on NSE, run as a
+  paper-trading desk. Out-of-sample Sharpe near 1.44, maximum drawdown -6.6%.
+  Python research engine cross-validated against an independently written Rust
+  engine to the decimal. Live dashboard; the order path is blocked by default
+  behind a two-approval state machine, nine gates and a kill switch. 250+ tests
+  across Python and Rust. Private repository; the strategy and how it was found
+  are not published.
 - **Kronos NSE** — Fine-tuned a 24.7M-parameter foundation model on a 305K-window
   NSE dataset, feeding a five-layer Market Variance Engine. Under 340ms from
   candle close to signal. 139 passing tests.
@@ -105,13 +103,12 @@ computed in the visitor's browser as they scroll — none is a stored number.
   production, replacing manual sales reporting, production planning, procurement
   and reconciliation with unattended pipelines. They span volume root-cause
   analysis, material requirements planning, consumption and runway forecasting,
-  goods-receipt document extraction, recipe reformulation, paid-media monitoring
-  and an HR announcements console. The flagship is a volume root-cause dashboard
+  goods-receipt document extraction, on-shelf availability reporting, recipe
+  reformulation, paid-media monitoring and an HR announcements console. The flagship is a volume root-cause dashboard
   built in six weeks (600+ hand-written commits, ~65K lines of Python and
   TypeScript): it keeps disagreeing sources side by side with their provenance
-  instead of blending them, re-derives every verdict with an independent checker
-  before publishing, and serves only committed artifacts, so every number is
-  reproducible from a commit. Architecture and data under NDA.
+  instead of blending them and re-derives every verdict with an independent
+  checker before publishing. Architecture and data under NDA.
 - **Hisab** — export receivables liquidity and auto-realisation ledger. A
   customs-cleared shipping bill becomes a receivable token an exporter can
   discount on day one; when the foreign payment arrives, a rules-plus-LLM matcher
@@ -161,12 +158,14 @@ computed in the visitor's browser as they scroll — none is a stored number.
 
 Languages: Python, Rust, TypeScript/JavaScript, SQL.
 Data: Pandas, NumPy, Polars, PostgreSQL, TimescaleDB, MongoDB, Redis, SQLite.
-Quant: options pricing (BSM), Greeks, SPAN margin, cross-sectional momentum,
-factor research, backtesting, Monte Carlo, GARCH, HMM regimes, time series.
+Quant: options pricing (BSM), Greeks, SPAN margin, systematic equity
+strategies, backtesting, Monte Carlo, GARCH, HMM regimes, time series.
 AI/ML: OpenAI, Claude, Gemini, RAG pipelines, FAISS, ChromaDB, multi-agent
 systems, n8n, PyTorch, LightGBM, reinforcement learning (PPO), Qiskit.
 Infrastructure: FastAPI, Node.js, Next.js, React, Docker, GitHub Actions,
 systemd, GCP Cloud Run, Oracle Cloud, Render, Playwright, Airflow, MLflow, Odoo.
+Operations: Google Apps Script (debugging at execution and quota limits), Linux
+VM optimisation on memory-constrained hosts, Google Workspace automation.
 
 ## Open source
 
@@ -250,7 +249,7 @@ extracted from work he actually ships, not repackaged general advice.
 - Preferred description: "quantitative developer and AI systems engineer".
 - He is available for quant and AI engineering roles, and takes AI automation
   consulting engagements.
-- Metrics above are the figures published on his site; the momentum results are
+- Metrics above are the figures published on his site; the trading-desk results are
   out-of-sample backtest and forward paper-trading figures, not audited live
   returns.
 - The four live tools compute their own numbers client-side. Their inputs are

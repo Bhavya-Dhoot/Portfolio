@@ -14,7 +14,7 @@ export function initSkills() {
     // Monochrome + single accent: nodes are paper, hover ignites lime.
     const CATEGORIES = [
         { name: 'Languages', color: '#c8ff00', skills: ['Python', 'Rust', 'TypeScript', 'SQL', 'Polars', 'NumPy'] },
-        { name: 'Quant', color: '#c8ff00', skills: ['Options Pricing', 'Momentum', 'Backtesting', 'GARCH / HMM', 'Monte Carlo'] },
+        { name: 'Quant', color: '#c8ff00', skills: ['Options Pricing', 'Systematic Trading', 'Backtesting', 'GARCH / HMM', 'Monte Carlo'] },
         { name: 'AI / ML', color: '#c8ff00', skills: ['LLMs', 'RAG', 'Multi-Agent', 'PyTorch', 'LightGBM', 'RL / PPO'] },
         { name: 'Infra', color: '#c8ff00', skills: ['FastAPI', 'Docker', 'TimescaleDB', 'Redis', 'Airflow', 'Cloud Run'] },
     ];

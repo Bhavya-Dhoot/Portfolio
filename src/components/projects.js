@@ -1,6 +1,6 @@
 /**
  * Project cards — Canvas mini-visualizations per case study
- * 1: Kronos MVE (candlesticks) · 2: Momentum (equity curve)
+ * 1: Kronos MVE (candlesticks) · 2: Trading desk (equity curve)
  * 3: Options Pricer (IV smile) · 4: THF Ops Suite (pipeline bars)
  */
 
@@ -127,7 +127,7 @@ function drawMarketViz(ctx, w, h, t) {
     });
 }
 
-// ── 2. Momentum: equity curve with drawdown dip ─────────────────
+// ── 2. Trading desk: equity curve with drawdown dip ─────────────────
 function drawEquityViz(ctx, w, h, t) {
     drawGrid(ctx, w, h);
 
