@@ -122,7 +122,8 @@ export function drawOn(paths, { stagger = .08, dur = .55, start = 'top 80%', end
         delay,
         scrollTrigger,
         onUpdate: syncDash,
-        onComplete: syncDash,
+        // Drop the dash once drawn: pathLength with a non-scaling stroke can leave a long line a few % short
+        onComplete: () => { list.forEach((p) => { if (!p.dataset.dash) p.style.strokeDasharray = 'none'; }); syncDash?.(); },
     });
 }
 

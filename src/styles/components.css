@@ -173,13 +173,18 @@ a:hover .mk, a:focus-visible .mk, .link:hover .mk {
   transition: background-color var(--d-fast) linear, color var(--d-fast) linear;
 }
 .chip-btn b { color: var(--accent); }
+/* Toggles: off is an outline, on is the highlighter. Plain chip-btn links stay solid ink. */
+.chip-btn[aria-pressed="false"] { background: transparent; color: var(--ink); }
 .chip-btn[aria-pressed="true"], .chip-btn.is-active {
-  background: var(--paper);
+  background: var(--accent);
   color: var(--ink);
 }
 .chip-btn[aria-pressed="true"] b, .chip-btn.is-active b { color: var(--ink); }
+.chip-btn:active { transform: translateY(1px); }
 @media (hover: hover) {
   .chip-btn:hover { background: var(--paper); color: var(--ink); }
+  .chip-btn[aria-pressed="false"]:hover { background: var(--ink); color: var(--paper); }
+  .chip-btn[aria-pressed="true"]:hover { background: var(--accent); }
   .chip-btn:hover b { color: var(--ink); }
 }
 

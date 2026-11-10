@@ -49,21 +49,33 @@ export function initPricer() {
 
     const state = { ...PRESETS.atm, view: 'expiry' };
 
-    // ---- chart furniture: hand-drawn axes, then exact data elements on top
+    // ---- chart furniture: one hand-drawn P&L axis; the zero line is the spot axis and is data, so it is exact
+    const defs = el('defs', {}, svg);
+    const hatch = el('pattern', { id: 'desk-hatch', width: '10', height: '10', patternUnits: 'userSpaceOnUse', patternTransform: 'rotate(45)' }, defs);
+    el('line', { x1: '0', y1: '0', x2: '0', y2: '10', stroke: '#0a0a0a', 'stroke-width': '2', opacity: '.35' }, hatch);
     const d = doodle(105);
     const axes = ink(svg, [
-        { d: d.line(PLOT.x0 - 14, PLOT.yTop - 24, PLOT.x0 - 14, PLOT.yBot + 20, 4), w: 4 },
-        { d: d.line(PLOT.x0 - 14, PLOT.yBot + 20, PLOT.x1 + 12, PLOT.yBot + 20, 4), w: 4 },
+        { d: d.line(PLOT.x0 - 14, PLOT.yTop - 24, PLOT.x0 - 14, PLOT.yBot + 6, 4), w: 4 },
     ]);
     label(svg, PLOT.x0 - 6, 34, 'P&L', { font: 'hand', size: HAND });
-    label(svg, PLOT.x1 + 10, BASE + 2, 'spot', { font: 'hand', size: HAND, anchor: 'end' });
-    const tickLo = label(svg, PLOT.x0 - 14, BASE, '', { size: TICK });
+    label(svg, PLOT.x1 + 12, BASE + 2, 'spot', { font: 'hand', size: HAND, anchor: 'end' });
+    const tickLo = label(svg, PLOT.x0, BASE, '', { size: TICK });
     const tickHi = label(svg, PLOT.x1 - 70, BASE, '', { size: TICK, anchor: 'end' });
     const tickZero = label(svg, PLOT.x0 - 22, 0, '0', { size: TICK, anchor: 'end' });
 
+    const gain = el('path', { class: 'gain' }, svg);
+    const loss = el('path', { class: 'loss' }, svg);
     const zero = el('path', { class: 'zero', 'vector-effect': 'non-scaling-stroke', 'stroke-width': '3' }, svg);
+    const cross = el('path', { class: 'cross', 'vector-effect': 'non-scaling-stroke', 'stroke-width': '2' }, svg);
     const curve = el('path', { class: 'curve', 'vector-effect': 'non-scaling-stroke', 'stroke-width': '4' }, svg);
+    const beMark = el('path', { class: 'be', 'vector-effect': 'non-scaling-stroke', 'stroke-width': '2' }, svg);
+    const beText = label(svg, 0, 0, '', { size: TICK, anchor: 'middle' });
     const dot = el('circle', { class: 'spot-dot', r: '8' }, svg);
+    // Live readout sits in the top-right corner, clear of the dot and the breakeven tag
+    const read = label(svg, PLOT.x1 + 12, 34, '', { size: PHONE ? 30 : 18, anchor: 'end' });
+    read.setAttribute('font-weight', '700');
+    const hint = label(svg, 0, 0, 'drag me', { font: 'hand', size: HAND, anchor: 'middle' });
+    let range = null;                     // frozen while dragging so the axis does not slide under the finger
 
     // ---- maths
     const pnl = (s, premium, T, sigma) => {
@@ -85,8 +97,7 @@ export function initPricer() {
         out.vega.textContent = g.vega.toFixed(3);
         out.theta.textContent = g.theta.toFixed(3);
 
-        const lo = Math.min(state.spot, state.strike) * 0.7;
-        const hi = Math.max(state.spot, state.strike) * 1.3;
+        const [lo, hi] = range || [Math.min(state.spot, state.strike) * 0.7, Math.max(state.spot, state.strike) * 1.3];
         const xs = [];
         for (let i = 0; i <= SAMPLES; i++) xs.push(lo + (hi - lo) * i / SAMPLES);
         xs.push(state.strike);
@@ -99,10 +110,40 @@ export function initPricer() {
         const X = (s) => PLOT.x0 + (s - lo) / (hi - lo) * (PLOT.x1 - PLOT.x0);
         const Y = (v) => PLOT.yBot - (v - vmin) / span * (PLOT.yBot - PLOT.yTop);
 
-        curve.setAttribute('d', xs.map((s, i) => `${i ? 'L' : 'M'}${X(s).toFixed(1)} ${Y(ys[i]).toFixed(1)}`).join(' '));
-        zero.setAttribute('d', `M${PLOT.x0 - 14} ${Y(0).toFixed(1)} L${PLOT.x1 + 12} ${Y(0).toFixed(1)}`);
-        dot.setAttribute('cx', X(state.spot).toFixed(1));
-        dot.setAttribute('cy', Y(pnl(state.spot, g.price, T, sigma)).toFixed(1));
+        const y0 = Y(0);
+        const pts = xs.map((s, i) => `${X(s).toFixed(1)} ${Y(ys[i]).toFixed(1)}`);
+        curve.setAttribute('d', 'M' + pts.join(' L'));
+        // Profit is highlighted, loss is hatched: the curve clamped to the zero line on each side
+        const band = (f) => `M${X(xs[0]).toFixed(1)} ${y0.toFixed(1)} `
+            + xs.map((s, i) => `L${X(s).toFixed(1)} ${f(Y(ys[i]), y0).toFixed(1)}`).join(' ')
+            + ` L${X(xs[xs.length - 1]).toFixed(1)} ${y0.toFixed(1)} Z`;
+        gain.setAttribute('d', band(Math.min));
+        loss.setAttribute('d', band(Math.max));
+        zero.setAttribute('d', `M${PLOT.x0 - 14} ${y0.toFixed(1)} L${PLOT.x1 + 12} ${y0.toFixed(1)}`);
+
+        // Breakeven: the first sign change, interpolated
+        let be = null;
+        for (let i = 1; i < xs.length && be === null; i++) {
+            if ((ys[i - 1] < 0) !== (ys[i] < 0)) be = xs[i - 1] + (xs[i] - xs[i - 1]) * (-ys[i - 1] / (ys[i] - ys[i - 1]));
+        }
+        beMark.setAttribute('d', be === null ? '' : `M${X(be).toFixed(1)} ${(y0 - 14).toFixed(1)} L${X(be).toFixed(1)} ${(y0 + 14).toFixed(1)}`);
+        // Tag sits above the zero line, on whichever side of the mark has room
+        const right = be !== null && X(be) > (PLOT.x0 + PLOT.x1) / 2;
+        beText.textContent = be === null ? '' : `${PHONE ? 'BE' : 'breakeven'} ${be.toFixed(2)}`;
+        beText.setAttribute('text-anchor', right ? 'end' : 'start');
+        beText.setAttribute('x', be === null ? 0 : (X(be) + (right ? -12 : 12)).toFixed(1));
+        beText.setAttribute('y', (y0 < PLOT.yTop + 30 ? y0 + 30 : y0 - 14).toFixed(1));
+
+        const sx = X(state.spot), here = pnl(state.spot, g.price, T, sigma), sy = Y(here);
+        dot.setAttribute('cx', sx.toFixed(1));
+        dot.setAttribute('cy', sy.toFixed(1));
+        cross.setAttribute('d', `M${sx.toFixed(1)} ${PLOT.yTop - 20} L${sx.toFixed(1)} ${PLOT.yBot + 6}`);
+        read.textContent = `spot ${state.spot.toFixed(1)}  P&L ${here >= 0 ? '+' : ''}${here.toFixed(2)}`;
+        // Hint beside the dot, on the side away from the breakeven tag
+        const hl = !right;
+        hint.setAttribute('text-anchor', hl ? 'start' : 'end');
+        hint.setAttribute('x', (sx + (hl ? 22 : -22)).toFixed(1));
+        hint.setAttribute('y', (sy > y0 ? sy + HAND + 4 : sy - 16).toFixed(1));   // off the curve, away from the zero line
 
         tickLo.textContent = lo.toFixed(0);
         tickHi.textContent = hi.toFixed(0);
@@ -159,6 +200,36 @@ export function initPricer() {
         pressed(presetBtns, () => false);
         schedule();
     }));
+
+    // ---- drag the spot along the curve, straight on the chart
+    let dragging = false;
+    const toSpot = (e) => {
+        const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(svg.getScreenCTM().inverse());
+        const [lo, hi] = range;
+        const s = lo + (Math.min(PLOT.x1, Math.max(PLOT.x0, p.x)) - PLOT.x0) / (PLOT.x1 - PLOT.x0) * (hi - lo);
+        state.spot = Math.round(s * 10) / 10;
+        inputs.spot.value = state.spot;
+        pressed(presetBtns, () => false);
+        schedule();
+    };
+    svg.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        range = [Math.min(state.spot, state.strike) * 0.7, Math.max(state.spot, state.strike) * 1.3];
+        svg.setPointerCapture(e.pointerId);
+        svg.classList.add('is-drag');
+        hint.style.opacity = '0';
+        toSpot(e);
+    });
+    svg.addEventListener('pointermove', (e) => { if (dragging) toSpot(e); });
+    const drop = () => {
+        if (!dragging) return;
+        dragging = false;
+        range = null;
+        svg.classList.remove('is-drag');
+        schedule();
+    };
+    svg.addEventListener('pointerup', drop);
+    svg.addEventListener('pointercancel', drop);
 
     writeInputs();
     syncToggles();

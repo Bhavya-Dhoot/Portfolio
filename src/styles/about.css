@@ -34,7 +34,7 @@
   aspect-ratio: 480 / 543;
   padding: 16px;
 }
-.portrait-frame canvas { width: 100%; height: 100%; }
+.portrait-frame canvas { width: 100%; height: 100%; touch-action: pan-y; cursor: crosshair; }
 .portrait-ink {
   position: absolute;
   inset: 0;

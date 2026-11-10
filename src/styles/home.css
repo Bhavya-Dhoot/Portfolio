@@ -149,6 +149,9 @@
 .desk-chart { grid-area: chart; width: 100%; height: auto; aspect-ratio: 800 / 420; }
 .outputs { grid-area: out; display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: var(--s-4); }
 .ctl-row { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+/* Presets: an even two-column grid, not a ragged wrap */
+.ctl-presets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ctl-presets .chip-btn { justify-content: center; text-align: center; padding-inline: .4em; }
 .ctl-toggles { gap: var(--s-4) var(--s-5); }
 .tog { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); }
 .tog .ctl-l { margin-right: var(--s-1); }
@@ -178,8 +181,15 @@
 }
 .fld input::-webkit-inner-spin-button, .fld input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 .fld input:focus-visible { background: var(--paper-2); }
-.desk-chart .zero { stroke-dasharray: 10 8; }
-.desk-chart .spot-dot { fill: var(--accent); stroke: var(--ink); stroke-width: 3; vector-effect: non-scaling-stroke; }
+.desk-chart { touch-action: pan-y; cursor: ew-resize; user-select: none; }
+.desk-chart .zero { fill: none; }
+.desk-chart .gain { fill: var(--accent); opacity: .55; }
+.desk-chart .loss { fill: url(#desk-hatch); }
+.desk-chart .be, .desk-chart .cross { fill: none; stroke: var(--ink); stroke-dasharray: 6 6; }
+.desk-chart .cross { opacity: 0; transition: opacity var(--d-fast) linear; }
+.desk-chart.is-drag .cross { opacity: 1; }
+.desk-chart .spot-dot { fill: var(--accent); stroke: var(--ink); stroke-width: 3; vector-effect: non-scaling-stroke; transition: r var(--d-fast) ease-out; }
+.desk-chart.is-drag .spot-dot { r: 12px; }
 .out dt { font-family: var(--font-mono); font-size: var(--fs-mono); letter-spacing: var(--track-mono); text-transform: uppercase; color: var(--muted); }
 .out dd { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; font-variant-numeric: tabular-nums; min-height: 1.5em; }
 
