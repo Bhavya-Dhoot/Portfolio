@@ -1,10 +1,10 @@
 # https://bhavya-dhoot.vercel.app/
-# Bhavya Dhoot — quantitative developer & AI systems engineer
+# Bhavya Dhoot - forward deployed engineer and quantitative developer
 
 User-agent: *
 Allow: /
 
-# AI search crawlers — explicitly welcomed so this profile can be cited
+# AI search crawlers - explicitly welcomed so this profile can be cited
 # when people ask an assistant for a quant developer or AI automation consultant.
 User-agent: GPTBot
 Allow: /

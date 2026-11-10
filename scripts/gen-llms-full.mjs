@@ -5,7 +5,7 @@
  * copy of the page content is worse than no file at all: it goes stale, and a
  * stale full-text dump is exactly the thing an answer engine will quote.
  *
- * Extraction is deliberately dumb — it takes the text that is actually in the
+ * Extraction is deliberately dumb - it takes the text that is actually in the
  * markup. Anything a widget computes at runtime is not here, which is correct:
  * those numbers belong to the visitor's browser, not to this file.
  */
@@ -24,7 +24,7 @@ const PAGES = [
 
 const ENTITIES = {
     amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ',
-    middot: '·', mdash: '—', ndash: '–', rarr: '→', larr: '←',
+    middot: '·', mdash: '-', ndash: '-', rarr: '→', larr: '←',
     ldquo: '"', rdquo: '"', lsquo: "'", rsquo: "'", hellip: '…',
     times: '×', sigma: 'σ', Sigma: 'Σ', Delta: 'Δ', Gamma: 'Γ',
     nu: 'ν', Theta: 'Θ', radic: '√', sup2: '²', deg: '°', minus: '−',
@@ -46,17 +46,21 @@ function extract(html) {
         .replace(/<style[\s\S]*?<\/style>/gi, '')
         .replace(/<svg[\s\S]*?<\/svg>/gi, '')
         .replace(/<canvas[\s\S]*?<\/canvas>/gi, '')
-        // Decorative act phases duplicate the real content that follows them
-        .replace(/<div class="act__phase[^"]*"[^>]*aria-hidden="true"[\s\S]*?<\/div>\s*(?=<)/gi, '');
+        // UI state, not copy: the "measuring" placeholder and the stamps.
+        .replace(/<span class="(?:wait|stamp)(?:\s[^"]*)?"[^>]*>[\s\S]*?<\/span>/gi, '')
+        // Empty swipe element, and no stray space before punctuation after an inline close.
+        .replace(/<i aria-hidden="true"><\/i>/g, '')
+        .replace(/<\/(?:span|i|em|b|strong)>(?=[:;,.!?])/g, '');
 
     const flat = (s) => decode(s.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
     const out = [];
 
-    // Metric blocks are label + value in sibling spans, and carry the page's
-    // most quotable facts. They are collected in a separate pass: putting div
-    // in the prose alternation below makes a matched div consume the <p> tags
+    // Metric blocks (span.fact holding span.fact-v and span.fact-l) are label + value in sibling spans, and carry the page's
+    // most quotable facts. They are collected in a separate pass: putting a block
+    // element in the prose alternation below makes a matched element consume the <p> tags
     // nested inside it, which silently drops half the page.
-    const metric = /<div class="(?:kpi-card|bench-metric|pipe-stat|signal-out__cell|stat-block)[^"]*"[^>]*>([\s\S]*?)<\/div>/gi;
+    // The negative lookahead stops at another outer .fact (class "fact" or "fact x"), never at the inner .fact-v or .fact-l.
+    const metric = /<span class="fact(?:\s[^"]*)?"[^>]*>((?:(?!<span class="fact(?:\s[^"]*)?")[\s\S])*?<\/span>\s*<\/span>)/gi;
     const metrics = new Map();
     let k;
     while ((k = metric.exec(cleaned)) !== null) {
@@ -64,7 +68,8 @@ function extract(html) {
         if (text.length > 1) metrics.set(k.index, text);
     }
 
-    const token = /<(h[1-6]|p|li|dt|dd)\b[^>]*>([\s\S]*?)<\/\1>/gi;
+    // Innermost blocks only, so <p>/<h3>/<li> nested inside an <li> are emitted one by one.
+    const token = /<(h[1-6]|p|li|dt|dd|th|td)\b[^>]*>((?:(?!<(?:h[1-6]|p|li|dt|dd|th|td)\b)[\s\S])*?)<\/\1>/gi;
     let m;
     while ((m = token.exec(cleaned)) !== null) {
         // Emit any metric block that appeared before this prose node, so the
@@ -89,7 +94,7 @@ function render(nodes) {
         if (/^h[1-6]$/.test(n.tag)) {
             const level = Math.min(6, Number(n.tag[1]) + 2);
             lines.push('', '#'.repeat(level) + ' ' + n.text, '');
-        } else if (n.tag === 'dt') {
+        } else if (n.tag === 'dt' || n.tag === 'th') {
             lines.push('', '**' + n.text + '**');
         } else if (n.tag === 'li') {
             lines.push('- ' + n.text);
@@ -101,7 +106,7 @@ function render(nodes) {
 }
 
 const parts = [
-    '# Bhavya Dhoot — full site text',
+    '# Bhavya Dhoot - full site text',
     '',
     '> Complete readable text of https://bhavya-dhoot.vercel.app/, generated from',
     '> the built pages at deploy time so it cannot drift from what is published.',
@@ -117,7 +122,7 @@ for (const page of PAGES) {
     const full = join(DIST, page.file);
     if (!existsSync(full)) { missing += 1; continue; }
     const html = readFileSync(full, 'utf8');
-    parts.push(`\n---\n\n## ${page.title} — ${ORIGIN}${page.path}\n`);
+    parts.push(`\n---\n\n## ${page.title} - ${ORIGIN}${page.path}\n`);
     parts.push(render(extract(html)));
 }
 

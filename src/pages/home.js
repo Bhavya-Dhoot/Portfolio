@@ -1,22 +1,44 @@
 /**
- * Home — hero, proof metrics, the live pricer, contact.
+ * Home - hero sketch, proof board, ten tools, and four working tools that run in the browser.
  */
 
-import { initCore, onFontsReady } from '../core.js';
-import { initHeroAnimation } from '../hero.js';
-import { initGrid } from '../svg/grid.js';
-import { initDashboard } from '../components/dashboard.js';
-import { initPayoff } from '../components/payoff.js';
-import '../acts/pricing.js';   // registers the pricing act renderer
-import '../acts/solver.js';    // registers the solver act renderer
-import '../acts/signal.js';    // registers the signal act renderer
-import '../acts/brief.js';     // registers the brief act renderer
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import '../styles/home.css';
 
-initCore();
-initGrid();
-initDashboard();
-initPayoff();
-onFontsReady(initHeroAnimation);
+import { boot } from '../app.js';
+import { doodle } from '../doodle/paths.js';
+import { ink } from '../doodle/draw.js';
+import { initHero } from '../home/hero.js';
+import { initProof } from '../home/proof.js';
+import { initTools, benchResult } from '../home/tools.js';
+import { initReconcile } from '../home/reconcile-view.js';
+import { initPricer } from '../home/pricer-view.js';
+import { initSolver } from '../home/solver-view.js';
+import { initSignal } from '../home/signal-view.js';
+import { initSelected } from '../home/selected.js';
 
-const badge = document.getElementById('availability-badge');
-if (badge) setTimeout(() => badge.classList.add('visible'), 1800);
+// Every .link carries an empty svg slot in the HTML (so the row never shifts); ink the drawn arrow into it
+function drawLinkArrows() {
+    const d = doodle(109);
+    document.querySelectorAll('a.link > svg').forEach((svg) => {
+        if (svg.querySelector('path')) return;
+        ink(svg, [{ d: d.arrow(3, 13, 42, 13, 5, 12), w: 4 }], { drawn: true });
+    });
+}
+
+boot();
+drawLinkArrows();
+
+// One benchmark run feeds the proof board and the solver cells
+const bench = benchResult();
+
+initHero();
+initProof(bench);
+initTools();
+initReconcile();
+initPricer();
+initSolver(bench);
+initSignal();
+initSelected();

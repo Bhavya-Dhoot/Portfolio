@@ -1,0 +1,211 @@
+/* about.css - the About page. Shared classes live in components.css and are never redefined here. */
+
+/* ---------------------------------------------------------------- section rhythm */
+.experience, .thesis, .faq-sec, .skills-sec { padding-block: var(--section); }
+.faq-sec, .skills-sec { padding-top: 0; }
+
+.sec-h {
+  max-width: 16ch;
+  margin-bottom: clamp(2rem, 5vw, 4rem);
+}
+.sec-h-sm { font-size: var(--fs-h3); max-width: none; margin-bottom: var(--s-6); }
+
+/* ---------------------------------------------------------------- intro */
+.intro { padding-block: clamp(2rem, 6vh, 4rem) var(--section); }
+.intro h1 {
+  font-size: var(--fs-big);
+  margin-bottom: var(--s-6);
+  max-width: 11ch;
+}
+.core { display: grid; gap: var(--s-5); }
+.core p {
+  max-width: 56ch;
+  font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  line-height: 1.5;
+}
+.core .mk { font-weight: 700; }
+
+.portrait {
+  justify-self: end;
+  width: min(100%, 30rem);
+}
+.portrait-frame {
+  position: relative;
+  aspect-ratio: 480 / 543;
+  padding: 16px;
+}
+.portrait-frame canvas { width: 100%; height: 100%; }
+.portrait-ink {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.portrait figcaption { margin-top: var(--s-3); text-align: center; }
+
+/* ---------------------------------------------------------------- phrases that wrap
+   A swiped phrase that breaks across lines cannot carry one absolute block, so on narrow
+   widths it flows inline and the highlighter is a background that fx.js grows. */
+@media (max-width: 1023px) {
+  .core .mk-flow { display: inline; }
+}
+@media (max-width: 1199px) {
+  .th-close .mk-flow { display: inline; }
+}
+@media (max-width: 1023px) {
+  .core .mk-flow,
+  .th-close .mk-flow {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 0% 48%;
+  }
+  .core .mk-flow > i, .th-close .mk-flow > i { display: none; }
+}
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .th-close .mk-flow {
+    background-image: linear-gradient(var(--accent), var(--accent));
+    background-repeat: no-repeat;
+    background-position: 0 88%;
+    background-size: 0% 48%;
+  }
+  .th-close .mk-flow > i { display: none; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 1199px) {
+  .core .mk-flow, .th-close .mk-flow { background-size: 100% 48%; }
+}
+
+/* ---------------------------------------------------------------- experience timeline */
+.timeline-wrap { --gut: 3.5rem; position: relative; }
+.timeline-ink {
+  position: absolute;
+  left: 0; top: 0;
+  width: var(--gut);
+  height: 100%;
+  pointer-events: none;
+}
+.timeline {
+  list-style: none;
+  display: grid;
+  gap: clamp(3rem, 7vw, 5.5rem);
+  padding-left: calc(var(--gut) + var(--s-5));
+}
+.entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr);
+  gap: var(--s-4) clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+}
+.entry-head h3 { font-size: var(--fs-h3); }
+.role {
+  margin-top: var(--s-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.entry-line {
+  max-width: 60ch;
+  margin-bottom: var(--s-4);
+}
+.entry-body .facts { max-width: 60ch; }
+
+/* ---------------------------------------------------------------- thesis */
+.th {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: var(--s-4) var(--s-6);
+  align-items: start;
+  margin-top: clamp(3.5rem, 8vw, 6.5rem);
+}
+.sec-h + .th { margin-top: 0; }
+.th-num { width: 5rem; height: 5rem; aspect-ratio: 1; }
+.th h3 { font-size: var(--fs-h3); margin-bottom: var(--s-3); }
+
+/* I: one wide note */
+.th-wide .th-body p { max-width: 78ch; font-size: clamp(1.0625rem, 1.35vw, 1.3125rem); }
+
+/* II: text with its drawing beside it */
+.th-pair { grid-template-columns: 5rem minmax(0, 1.15fr) minmax(0, .85fr); align-items: center; }
+.th-draw { width: 100%; height: auto; aspect-ratio: 520 / 412; }
+
+/* III: a narrow column, then one closing line at the full width of the content */
+.th-narrow { margin-left: clamp(0rem, 8vw, 7rem); }
+.th-narrow .th-body { max-width: 40ch; }
+.th-close {
+  grid-column: 2;
+  max-width: none;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-h3);
+  letter-spacing: var(--track-display);
+  line-height: 1.05;
+  margin-top: var(--s-4);
+}
+
+/* ---------------------------------------------------------------- FAQ */
+.faq { display: grid; gap: var(--s-7); }
+.faq dt {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.9vw, 1.6rem);
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  margin-bottom: var(--s-3);
+  max-width: 40ch;
+}
+.faq dd { max-width: var(--measure); }
+
+/* ---------------------------------------------------------------- skills table */
+.skills-wrap { position: relative; }
+.skills-ink {
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+#skills-table { position: relative; width: 100%; }
+#skills-table th, #skills-table td {
+  padding: var(--s-5);
+  text-align: left;
+  vertical-align: top;
+}
+#skills-table th {
+  width: 12rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+#skills-table td { font-weight: 500; max-width: 70ch; }
+
+/* ---------------------------------------------------------------- tablet and phone */
+@media (max-width: 1023px) {
+  .th-pair { grid-template-columns: 5rem minmax(0, 1fr); }
+  .th-pair .th-draw { grid-column: 2; max-width: 32rem; }
+}
+
+@media (max-width: 767px) {
+  .portrait { justify-self: start; width: min(100%, 18rem); }
+  .split > figure.portrait { max-height: none; }
+
+  .timeline-wrap { --gut: 2.75rem; }
+  .timeline { padding-left: calc(var(--gut) + var(--s-3)); }
+  .entry { grid-template-columns: minmax(0, 1fr); }
+
+  .th, .th-pair { grid-template-columns: minmax(0, 1fr); }
+  .th-pair .th-draw { grid-column: auto; max-height: 60vw; width: auto; max-width: 100%; }
+  .th-num { width: 4rem; height: 4rem; }
+  .th-narrow { margin-left: 0; }
+  .th-close { grid-column: auto; }
+}
+
+@media (max-width: 639px) {
+  #skills-table, #skills-table tbody, #skills-table tr, #skills-table th, #skills-table td { display: block; width: auto; }
+  #skills-table th { padding-bottom: 0; }
+  #skills-table td { padding-top: var(--s-2); }
+}

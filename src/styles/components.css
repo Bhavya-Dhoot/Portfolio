@@ -1,0 +1,349 @@
+/* components.css - shared classes owned by foundation. Page sheets use these, never redefine them. */
+
+/* ---------------------------------------------------------------- marker swipe */
+.mk {
+  display: inline;
+  background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 88% / 0% 48%;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* the empty <i> stays in the markup; the highlighter is the background so a phrase can wrap */
+.mk > i { display: none; }
+a:hover .mk, a:focus-visible .mk, .link:hover .mk {
+  background-size: 100% 48%;
+  transition: background-size var(--d-swipe) var(--ease-out);
+}
+.nav-link.active .mk { background-size: 100% 48%; }
+@media (prefers-reduced-motion: reduce) {
+  .mk { background-size: 100% 48%; }
+}
+
+/* ---------------------------------------------------------------- nav */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--nav-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-inline: var(--gutter);
+  background: transparent;
+  transition: background-color var(--d-fast) linear;
+}
+.nav.scrolled { background: rgba(240, 237, 232, .92); }
+
+.nav-logo {
+  position: relative;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 52px; height: 36px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: -.04em;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+}
+.nav-logo-ink {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(.75rem, 2.4vw, 2.25rem);
+  list-style: none;
+}
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  letter-spacing: .02em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* ---------------------------------------------------------------- text helpers */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 400;
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hand {
+  font-family: var(--font-hand);
+  font-weight: 400;
+  font-size: var(--fs-hand);
+  letter-spacing: 0;
+  line-height: 1.25;
+  color: var(--note);
+}
+
+/* Inline text link with a slot for a drawn arrow glyph: <a class="link">See the work <svg class="ink-svg">...</svg></a> */
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  gap: .45em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+}
+.link > svg, .link > .ink-svg { width: 1.6em; height: .9em; flex: none; }
+
+/* ---------------------------------------------------------------- facts */
+/* .fact is THE class gen-llms-full collects: one level deep, static figures only. */
+.fact { display: inline; }
+.fact-v { font-weight: 700; font-variant-numeric: tabular-nums; }
+.fact-v + .fact-l { margin-left: .3em; }
+
+/* Metric-first bullet list */
+.facts {
+  list-style: none;
+  display: grid;
+  gap: var(--s-3);
+  max-width: var(--measure);
+}
+.facts > li {
+  position: relative;
+  padding-left: 1.35em;
+  font-weight: 500;
+}
+.facts > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: .68em;
+  width: .7em;
+  height: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+  transform: rotate(-4deg);
+}
+.facts > li > b:first-child, .facts > li > strong:first-child, .facts .fact-v { font-weight: 700; }
+
+/* ---------------------------------------------------------------- chips, buttons, stamps */
+.chip {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-mono);
+  letter-spacing: .06em;
+  line-height: 1.45;
+  padding: .55em .9em;
+  border-radius: var(--r);
+  font-variant-numeric: tabular-nums;
+}
+.chip b { color: var(--accent); font-weight: 700; }
+
+.chip-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-mono);
+  letter-spacing: .06em;
+  line-height: 1.3;
+  padding: calc(.55em - 3px) calc(.9em - 3px);
+  border: 3px solid var(--ink);
+  border-radius: var(--r);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--d-fast) linear, color var(--d-fast) linear;
+}
+.chip-btn b { color: var(--accent); }
+.chip-btn[aria-pressed="true"], .chip-btn.is-active {
+  background: var(--paper);
+  color: var(--ink);
+}
+.chip-btn[aria-pressed="true"] b, .chip-btn.is-active b { color: var(--ink); }
+@media (hover: hover) {
+  .chip-btn:hover { background: var(--paper); color: var(--ink); }
+  .chip-btn:hover b { color: var(--ink); }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5em;
+  min-height: 48px;
+  padding: .75em 1.4em;
+  background: var(--ink);
+  color: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: var(--r);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -.01em;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--d-fast) linear, color var(--d-fast) linear;
+}
+.btn:hover { background: var(--paper); color: var(--ink); }
+.btn-paper { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+.btn-paper:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+
+/* Rotation is CSS-owned (--rot); stamp() animates --sc and opacity only. */
+.stamp {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: var(--r);
+  padding: 2px 12px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--fs-mono);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  white-space: nowrap;
+  transform-origin: center;
+  transform: rotate(var(--rot, -6deg)) scale(var(--sc, 1));
+}
+
+/* ---------------------------------------------------------------- drawings */
+.ink-svg { overflow: visible; }
+.ink-svg path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ink-svg .fill { fill: var(--accent); stroke: none; }
+.ink-svg .lbl { fill: var(--ink); }
+.ink-svg .lbl-mono {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: var(--track-mono);
+  text-transform: uppercase;
+}
+.ink-svg .lbl-hand { font-family: var(--font-hand); fill: var(--note); }
+.ink-svg .lbl-muted { fill: var(--muted); }
+.band .ink-svg path { stroke: var(--paper); }
+.band .ink-svg .lbl { fill: var(--paper); }
+
+/* ---------------------------------------------------------------- contact band */
+.band {
+  position: relative;
+  background: var(--ink);
+  color: var(--paper);
+  padding-block: var(--section);
+}
+.band-h {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  letter-spacing: var(--track-display);
+  line-height: var(--lh-display);
+  color: var(--paper);
+  max-width: 18ch;
+  text-wrap: balance;
+}
+.band-h--accent { color: var(--accent); margin-top: var(--s-2); }
+.band-note {
+  color: var(--accent);
+  margin-top: var(--s-6);
+  max-width: var(--measure);
+}
+.band-rule {
+  display: block;
+  width: 100%;
+  height: 12px;
+  margin-block: var(--s-6);
+}
+.band-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-6);
+}
+.band-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: .02em;
+  color: var(--paper);
+  text-decoration: none;
+  background-image: linear-gradient(var(--paper), var(--paper));
+  background-repeat: no-repeat;
+  background-position: 0 calc(100% - 10px);
+  background-size: 0% 2px;
+  transition: background-size var(--d-swipe) var(--ease-out);
+  overflow-wrap: anywhere;
+}
+.band-link:hover, .band-link:focus-visible { background-size: 100% 2px; }
+
+/* ---------------------------------------------------------------- footer */
+.footer {
+  padding-block: var(--s-6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  color: var(--ink);
+}
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3) var(--s-6);
+}
+.footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--ink);
+  text-underline-offset: .25em;
+}
+
+/* ---------------------------------------------------------------- page wipe */
+#wipe {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  pointer-events: none;
+  overflow: visible;
+  visibility: hidden;
+}
+#wipe path {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  will-change: stroke-dashoffset;
+}
+
+@media (max-width: 479px) {
+  .band-row { gap: var(--s-3) var(--s-5); }
+}
+
+/* Arriving from a wipe: hide the page until wipe.js has laid the lime cover over it */
+html.bd-wipe-in body > :not(#wipe) { visibility: hidden; }

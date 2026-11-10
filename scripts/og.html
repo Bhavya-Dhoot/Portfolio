@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>og</title>
+<!-- Source for public/og.jpg. Render at 1200x630 with a headless browser screenshot. Doodle look: paper, ink, one lime highlighter, hand-drawn SVG by brief. -->
+<style>
+  @font-face { font-family: 'Archivo Variable'; font-weight: 100 900; src: url('../public/fonts/archivo-latin-wght-normal.woff2') format('woff2'), url('../node_modules/@fontsource-variable/archivo/files/archivo-latin-wght-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'Patrick Hand'; font-weight: 400; src: url('../public/fonts/patrick-hand-latin-400-normal.woff2') format('woff2'), url('../node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: url('../public/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'), url('../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 700; src: url('../public/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2'), url('../node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2') format('woff2'); }
+  :root { --paper: #f0ede8; --ink: #0a0a0a; --accent: #c8ff00; --note: #3a3833; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--paper); }
+  .card { position: relative; width: 1200px; height: 630px; overflow: hidden;
+    background:
+      linear-gradient(to right, rgba(10,10,10,.07) 1.5px, transparent 1.5px) 0 0 / 60px 60px,
+      linear-gradient(to bottom, rgba(10,10,10,.07) 1.5px, transparent 1.5px) 0 0 / 60px 60px,
+      var(--paper); color: var(--ink); }
+  .eyebrow { position: absolute; left: 72px; top: 64px; font: 400 21px/1.3 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+  h1 { position: absolute; left: 66px; top: 128px; font: 800 152px/.92 'Archivo Variable', Arial, sans-serif; letter-spacing: -.04em; }
+  .mk { position: relative; display: inline-block; isolation: isolate; }
+  .mk i { position: absolute; left: -8px; right: -12px; bottom: 8px; height: 40%; background: var(--accent); transform: skewX(-6deg); z-index: -1; }
+  .lead { position: absolute; left: 72px; top: 446px; width: 560px; font: 500 28px/1.35 'Archivo Variable', Arial, sans-serif; letter-spacing: -.01em; }
+  .url { position: absolute; left: 72px; bottom: 44px; font: 700 20px/1 'JetBrains Mono', monospace; letter-spacing: .08em; }
+  svg { position: absolute; left: 676px; top: 96px; width: 494px; height: 446px; overflow: visible; }
+  svg path { fill: none; stroke: var(--ink); stroke-linecap: round; stroke-linejoin: round; }
+  svg text.m { font: 700 17px 'JetBrains Mono', monospace; letter-spacing: .14em; fill: var(--ink); }
+  svg text.h { font: 400 30px 'Patrick Hand', cursive; fill: var(--note); }
+</style>
+</head>
+<body>
+<div class="card">
+  <p class="eyebrow">Forward deployed engineer. Quant developer.</p>
+  <h1>Bhavya<br><span class="mk">Dhoot<i></i></span></h1>
+  <p class="lead">Ten internal tools built for The Health Factory, 7+ running unattended in production.</p>
+  <p class="url">bhavya-dhoot.vercel.app</p>
+  <svg id="art" viewBox="0 0 520 470" aria-hidden="true">
+    <rect id="lime" x="430" y="104" width="70" height="48" rx="4" fill="#c8ff00" transform="rotate(-3 465 128)"/>
+  </svg>
+</div>
+<script>
+  // Seeded LCG so the sketch is identical on every render.
+  let s = 4242; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const j = (n) => (rnd() - .5) * 2 * n;
+  const NS = 'http://www.w3.org/2000/svg', svg = document.getElementById('art');
+  const add = (d, w) => { const p = document.createElementNS(NS, 'path'); p.setAttribute('d', d); p.setAttribute('stroke-width', w || 5); svg.appendChild(p); };
+  const line = (x1, y1, x2, y2, b = 4) => { const mx = (x1 + x2) / 2 + j(b), my = (y1 + y2) / 2 + j(b); return `M${x1 + j(2)} ${y1 + j(2)} Q${mx} ${my} ${x2 + j(2)} ${y2 + j(2)}`; };
+  const rect = (x, y, w, h, o = 9) => [line(x - o, y, x + w + o, y + j(3)), line(x + w, y - o, x + w + j(3), y + h + o), line(x + w + o, y + h, x - o, y + h + j(3)), line(x, y + h + o, x + j(3), y - o)].join(' ');
+  const circle = (cx, cy, r) => { let d = ''; for (let i = 0; i <= 56; i++) { const a = -2.2 + (i / 56) * 1.1 * Math.PI * 2, rr = r + j(2) + i * .03; d += (i ? 'L' : 'M') + (cx + Math.cos(a) * rr).toFixed(1) + ' ' + (cy + Math.sin(a) * rr).toFixed(1); } return d; };
+  const arrow = (x1, y1, x2, y2, b, head = 16) => { const a = Math.atan2(y2 - y1, x2 - x1); return line(x1, y1, x2, y2, b) + ` M${x2 - Math.cos(a - .5) * head} ${y2 - Math.sin(a - .5) * head} L${x2} ${y2} L${x2 - Math.cos(a + .5) * head} ${y2 - Math.sin(a + .5) * head}`; };
+  const check = (x, y, k) => `M${x} ${y + k * .55} L${x + k * .35} ${y + k * .9} L${x + k} ${y}`;
+  const text = (cls, x, y, t) => { const e = document.createElementNS(NS, 'text'); e.setAttribute('class', cls); e.setAttribute('x', x); e.setAttribute('y', y); e.textContent = t; svg.appendChild(e); };
+  // feeds
+  add(rect(10, 70, 110, 90), 6); text('m', 24, 98, 'FEEDS');
+  add(line(24, 118, 104, 119, 3), 4); add(line(24, 140, 90, 141, 3), 4);
+  add(arrow(140, 115, 200, 115, 8), 5);
+  // checks
+  add(rect(212, 40, 130, 150), 6); text('m', 228, 70, 'CHECKS');
+  [92, 128, 162].forEach((y) => { add(check(228, y, 24), 9); add(line(262, y + 16, 322, y + 16, 3), 4); });
+  add(circle(277, 115, 105), 4);
+  add(arrow(362, 115, 410, 115, -8), 5);
+  // ledger
+  add(rect(420, 70, 90, 90), 6); text('m', 428, 98, 'LEDGER');
+  add(check(436, 112, 40), 9);
+  // sparks
+  add('M490 40 L490 62 M479 51 L501 51', 4); add('M20 190 L20 206 M12 198 L28 198', 4);
+  // hand note
+  text('h', 150, 262, 'runs while nobody is watching');
+  // pencil
+  add('M470 318 L520 268', 4); add('M478 326 L528 276', 4); add('M464 324 L470 318 M464 324 L470 318', 4);
+  // arrow from note up to the pipeline
+  add(arrow(250, 240, 262, 205, 6), 4);
+</script>
+</body>
+</html>
