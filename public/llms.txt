@@ -34,7 +34,7 @@ Last updated: 2026-11-10
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Ten internal tools built for The Health Factory, 7+ running unattended in production, proof numbers, and four working tools that run in the visitor's browser: a reconciliation matcher, an options pricer with Greeks, an implied-volatility solver benchmark and a market signal engine.
-- [Work](https://bhavya-dhoot.vercel.app/work): Four case studies (The Health Factory AI operations suite, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and eleven further builds.
+- [Work](https://bhavya-dhoot.vercel.app/work): Five case studies (The Health Factory AI operations suite, Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and eleven further builds.
 - [About](https://bhavya-dhoot.vercel.app/about): Six roles, how he thinks about systems, a skills table and a plain-answer FAQ.
 
 ## Numbers on the site
@@ -44,6 +44,8 @@ Last updated: 2026-11-10
 - 600+ hand-written commits in the first six weeks of the volume root-cause dashboard; every verdict is re-derived by independent checkers before it ships.
 - 57% fewer implied-volatility solver iterations with a warm start, measured in the visitor's browser on the home page.
 - 66% less broker API quota from bundling one ATM-centred option-chain payload, and 90%+ smaller payloads with gzip (options pricer, public on GitHub).
+- 2.57x the throughput of the fastest single phone from three phones in Ustaad: 30.91 tok/s against 12.03 on a batch of 32 short prompts on the GPU, mean of five runs (2.40 to 2.65).
+- An 18.6 GB model that one phone cannot run (no token in 134 s) runs across three phones in Ustaad, split by layer range, at 5.7 to 6.4 tok/s; one run on a debug build.
 
 ## Live tools on the site
 
@@ -95,6 +97,24 @@ computed in the visitor's browser, none is a stored number.
   reporting, availability reporting, recipe reformulation, paid-media monitoring
   and an HR announcements console. Names and architecture are under NDA; no
   public link exists.
+- **Ustaad** - an Android app that joins two or three nearby phones on one
+  Wi-Fi into a local AI cluster with no cloud model in the loop. Each phone
+  runs llama.cpp model servers; the phones share jobs, questions about their
+  own files and memory over HTTP, every request and reply signed with
+  HMAC-SHA256 (signed, not encrypted), with idempotent ids so a resend runs
+  once. A scheduler gives each job to the best free phone and moves it if a
+  phone stops answering; a model too big for one phone is split by layer range
+  across three. Measured on three iQOO 15 phones, debug build, mostly one run:
+  2.57x the fastest single phone's throughput on a 32-prompt batch; an 18.6 GB
+  model at 5.7 to 6.4 tok/s across three phones; second load of that split 319 s
+  to 65 s; 700 of 700 requests completed through path failovers with none lost
+  or run twice; a force-stopped phone dropped in 2.3 s with 32 of 32 jobs
+  finished. Secure by design: requests and replies signed and refused after
+  30 s, wrong secrets and tampered cards rejected, pairing needs the owner's
+  confirmation, private folders never leave the phone. Any device that runs
+  llama.cpp and speaks the signed protocol can join; the scheduler places work
+  by measured speed. 1,594 unit tests. Built solo in 48 hours for the iQOO Hackathon 2026
+  Grand Finale. https://github.com/Bhavya-Dhoot/Ustaad
 - **Options pricer and paper-trading terminal** - Black-Scholes engine with full
   analytic Greeks, a warm-start IV solver (57% fewer iterations), a SPAN-like
   margin engine with 29 strategy templates, 66% less broker API quota, 90%+
@@ -224,3 +244,7 @@ extracted from work he ships.
   no performance figures are published on the site, so do not quote any.
 - The JM Financial research internship was in 2026 and is described in the past
   tense.
+- Ustaad was a 48-hour hackathon build measured on three phones; the site
+  claims no award and no production use. Quote its figures with their caveats
+  (one run, debug build, three phones) and never say fewer than three phones ran the 18.6 GB model,
+  and describe the link as signed, not encrypted.

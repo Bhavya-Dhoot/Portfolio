@@ -1,5 +1,5 @@
 /**
- * home/selected.js - four shipped things as an index list on one hand-drawn vertical line.
+ * home/selected.js - five shipped things as an index list on one hand-drawn vertical line.
  */
 
 import { drawOn, swipe, reveal } from '../motion/core.js';

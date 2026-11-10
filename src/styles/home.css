@@ -224,9 +224,10 @@
 .sel-title { font-size: var(--fs-h3); }
 .sel-line { margin-top: var(--s-2); font-weight: 500; }
 .sel-row:nth-child(1) .sel-line { max-width: 44ch; }
-.sel-row:nth-child(2) .sel-line { max-width: 30ch; }
-.sel-row:nth-child(3) .sel-line { max-width: 54ch; }
-.sel-row:nth-child(4) .sel-line { max-width: 38ch; }
+.sel-row:nth-child(2) .sel-line { max-width: 54ch; }
+.sel-row:nth-child(3) .sel-line { max-width: 30ch; }
+.sel-row:nth-child(4) .sel-line { max-width: 54ch; }
+.sel-row:nth-child(5) .sel-line { max-width: 38ch; }
 .sel-stat { font-family: var(--font-mono); font-size: var(--fs-mono); white-space: nowrap; }
 .sel-all { margin-top: var(--s-6); padding-left: 3rem; }
 

@@ -1,5 +1,5 @@
 /**
- * work/cases.js - the four case-study drawings (6.2.2 to 6.2.5) and their text entrances.
+ * work/cases.js - the five case-study drawings (6.2.2 to 6.2.5 plus Ustaad) and their text entrances.
  * Every drawing owns a fixed seed, so strokes never change between loads.
  * Boil is applied only to the strokes the spec names; labels and lime fills stay crisp.
  */
@@ -68,6 +68,51 @@ function thf() {
     // Draw the whole case drawing once as it enters
     drawOn(order, { dur: .6, stagger: .05 });
     fadeIn(svg, tags);
+}
+
+// ---------------------------------------------------------------- Ustaad
+function ustaad() {
+    const svg = byId('ustaad-art');
+    if (!svg) return;
+    const d = doodle(205);
+    const { order, put } = pen(svg);
+    const job = [];
+    const tags = [];
+
+    // Three phones, each holding one layer range of the one model
+    const phones = [[40, 110, 'C', '0-15'], [250, 320, 'A', '16-31'], [460, 530, 'B', '32-47']];
+    phones.forEach(([x, cx, name, range]) => {
+        put([{ d: d.rect(x, 60, 140, 260), w: 6 }]);
+        tags.push(mono(svg, cx, 96, name, 22)); // ponytail: letter only, 'PHONE C' overran the body at phone scale
+        tags.push(fillBlock(svg, x + 22, 122, 96, 146));
+        put([{ d: d.rect(x + 20, 120, 100, 150), w: 5 }, { d: d.scrib(x + 32, 140, 76, 5, 26), w: 4 }]);
+        tags.push(mono(svg, cx, 298, range, 16, 'middle', 1.1));
+        put([{ d: d.line(cx, 320, cx, 360, 2), w: 4 }]);
+    });
+    tags.push(hand(svg, 320, 40, 'one 18.6 GB model, one layer range per phone'));
+
+    // The shared Wi-Fi bus
+    put([{ d: d.line(110, 360, 530, 360, 6), w: 5 }]);
+    tags.push(mono(svg, 320, 386, 'ONE WI-FI, SIGNED BOTH WAYS', 16, 'middle', 1.1));
+
+    // One job, signed, then moved to another phone when the first goes quiet
+    const add = (strokes) => job.push(...ink(svg, strokes));
+    add([{ d: d.rect(40, 410, 90, 60), w: 5 }]);
+    tags.push(mono(svg, 85, 447, 'JOB', 18));
+    add([{ d: d.arrow(130, 440, 200, 440, 0, 14), w: 4, boil: true }]);
+    add([{ d: d.rect(205, 412, 120, 56), w: 5 }, { d: d.check(214, 428, 20), w: 9 }]);
+    tags.push(mono(svg, 282, 447, 'HMAC', 14, 'middle', 1));
+    add([{ d: d.arrow(325, 440, 400, 440, -18, 14), w: 4, boil: true }, { d: d.circle(432, 440, 26, 1.1), w: 4 }]);
+    tags.push(mono(svg, 432, 447, 'A', 18));
+    add([{ d: d.arrow(458, 440, 526, 440, -18, 14), w: 4, dash: true, boil: true }, { d: d.circle(556, 440, 26, 1.1), w: 4 }]);
+    tags.push(mono(svg, 556, 447, 'B', 18));
+    tags.push(hand(svg, 320, 500, 'signed, so it runs once even when resent'));
+    tags.push(hand(svg, 320, 538, 'moved if a phone goes quiet'));
+
+    // Phones and bus first, then the job row a beat later
+    drawOn(order, { dur: .55, stagger: .04 });
+    drawOn(job, { dur: .5, stagger: .06, delay: .35 });
+    fadeIn(svg, tags, .5);
 }
 
 // ---------------------------------------------------------------- 6.2.3 Options pricer
@@ -225,6 +270,7 @@ function entrances() {
 export function initCases() {
     entrances();
     thf();
+    ustaad();
     pricer();
     kronosWide();
     kronosTall();

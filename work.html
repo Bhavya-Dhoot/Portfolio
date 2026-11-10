@@ -5,7 +5,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Work: Bhavya Dhoot</title>
-<meta name="description" content="Four case studies: The Health Factory AI operations suite, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
+<meta name="description" content="Five case studies: The Health Factory AI operations suite, Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
 <meta name="keywords" content="Bhavya Dhoot, Forward Deployed Engineer, Quantitative Developer, Quant Researcher, AI Engineer, AI Automation Consultant, Options Pricing, Algorithmic Trading, Machine Learning, RAG Pipelines, Multi-Agent Systems, n8n" />
 <meta name="author" content="Bhavya Dhoot" />
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
@@ -14,7 +14,7 @@
 <!-- Open Graph -->
 <meta property="og:site_name" content="Bhavya Dhoot" />
 <meta property="og:title" content="Work: Bhavya Dhoot" />
-<meta property="og:description" content="Four case studies: The Health Factory AI operations suite, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
+<meta property="og:description" content="Five case studies: The Health Factory AI operations suite, Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
 <meta property="og:type" content="profile" />
 <meta property="profile:first_name" content="Bhavya" />
 <meta property="profile:last_name" content="Dhoot" />
@@ -28,7 +28,7 @@
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Work: Bhavya Dhoot" />
-<meta name="twitter:description" content="Four case studies: The Health Factory AI operations suite, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
+<meta name="twitter:description" content="Five case studies: The Health Factory AI operations suite, Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, and an NSE trading desk. Three packages you can install from PyPI and npm." />
 <meta name="twitter:image" content="https://bhavya-dhoot.vercel.app/og.jpg" />
 
 <!-- Canonical URL -->
@@ -166,6 +166,24 @@
         "https://www.linkedin.com/in/bhavya-dhoot/",
         "https://github.com/Bhavya-Dhoot"
       ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://bhavya-dhoot.vercel.app/work#ustaad-app",
+      "name": "Ustaad",
+      "description": "Android app that joins two or three nearby phones on one Wi-Fi into a local AI cluster with no cloud model in the loop: a scheduler, a signed idempotent protocol between phones, failover, and a model split by layer ranges across phones. Built in 48 hours and measured on three phones.",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Android",
+      "url": "https://bhavya-dhoot.vercel.app/work#ustaad",
+      "sameAs": "https://github.com/Bhavya-Dhoot/Ustaad",
+      "author": {
+        "@id": "https://bhavya-dhoot.vercel.app/#person"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
     }
   ]
 }
@@ -192,9 +210,10 @@
   <section class="work-intro" aria-labelledby="work-h">
     <div class="wrap">
       <h1 id="work-h">Work.</h1>
-      <p class="hand">Four case studies, three packages you can install, eleven more builds.</p>
+      <p class="hand">Five case studies, three packages you can install, eleven more builds.</p>
       <nav class="chip-row" aria-label="Case studies">
         <a class="chip-btn" href="#thf">Health Factory</a>
+        <a class="chip-btn" href="#ustaad">Ustaad</a>
         <a class="chip-btn" href="#pricer">Options pricer</a>
         <a class="chip-btn" href="#kronos">Kronos NSE</a>
         <a class="chip-btn" href="#desk">Trading desk</a>
@@ -226,9 +245,37 @@
     </div>
   </section>
 
+  <!-- Ustaad (plans/2026-11-10-ustaad.md 2.2) -->
+  <section id="ustaad" class="case" aria-labelledby="ustaad-h">
+    <div class="wrap split split-rev">
+      <div class="case-text">
+        <h2 id="ustaad-h">Ustaad: three phones, one local AI cluster</h2>
+        <p class="hand case-problem">The models worth running do not fit on one phone, and the files worth asking about should not leave it.</p>
+        <h3>An Android app that joins two or three phones on one Wi-Fi into one cluster: a scheduler that gives each job to the best free phone, a signed idempotent protocol between phones, failover when one stops answering, and a model too big for any one phone split by layer range across all three. No cloud model in the loop.</h3>
+        <p>Built solo in 48 hours for the iQOO Hackathon 2026 Grand Finale in Bengaluru and run on three iQOO 15 phones. Each phone runs llama.cpp model servers as child processes; the phones share jobs, questions about their own files and memory over HTTP, every request and every reply signed. Nothing in the protocol is tied to one phone model: any device that runs llama.cpp and speaks the same signed HTTP protocol can join, and the scheduler already places work by each device's measured speed.</p>
+<p><strong>Secure by design.</strong> Every request and every reply is signed with HMAC-SHA256 and refused after 30 s. A wrong secret, a stale clock or a tampered answer card is rejected. A phone joins only after the owner confirms the pairing, private folders never leave the phone, and the endpoint for other apps is closed to the network and needs the owner's key. Traffic is signed, not encrypted.</p>
+        <p>On top of that link: the phones answer the same problem and revise where they disagree, each phone searches its own files and sends back only short snippets, never the files, and answers are shared as signed cards. Other apps on the phone reach the cluster through an OpenAI-format endpoint. A model that will not fit is refused in 0.4 s instead of 134 s of swap thrashing. Every figure below is one run on a debug build unless it says otherwise.</p>
+        <ul class="facts">
+          <li><span class="fact"><span class="fact-v">2.57x</span><span class="fact-l">the throughput of the fastest single phone: 30.91 tok/s across three phones against 12.03, on a batch of 32 short prompts on the GPU, mean of five runs (2.40 to 2.65).</span></span></li>
+          <li><span class="fact"><span class="fact-v">18.6 GB</span><span class="fact-l">model that one phone cannot run (no token in 134 s) runs across three phones, split by layer range with one range per phone: 5.7 to 6.4 tok/s, first token 1.5 to 2.8 s. One run.</span></span></li>
+          <li><span class="fact"><span class="fact-v">80%</span><span class="fact-l">faster second load of that split, 319 s to 65 s, with the weights cached on the two lending phones.</span></span></li>
+          <li><span class="fact"><span class="fact-v">700 of 700</span><span class="fact-l">requests completed through path failovers, none lost, none run twice: an idempotent id on every request that changes state, so a resend runs once. Paths were cut with a fault hook, not by switching Wi-Fi off.</span></span></li>
+          <li><span class="fact"><span class="fact-v">2.3 s</span><span class="fact-l">to drop a phone force-stopped in the middle of a batch; 32 of 32 jobs still finished. If the coordinating phone dies, the batch ends.</span></span></li>
+          <li><span class="fact"><span class="fact-v">1,594</span><span class="fact-l">unit tests, 0 failures. 727 commits in six days, solo. Gates closed only on numbers measured on real phones; a final audit by four independent readers, 52 findings fixed with unit tests.</span></span></li>
+        </ul>
+        <p><span class="chip">PUBLIC ON GITHUB<br>48 HOURS, SOLO, THREE PHONES</span></p>
+        <p class="case-links">
+          <a class="link" href="https://github.com/Bhavya-Dhoot/Ustaad" target="_blank" rel="noopener" aria-label="Ustaad on GitHub"><span class="mk">GitHub<i aria-hidden="true"></i></span><svg class="ink-svg" viewBox="0 0 48 26" aria-hidden="true" focusable="false"></svg></a>
+        </p>
+        <p class="stack-line">Kotlin, Jetpack Compose, llama.cpp, HTTP and JSON over Wi-Fi Direct, HMAC-SHA256, OpenAI-format endpoint</p>
+      </div>
+      <svg id="ustaad-art" class="ink-svg case-art" viewBox="0 0 640 560" role="img" aria-label="Three phones on one link, each holding one layer range of a single model; below, a signed job going to a free phone and moving to another when the first stops answering" focusable="false"></svg>
+    </div>
+  </section>
+
   <!-- 6.2.3 Options pricer -->
   <section id="pricer" class="case" aria-labelledby="pricer-h">
-    <div class="wrap split split-rev">
+    <div class="wrap split">
       <div class="case-text">
         <h2 id="pricer-h">Options pricer and paper-trading terminal</h2>
         <p class="hand case-problem">Retail options tooling re-solves implied vol from scratch every tick and ignores portfolio-level margin.</p>

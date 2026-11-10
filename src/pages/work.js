@@ -1,5 +1,5 @@
 /**
- * Work - four case studies, the open-source row and the further builds.
+ * Work - five case studies, the open-source row and the further builds.
  */
 
 import '../styles/tokens.css';
