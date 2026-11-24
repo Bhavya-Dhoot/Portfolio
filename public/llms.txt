@@ -34,8 +34,19 @@ Last updated: 2026-11-10
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Ten internal tools built for The Health Factory, 7+ running unattended in production, proof numbers, and four working tools that run in the visitor's browser: a reconciliation matcher, an options pricer with Greeks, an implied-volatility solver benchmark and a market signal engine.
-- [Work](https://bhavya-dhoot.vercel.app/work): Six case studies (OTIF, a nine-plant operations platform; The Health Factory AI operations suite; Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and eleven further builds.
+- [Work](https://bhavya-dhoot.vercel.app/work): Six case studies (OTIF, a nine-plant operations platform; The Health Factory AI operations suite; Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and thirteen further builds, three of them prize winners.
 - [About](https://bhavya-dhoot.vercel.app/about): Six roles, how he thinks about systems, a skills table and a plain-answer FAQ.
+
+## Hackathon wins
+
+- **First runner-up, Rs 80,000** - iQOO Hackathon 2026 Grand Finale, Bengaluru,
+  for Ustaad, built solo in 48 hours.
+- **Rs 40,000** - Vedanta Makeathon 2026, for MAYA, a VR body-ownership
+  experiment on a Quest 3 and a muscle-sensing sleeve (Team Kela).
+  https://github.com/black1plague2/phantomhand
+- **$1,500** - IEEE ClimateChain Global Hackathon 2026, for EmbedProof, which
+  turns a steel mill's emissions claim into a tamper-evident, post-quantum
+  signed certificate. https://github.com/Bhavya-Dhoot/embedproof
 
 ## Numbers on the site
 
@@ -128,7 +139,7 @@ computed in the visitor's browser, none is a stored number.
   confirmation, private folders never leave the phone. Any device that runs
   llama.cpp and speaks the signed protocol can join; the scheduler places work
   by measured speed. 1,594 unit tests. Built solo in 48 hours for the iQOO Hackathon 2026
-  Grand Finale. https://github.com/Bhavya-Dhoot/Ustaad
+  Grand Finale, where it took first runner-up (Rs 80,000). https://github.com/Bhavya-Dhoot/Ustaad
 - **Options pricer and paper-trading terminal** - Black-Scholes engine with full
   analytic Greeks, a warm-start IV solver (57% fewer iterations), a SPAN-like
   margin engine with 29 strategy templates, 66% less broker API quota, 90%+

@@ -222,7 +222,7 @@
   <section class="work-intro" aria-labelledby="work-h">
     <div class="wrap">
       <h1 id="work-h">Work.</h1>
-      <p class="hand">Six case studies, three packages you can install, eleven more builds.</p>
+      <p class="hand">Six case studies, three packages you can install, thirteen more builds.</p>
       <nav class="chip-row" aria-label="Case studies">
         <a class="chip-btn" href="#otif">OTIF</a>
         <a class="chip-btn" href="#thf">Health Factory</a>
@@ -287,7 +287,7 @@
         <h2 id="ustaad-h">Ustaad: three phones, one local AI cluster</h2>
         <p class="hand case-problem">The models worth running do not fit on one phone, and the files worth asking about should not leave it.</p>
         <h3>An Android app that joins two or three phones on one Wi-Fi into one cluster: a scheduler that gives each job to the best free phone, a signed idempotent protocol between phones, failover when one stops answering, and a model too big for any one phone split by layer range across all three. No cloud model in the loop.</h3>
-        <p>Built solo in 48 hours for the iQOO Hackathon 2026 Grand Finale in Bengaluru and run on three iQOO 15 phones. Each phone runs llama.cpp model servers as child processes; the phones share jobs, questions about their own files and memory over HTTP, every request and every reply signed. Nothing in the protocol is tied to one phone model: any device that runs llama.cpp and speaks the same signed HTTP protocol can join, and the scheduler already places work by each device's measured speed.</p>
+        <p>Built solo in 48 hours for the iQOO Hackathon 2026 Grand Finale in Bengaluru, where it took first runner-up and &#8377;80,000, and run on three iQOO 15 phones. Each phone runs llama.cpp model servers as child processes; the phones share jobs, questions about their own files and memory over HTTP, every request and every reply signed. Nothing in the protocol is tied to one phone model: any device that runs llama.cpp and speaks the same signed HTTP protocol can join, and the scheduler already places work by each device's measured speed.</p>
 <p><strong>Secure by design.</strong> Every request and every reply is signed with HMAC-SHA256 and refused after 30 s. A wrong secret, a stale clock or a tampered answer card is rejected. A phone joins only after the owner confirms the pairing, private folders never leave the phone, and the endpoint for other apps is closed to the network and needs the owner's key. Traffic is signed, not encrypted.</p>
         <p>On top of that link: the phones answer the same problem and revise where they disagree, each phone searches its own files and sends back only short snippets, never the files, and answers are shared as signed cards. Other apps on the phone reach the cluster through an OpenAI-format endpoint. A model that will not fit is refused in 0.4 s instead of 134 s of swap thrashing. Every figure below is one run on a debug build unless it says otherwise.</p>
         <ul class="facts">
@@ -298,7 +298,7 @@
           <li><span class="fact"><span class="fact-v">2.3 s</span><span class="fact-l">to drop a phone force-stopped in the middle of a batch; 32 of 32 jobs still finished. If the coordinating phone dies, the batch ends.</span></span></li>
           <li><span class="fact"><span class="fact-v">1,594</span><span class="fact-l">unit tests, 0 failures. 727 commits in six days, solo. Gates closed only on numbers measured on real phones; a final audit by four independent readers, 52 findings fixed with unit tests.</span></span></li>
         </ul>
-        <p><span class="chip">PUBLIC ON GITHUB<br>48 HOURS, SOLO, THREE PHONES</span></p>
+        <p><span class="chip">FIRST RUNNER-UP, &#8377;80,000<br>48 HOURS, SOLO, THREE PHONES</span></p>
         <p class="case-links">
           <a class="link" href="https://github.com/Bhavya-Dhoot/Ustaad" target="_blank" rel="noopener" aria-label="Ustaad on GitHub"><span class="mk">GitHub<i aria-hidden="true"></i></span><svg class="ink-svg" viewBox="0 0 48 26" aria-hidden="true" focusable="false"></svg></a>
         </p>
@@ -425,6 +425,16 @@
     <div class="wrap">
       <h2 id="more-h">Further builds.</h2>
       <ul class="more-list">
+        <li class="more-row">
+          <h3 class="more-t">EmbedProof, emissions claims you can verify &middot; won $1,500</h3>
+          <p>A steel mill's CO&#8322;-per-tonne claim becomes a tamper-evident certificate: an AI model checks it for plausibility against independent estimates for the plant, every certificate carries a post-quantum signature, and the same attested tonne cannot be claimed by two importers. Won $1,500 at the IEEE ClimateChain Global Hackathon 2026.</p>
+          <a class="more-link" href="https://github.com/Bhavya-Dhoot/embedproof" target="_blank" rel="noopener">github.com/Bhavya-Dhoot/embedproof</a>
+        </li>
+        <li class="more-row">
+          <h3 class="more-t">MAYA, a hand that is not yours &middot; won &#8377;40,000</h3>
+          <p>A VR experiment on a Quest 3 and a vibrating, muscle-sensing sleeve that recreates a published body-ownership illusion and records how the body responds when touch is in time with sight and when it is not. Team Kela; I wrote most of the code. Won &#8377;40,000 at the Vedanta Makeathon 2026.</p>
+          <a class="more-link" href="https://github.com/black1plague2/phantomhand" target="_blank" rel="noopener">github.com/black1plague2/phantomhand</a>
+        </li>
         <li class="more-row">
           <h3 class="more-t">Hisab, export receivables ledger</h3>
           <p>A customs-cleared shipping bill becomes a receivable discounted on day one; the LLM proposes the SWIFT match, rules re-verify, humans decide. 21 tests, 28 end-to-end checks.</p>
