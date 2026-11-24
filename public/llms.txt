@@ -39,7 +39,7 @@ Last updated: 2026-11-10
 
 ## Numbers on the site
 
-- 82% faster stock-balance reads at 100,000 ledger movements (213 ms to 39 ms) in the material-planning app he built; the original exact walk is kept as a test oracle.
+- 82% faster stock-balance reads, benchmarked at 100,000 stock movements (213 ms to 39 ms), in OTIF, the planning platform he built; the original exact walk is kept as a test oracle.
 - 93% fewer database queries for one head-office screen (136 per render down to 9).
 - 600+ hand-written commits in the first six weeks of the volume root-cause dashboard; every verdict is re-derived by independent checkers before it ships.
 - 57% fewer implied-volatility solver iterations with a warm start, measured in the visitor's browser on the home page.
@@ -98,7 +98,7 @@ computed in the visitor's browser, none is a stored number.
   warehouse apps that update over the air. Used by head office, purchase, plant
   managers, stores, QC and drivers: 9 plants, 19 accounts. 2,938 automated tests
   passing with none failing on a fresh database (23 November 2026); 620+ commits
-  since August 2026, all his. Stock-balance reads 82% faster at 100,000 ledger
+  since August 2026, all his. Stock-balance reads 82% faster, benchmarked at 100,000 stock
   movements (213 ms to 39 ms); one head-office screen down from 136 queries per
   render to 9. TypeScript, Next.js, React Native, PostgreSQL. Plant names,
   partners and prices are under NDA; no public link exists.
