@@ -34,7 +34,7 @@ Last updated: 2026-11-10
 ## Pages
 
 - [Home](https://bhavya-dhoot.vercel.app/): Ten internal tools built for The Health Factory, 7+ running unattended in production, proof numbers, and four working tools that run in the visitor's browser: a reconciliation matcher, an options pricer with Greeks, an implied-volatility solver benchmark and a market signal engine.
-- [Work](https://bhavya-dhoot.vercel.app/work): Five case studies (The Health Factory AI operations suite, Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and eleven further builds.
+- [Work](https://bhavya-dhoot.vercel.app/work): Six case studies (OTIF, a nine-plant operations platform; The Health Factory AI operations suite; Ustaad, a three-phone local AI cluster, an options pricer with a warm-start IV solver, Kronos NSE, an NSE trading desk), four open-source tools, and eleven further builds.
 - [About](https://bhavya-dhoot.vercel.app/about): Six roles, how he thinks about systems, a skills table and a plain-answer FAQ.
 
 ## Numbers on the site
@@ -88,6 +88,20 @@ computed in the visitor's browser, none is a stored number.
   lead the cell.
 
 ## Case studies
+
+- **OTIF** - his largest build: one operations platform, built solo, that runs a
+  nine-plant bakery business for The Health Factory. It plans tomorrow's
+  production for every plant, costs every product from its recipe, issues
+  material to the line, plans and raises the purchase shortfall, tracks what
+  arrived against what was ordered (fill rate) and which plant short-shipped,
+  and dispatches the trucks with proof of delivery through Android driver and
+  warehouse apps that update over the air. Used by head office, purchase, plant
+  managers, stores, QC and drivers: 9 plants, 19 accounts. 2,938 automated tests
+  passing with none failing on a fresh database (23 November 2026); 620+ commits
+  since August 2026, all his. Stock-balance reads 82% faster at 100,000 ledger
+  movements (213 ms to 39 ms); one head-office screen down from 136 queries per
+  render to 9. TypeScript, Next.js, React Native, PostgreSQL. Plant names,
+  partners and prices are under NDA; no public link exists.
 
 - **The Health Factory AI operations suite** - ten internal tools on one pattern:
   deterministic pipelines, LLM extraction behind compliance gates, automated

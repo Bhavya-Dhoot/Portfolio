@@ -42,6 +42,37 @@ function pen(svg) {
     };
 }
 
+// ---------------------------------------------------------------- OTIF
+function otif() {
+    const svg = byId('otif-art');
+    if (!svg) return;
+    const d = doodle(206);
+    const { order, put } = pen(svg);
+    const tags = [];
+    const steps = ['PLAN', 'RECIPE', 'ISSUE', 'BUY', 'DISPATCH'];
+
+    // One order walks down the day: five steps, each feeding the next
+    steps.forEach((s, i) => {
+        const y = 40 + i * 84;
+        const x = 40 + (i % 2) * 150;
+        put([{ d: d.rect(x, y, 220, 58), w: 5 }]);
+        tags.push(mono(svg, x + 110, y + 36, s, 20));
+        if (i < steps.length - 1) {
+            const nx = 40 + ((i + 1) % 2) * 150;
+            put([{ d: d.arrow(x + 110, y + 58, nx + 110, y + 84, i % 2 ? -14 : 14, 12), w: 4, boil: true }]);
+        }
+    });
+    // Delivered, with proof
+    put([{ d: d.arrow(260, 405, 430, 405, 0), w: 4, boil: true }]);
+    put([{ d: d.circle(500, 405, 56, 1.1), w: 5 }, { d: d.check(476, 384, 44), w: 9, boil: true }]);
+    tags.push(hand(svg, 500, 500, 'delivered, with a photo'));
+    tags.push(hand(svg, 520, 120, 'nine plants,'));
+    tags.push(hand(svg, 520, 156, 'one ledger'));
+
+    drawOn(order, { dur: .5, stagger: .05 });
+    fadeIn(svg, tags);
+}
+
 // ---------------------------------------------------------------- 6.2.2 The Health Factory
 function thf() {
     const svg = byId('thf-art');
@@ -269,6 +300,7 @@ function entrances() {
 
 export function initCases() {
     entrances();
+    otif();
     thf();
     ustaad();
     pricer();
