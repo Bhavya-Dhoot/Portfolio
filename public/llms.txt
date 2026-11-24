@@ -94,7 +94,7 @@ computed in the visitor's browser, none is a stored number.
   production for every plant, costs every product from its recipe, issues
   material to the line, plans and raises the purchase shortfall, tracks what
   arrived against what was ordered (fill rate) and which plant short-shipped,
-  and dispatches the trucks with proof of delivery through Android driver and
+  and is piloting dispatch with proof of delivery through Android driver and
   warehouse apps that update over the air. Used by head office, purchase, plant
   managers, stores, QC and drivers: 9 plants, 19 accounts. 2,938 automated tests
   passing with none failing on a fresh database (23 November 2026); 620+ commits
